@@ -14,15 +14,19 @@ public class SimulationBasicDataService {
     public SimulationBasicDataService(SimulationBasicDataRepository simulationBasicDataRepository) {
         this.simulationBasicDataRepository = simulationBasicDataRepository;
     }
+
     public List<SimulationBasicData> findAll() {
         return simulationBasicDataRepository.findAll();
     }
+
     public Optional<SimulationBasicData> findById(long id) {
         return simulationBasicDataRepository.findById(id);
     }
+
     public SimulationBasicData save(SimulationBasicData simulationBasicData) {
         return simulationBasicDataRepository.save(simulationBasicData);
     }
+
     public void deleteById(long id) {
         simulationBasicDataRepository.deleteById(id);
     }
