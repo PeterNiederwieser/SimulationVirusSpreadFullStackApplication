@@ -1,6 +1,6 @@
 import {useState} from "react";
 import FormSimulationParameters from "./components/FormSimulationParameters.jsx";
-import {postSimulationParameters} from "../service/requestMethods.js";
+import {postSimulationBasicData} from "../service/requestMethods.js";
 
 function Simulation() {
     function initFormObject() {
@@ -25,7 +25,7 @@ function Simulation() {
     }
 
     function onSumbit(formObject) {
-        postSimulationParameters(formObject)
+        postSimulationBasicData(formObject)
             .then(() => {
                 console.log("parameters: ", formObject);
             })
