@@ -21,4 +21,5 @@ public class SimulationBasicData {
     private String numberOfAnimals;
     private String numberOfInitialInfections;
     private String mortalityRate;
+    private String isSimulationCompleted;
 }
