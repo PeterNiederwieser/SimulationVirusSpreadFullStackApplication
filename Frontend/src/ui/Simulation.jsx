@@ -1,8 +1,18 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom"
 import FormSimulationParameters from "./components/FormSimulationParameters.jsx";
-import {postSimulationBasicData} from "../service/requestMethods.js";
+import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
+import OverviewSimulations from "./components/OverviewSimulations.jsx";
 
 function Simulation() {
+    const navigate = useNavigate();
+    const [simulationsBasicData, setSimulationsBasicData] = useState([]);
+
+    useEffect(() => {
+        getAllSimulationsBasicData()
+            .then(data => setSimulationsBasicData(data));
+    }, [])
+
     function initFormObject() {
         return {
             simulationName: "",
@@ -24,9 +34,11 @@ function Simulation() {
         });
     }
 
-    function onSumbit(formObject) {
+    function onSubmit(formObject) {
         postSimulationBasicData(formObject)
             .then(() => {
+                navigate("/simulation");
+                setFormObject(initFormObject());
                 console.log("parameters: ", formObject);
             })
             .catch(error => {
@@ -40,10 +52,12 @@ function Simulation() {
             <FormSimulationParameters
                 updateFormObject={updateFormObject}
                 formObject={formObject}
+                onSubmit={onSubmit}
             />
-            <button className="form-button" onClick={() => onSumbit(formObject)}>Submit</button>
+            <OverviewSimulations
+                simulationsBasicData={simulationsBasicData}
+            />
         </>
     )
 }
-
 export default Simulation
