@@ -6,7 +6,7 @@ import OverviewSimulations from "./components/OverviewSimulations.jsx";
 
 function Simulation() {
     const navigate = useNavigate();
-    const [simulationsBasicData, setSimulationsBasicData] = useState([]);
+    const [simulationsBasicData, setSimulationsBasicData] = useState(null);
 
     useEffect(() => {
         getAllSimulationsBasicData()
@@ -37,9 +37,9 @@ function Simulation() {
     function onSubmit(formObject) {
         postSimulationBasicData(formObject)
             .then(() => {
-                navigate("/simulation");
+                getAllSimulationsBasicData()
+                    .then(data => setSimulationsBasicData(data));
                 setFormObject(initFormObject());
-                console.log("parameters: ", formObject);
             })
             .catch(error => {
                 throw error;
@@ -56,6 +56,7 @@ function Simulation() {
             />
             <OverviewSimulations
                 simulationsBasicData={simulationsBasicData}
+                setSimulationsBasicData={setSimulationsBasicData}
             />
         </>
     )
