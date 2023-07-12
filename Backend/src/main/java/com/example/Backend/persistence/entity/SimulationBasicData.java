@@ -20,6 +20,7 @@ public class SimulationBasicData {
     private String simulationName;
     private String numberOfAnimals;
     private String numberOfInitialInfections;
+    private String virusInfectiousness;
     private String mortalityRate;
     private String isSimulationCompleted;
 }
