@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("simulation-basic-parameters")
+@RequestMapping("simulation-data")
 @CrossOrigin(origins = "*")
 public class SimulationDataEndpoint {
     private final SimulationDataService simulationDataService;
