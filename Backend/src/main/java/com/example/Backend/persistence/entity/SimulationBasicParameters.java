@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SimulationBasicData {
+public class SimulationBasicParameters {
     @Id
     @GeneratedValue
     private long id;
@@ -22,5 +22,5 @@ public class SimulationBasicData {
     private String numberOfInitialInfections;
     private String virusInfectiousness;
     private String mortalityRate;
-    private String isSimulationCompleted;
+    private boolean isSimulationCompleted;
 }

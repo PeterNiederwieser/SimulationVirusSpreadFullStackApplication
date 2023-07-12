@@ -1,7 +1,7 @@
 package com.example.Backend.api;
 
-import com.example.Backend.persistence.entity.SimulationBasicData;
-import com.example.Backend.service.SimulationBasicDataService;
+import com.example.Backend.persistence.entity.SimulationBasicParameters;
+import com.example.Backend.service.SimulationBasicParametersService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -17,32 +17,32 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Optional;
 
-@WebMvcTest(SimulationBasicDataEndpoint.class)
-class SimulationBasicDataEndpointTest {
+@WebMvcTest(SimulationBasicParametersEndpoint.class)
+class SimulationBasicParametersEndpointTest {
     @MockBean
-    SimulationBasicDataService simulationBasicDataService;
+    SimulationBasicParametersService simulationBasicParametersService;
     @Autowired
     MockMvc mockMvc;
-    String url = "/simulation-basic-data";
+    String url = "/simulation-basic-parameters";
 
     @Test
     void getAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(url))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(simulationBasicDataService).findAll();
+        Mockito.verify(simulationBasicParametersService).findAll();
     }
 
     @Test
     void getById() throws Exception {
         long id = 1;
         String extendedUrl = url + "/" + id;
-        SimulationBasicData simulationBasicData = SimulationBasicData.builder().build();
-        Mockito.when(simulationBasicDataService.findById(id)).thenReturn(Optional.of(simulationBasicData));
+        SimulationBasicParameters simulationBasicParameters = SimulationBasicParameters.builder().build();
+        Mockito.when(simulationBasicParametersService.findById(id)).thenReturn(Optional.of(simulationBasicParameters));
 
         mockMvc.perform(MockMvcRequestBuilders.get(extendedUrl))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(simulationBasicDataService).findById(id);
+        Mockito.verify(simulationBasicParametersService).findById(id);
     }
 
     @Test
@@ -53,13 +53,13 @@ class SimulationBasicDataEndpointTest {
         mockMvc.perform(MockMvcRequestBuilders.get(extendedUrl))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
 
-        Mockito.verify(simulationBasicDataService).findById(id);
+        Mockito.verify(simulationBasicParametersService).findById(id);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"POST", "PUT"})
     void saveAndUpdate(String httpMethodName) throws Exception {
-        SimulationBasicData simulationBasicData = SimulationBasicData.builder()
+        SimulationBasicParameters simulationBasicParameters = SimulationBasicParameters.builder()
                 .simulationName("testSimulationName")
                 .numberOfAnimals("testNumberOfAnimals")
                 .mortalityRate("testMortalityRate")
@@ -76,7 +76,7 @@ class SimulationBasicDataEndpointTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
 
-        Mockito.verify(simulationBasicDataService).save(simulationBasicData);
+        Mockito.verify(simulationBasicParametersService).save(simulationBasicParameters);
     }
 
     @Test
@@ -87,6 +87,6 @@ class SimulationBasicDataEndpointTest {
         mockMvc.perform(MockMvcRequestBuilders.delete(extendedUrl))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(simulationBasicDataService).deleteById(id);
+        Mockito.verify(simulationBasicParametersService).deleteById(id);
     }
 }
