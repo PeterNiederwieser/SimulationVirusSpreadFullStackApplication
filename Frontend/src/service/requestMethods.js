@@ -38,7 +38,7 @@ export async function updateSimulationBasicData(basicData) {
 
 export async function deleteSimulationBasicDataById(id) {
     try {
-        await axios.delete(URL_SIMULATION_BASIC_DATA + `${id}`);
+        await axios.delete(URL_SIMULATION_BASIC_DATA + `/` + `${id}`);
     } catch (error) {
         console.log("Error in deleteSimulationBasicDataById: ", error);
     }
