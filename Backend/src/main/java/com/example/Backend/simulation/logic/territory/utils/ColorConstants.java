@@ -13,4 +13,5 @@ public interface ColorConstants {
     Color COLOR_WATER = Color.decode("#054177");
     Color COLOR_ACCESSIBLE_TERRAIN = Color.decode("#97BC62");
     Color COLOR_INACCESSIBLE_TERRAIN = Color.decode("#2C5F2D");
+    Color COLOR_WATER_INPUT_IMAGE = Color.decode("#030574");
 }
