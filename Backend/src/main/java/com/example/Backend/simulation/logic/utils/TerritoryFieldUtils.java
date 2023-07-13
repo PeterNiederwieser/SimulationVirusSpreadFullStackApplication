@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class TerritoryFieldUtils {
     public boolean isAreaInaccessible(Position nextPosition, Context context) {
-        SurfaceType[][] map = context.getMap();
+        SurfaceType[][] map = context.getTerritory();
         for (int x = nextPosition.x(); x <= nextPosition.x() + context.getANIMAL_SIZE(); x++) {
             for (int y = nextPosition.y(); y <= nextPosition.y() + context.getANIMAL_SIZE(); y++) {
                 if (isFieldOutOfMap(new Position(x, y), context)) {
@@ -37,7 +37,7 @@ public class TerritoryFieldUtils {
     }
 
     public boolean isFieldOutOfMap(Position nextPosition, Context context) {
-        SurfaceType[][] map = context.getMap();
+        SurfaceType[][] map = context.getTerritory();
         return nextPosition.x() < 0 || nextPosition.y() < 0 || nextPosition.x() >= map.length || nextPosition.y() >= map[0].length;
     }
 
