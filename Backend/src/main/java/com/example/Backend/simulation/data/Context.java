@@ -21,9 +21,9 @@ public class Context {
     private final float MIN_ANIMAL_SPEED = 1F;
     private final int MAX_TRIALS_OF_DIRECTION_CHANGE_FOR_SINGLE_MOVE = 200;
     private final int DELAY_IN_MS = 40;
-    private final int MAP_GENERATION_SCALE_FACTOR = 1;
-    private final int MAP_WIDTH = 800;
-    private final int MAP_HEIGHT = 800;
+    private final int TERRITORY_GENERATION_SCALE_FACTOR = 1;
+    private final int TERRITORY_WIDTH = 800;
+    private final int TERRITORY_HEIGHT = 800;
     private final int WINDOW_HEIGHT_CORRECTION = 37;
     private final int FRAME_WIDTH = 1850;
     private final int FRAME_HEIGHT = 1200;
@@ -36,9 +36,9 @@ public class Context {
     private boolean isSimulationOngoing = false;
     private boolean isSimulationPaused = false;
     private boolean shouldSimulationRestart = false;
-    private final String filePathOfMapImage = "src/main/resources/MapImage_by_DALL·E .png";
+    private final String filePathOfTerritoryImage = "src/main/resources/MapImage_by_DALL·E .png";
     private List<Animal> population = new ArrayList<>();
-    private SurfaceType[][] map;
+    private SurfaceType[][] territory;
     private int numberOfAnimalDeathsInCurrentTimeInterval;
     private int numberOfNewInfectionsInCurrentTimeInterval;
     private int totalNumberOfInfectedAnimals;
