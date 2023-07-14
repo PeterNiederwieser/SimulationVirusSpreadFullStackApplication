@@ -24,26 +24,15 @@ public class Context {
     private final int TERRITORY_GENERATION_SCALE_FACTOR = 1;
     private final int TERRITORY_WIDTH = 800;
     private final int TERRITORY_HEIGHT = 800;
-    private final int WINDOW_HEIGHT_CORRECTION = 37;
-    private final int FRAME_WIDTH = 1850;
-    private final int FRAME_HEIGHT = 1200;
-    private List<Integer> infectionNumbersForCharts = new ArrayList<>();
-    private List<Integer> lethalInfectionNumbersForCharts = new ArrayList<>();
-    private List<Integer> uninfectedAnimalNumbersForCharts = new ArrayList<>();
-    private List<Integer> recoveredAnimalNumbersForCharts = new ArrayList<>();
-    private int totalNumberOfDeadAnimals = 0;
     private int stepNumber = 1;
-    private boolean isSimulationOngoing = false;
-    private boolean isSimulationPaused = false;
-    private boolean shouldSimulationRestart = false;
     private final String filePathOfTerritoryImage = "src/main/resources/MapImage_by_DALL·E .png";
     private List<Animal> population = new ArrayList<>();
     private SurfaceType[][] territory;
-    private int numberOfAnimalDeathsInCurrentTimeInterval;
-    private int numberOfNewInfectionsInCurrentTimeInterval;
-    private int totalNumberOfInfectedAnimals;
-    private int totalNumberOfHealthyAnimals;
-    private int totalNumberOfRecoveredAnimals;
-    private boolean isChartDataShown = false;
-    private String textForButtonPause = "Stop";
+
+    public Context(int NUMBER_OF_ANIMALS, int NUMBER_OF_INITIAL_INFECTIONS, float PROBABILITY_OF_INFECTION, float PROBABILITY_OF_FATAL_INFECTION_COURSE) {
+        this.NUMBER_OF_ANIMALS = NUMBER_OF_ANIMALS;
+        this.NUMBER_OF_INITIAL_INFECTIONS = NUMBER_OF_INITIAL_INFECTIONS;
+        this.PROBABILITY_OF_INFECTION = PROBABILITY_OF_INFECTION;
+        this.PROBABILITY_OF_FATAL_INFECTION_COURSE = PROBABILITY_OF_FATAL_INFECTION_COURSE;
+    }
 }
