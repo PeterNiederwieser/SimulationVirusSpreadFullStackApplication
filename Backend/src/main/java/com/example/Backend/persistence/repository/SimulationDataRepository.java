@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SimulationDataRepository extends JpaRepository<SimulationData, Long> {
-    List<SimulationData> findTopNByOrderByStepNumberDesc(int numberOfSteps);
+    List<SimulationData> findBySimulationIdAndStepNumberBetween(long simulationId, int stepNumberFloor, int stepNumberCeil);
 }
