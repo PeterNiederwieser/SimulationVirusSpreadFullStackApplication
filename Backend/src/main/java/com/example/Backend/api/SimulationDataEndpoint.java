@@ -4,6 +4,7 @@ import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.service.SimulationDataService;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -15,8 +16,8 @@ public class SimulationDataEndpoint {
     public SimulationDataEndpoint(SimulationDataService simulationDataService) {
         this.simulationDataService = simulationDataService;
     }
-    @GetMapping("{numberOfSteps}")
-    public List<SimulationData> getDataForNextSteps(@PathVariable int numberOfSteps) {
-        return simulationDataService.findNextSimulationSteps(numberOfSteps);
+    @GetMapping("{simulationId}/{stepNumberFloor}/{stepNumberCeil}")
+    public List<SimulationData> getDataForNextSteps(@PathVariable int simulationId, @PathVariable int stepNumberFloor, @PathVariable int stepNumberCeil) throws IOException {
+        return simulationDataService.getSimulationData(simulationId, stepNumberFloor, stepNumberCeil);
     }
 }
