@@ -1,12 +1,13 @@
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom"
 import FormSimulationParameters from "./components/FormSimulationParameters.jsx";
-import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
+import {getAllSimulationsBasicData, getSimulationData, postSimulationBasicData} from "../service/requestMethods.js";
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
 
 function Simulation() {
     const navigate = useNavigate();
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
+    const [simulationData, setSimulationData] = useState(null);
 
     useEffect(() => {
         getAllSimulationsBasicData()
@@ -46,6 +47,14 @@ function Simulation() {
             });
     }
 
+    function runSimulation(simulationId) {
+        getSimulationData(simulationId)
+            .then(data => setSimulationData(data))
+            .catch(error => {
+                throw error;
+            });
+    }
+    console.log("simulationData", simulationData);
     return (
         <>
             <div>Enter the key data for your simulation:</div>
@@ -55,10 +64,12 @@ function Simulation() {
                 onSubmit={onSubmit}
             />
             <OverviewSimulations
+                runSimulation={runSimulation}
                 simulationsBasicData={simulationsBasicData}
                 setSimulationsBasicData={setSimulationsBasicData}
             />
         </>
     )
 }
+
 export default Simulation
