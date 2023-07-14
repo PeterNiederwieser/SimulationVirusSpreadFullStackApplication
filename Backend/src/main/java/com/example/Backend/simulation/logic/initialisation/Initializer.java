@@ -28,11 +28,6 @@ public class Initializer {
         initializeStartingStateOfInfections(context);
     }
 
-    public void reInitializeSimulation(Context context) {
-        initializePopulation(context);
-        initializeStartingStateOfInfections(context);
-    }
-
     private void initializeStartingStateOfInfections(Context context) {
         List<Animal> population = context.getPopulation();
         int NUMBER_OF_INITIAL_INFECTIONS = context.getNUMBER_OF_INITIAL_INFECTIONS();
