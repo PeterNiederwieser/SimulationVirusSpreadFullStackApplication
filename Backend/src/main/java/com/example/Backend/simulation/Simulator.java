@@ -2,10 +2,11 @@ package com.example.Backend.simulation;
 
 import com.example.Backend.simulation.data.Context;
 import com.example.Backend.simulation.logic.simulationPhase.Phase;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-
+@Service
 public class Simulator {
     private final List<Phase> phases;
 
