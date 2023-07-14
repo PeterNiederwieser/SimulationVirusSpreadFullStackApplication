@@ -4,6 +4,7 @@ import com.example.Backend.persistence.entity.SimulationBasicParameters;
 import com.example.Backend.service.SimulationBasicParametersService;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,13 +29,13 @@ public class SimulationBasicParametersEndpoint {
     }
 
     @PostMapping
-    SimulationBasicParameters save(@RequestBody SimulationBasicParameters simulationBasicParameters) {
-        return simulationBasicParametersService.save(simulationBasicParameters);
+    SimulationBasicParameters create(@RequestBody SimulationBasicParameters simulationBasicParameters) throws IOException {
+        return simulationBasicParametersService.create(simulationBasicParameters);
     }
 
     @PutMapping
     SimulationBasicParameters update(@RequestBody SimulationBasicParameters simulationBasicParameters) {
-        return simulationBasicParametersService.save(simulationBasicParameters);
+        return simulationBasicParametersService.update(simulationBasicParameters);
     }
 
     @DeleteMapping("{id}")
