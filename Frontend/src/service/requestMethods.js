@@ -1,5 +1,5 @@
 import axios from "axios";
-import {URL_SIMULATION_BASIC_DATA} from "../data/constants_url.js";
+import {URL_SIMULATION_BASIC_DATA, URL_SIMULATION_DATA} from "../data/constants_url.js";
 
 
 export async function getAllSimulationsBasicData() {
@@ -44,4 +44,10 @@ export async function deleteSimulationBasicDataById(id) {
     }
 }
 
-
+export async function getSimulationData(simulationId) {
+    try {
+        await axios.get(URL_SIMULATION_DATA + `/` + `${simulationId}`);
+    } catch (error) {
+        console.log("Error in getSimulationData: ", error);
+    }
+}
