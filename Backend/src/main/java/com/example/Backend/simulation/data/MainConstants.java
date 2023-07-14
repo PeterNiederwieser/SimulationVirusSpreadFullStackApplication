@@ -15,5 +15,5 @@ public interface MainConstants {
     int TERRITORY_GENERATION_SCALE_FACTOR = 1;
     int TERRITORY_WIDTH = 800;
     int TERRITORY_HEIGHT = 800;
-    String filePathOfTerritoryImage = "src/main/resources/MapImage_by_DALL·E .png";
+    String filePathOfTerritoryImage = "Backend/src/main/resources/MapImage_by_DALL·E .png";
 }
