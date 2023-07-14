@@ -76,7 +76,7 @@ class SimulationBasicParametersEndpointTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
 
-        Mockito.verify(simulationBasicParametersService).save(simulationBasicParameters);
+        Mockito.verify(simulationBasicParametersService).create(simulationBasicParameters);
     }
 
     @Test
