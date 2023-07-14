@@ -2,10 +2,7 @@ package com.example.Backend.api;
 
 import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.service.SimulationDataService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +15,8 @@ public class SimulationDataEndpoint {
     public SimulationDataEndpoint(SimulationDataService simulationDataService) {
         this.simulationDataService = simulationDataService;
     }
-    @GetMapping
-    public List<SimulationData> get() {
-        return simulationDataService.findAll();
+    @GetMapping("{numberOfSteps}")
+    public List<SimulationData> getDataForNextSteps(@PathVariable int numberOfSteps) {
+        return simulationDataService.findNextSimulationSteps(numberOfSteps);
     }
 }
