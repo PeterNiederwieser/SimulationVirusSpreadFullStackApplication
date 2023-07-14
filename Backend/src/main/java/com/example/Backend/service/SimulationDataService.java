@@ -14,8 +14,8 @@ public class SimulationDataService {
         this.simulationDataRepository = simulationDataRepository;
     }
 
-    public List<SimulationData> findAll() {
-        return simulationDataRepository.findAll();
+    public List<SimulationData> findNextSimulationSteps(int numberOfSteps) {
+        return simulationDataRepository.findTopNByOrderByStepNumberDesc(numberOfSteps);
     }
     public SimulationData save(SimulationData simulationData) {
         return simulationDataRepository.save(simulationData);
