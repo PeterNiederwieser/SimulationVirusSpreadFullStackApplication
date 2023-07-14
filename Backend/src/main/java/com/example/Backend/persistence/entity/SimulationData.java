@@ -17,6 +17,7 @@ public class SimulationData {
     @Id
     @GeneratedValue
     private long id;
+    private long simulationId;
     private int stepNumber;
     private double xPosition;
     private double yPosition;
