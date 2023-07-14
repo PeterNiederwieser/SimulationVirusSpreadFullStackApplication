@@ -2,17 +2,25 @@ package com.example.Backend.service;
 
 import com.example.Backend.persistence.entity.SimulationBasicParameters;
 import com.example.Backend.persistence.repository.SimulationBasicParametersRepository;
+import com.example.Backend.simulation.data.Context;
+import com.example.Backend.simulation.logic.initialisation.Initializer;
+import com.example.Backend.simulation.logic.territory.TerritoryCreator;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class SimulationBasicParametersService {
     private final SimulationBasicParametersRepository simulationBasicParametersRepository;
+    private final SimulationContextStorage simulationContextStorage;
+    private final Initializer initializer;
 
-    public SimulationBasicParametersService(SimulationBasicParametersRepository simulationBasicParametersRepository) {
+    public SimulationBasicParametersService(SimulationBasicParametersRepository simulationBasicParametersRepository, SimulationContextStorage simulationContextStorage, Initializer initializer) {
         this.simulationBasicParametersRepository = simulationBasicParametersRepository;
+        this.simulationContextStorage = simulationContextStorage;
+        this.initializer = initializer;
     }
 
     public List<SimulationBasicParameters> findAll() {
@@ -23,7 +31,16 @@ public class SimulationBasicParametersService {
         return simulationBasicParametersRepository.findById(id);
     }
 
-    public SimulationBasicParameters save(SimulationBasicParameters simulationBasicParameters) {
+    public SimulationBasicParameters create(SimulationBasicParameters simulationBasicParameters) throws IOException {
+        SimulationBasicParameters persisted = simulationBasicParametersRepository.save(simulationBasicParameters);
+        long id = persisted.getId();
+        Context context = new Context(Integer.parseInt(persisted.getNumberOfAnimals()), Integer.parseInt(persisted.getNumberOfInitialInfections()), Float.parseFloat(persisted.getVirusInfectiousness()), Float.parseFloat(persisted.getMortalityRate()));
+        initializer.initializeSimulation(context);
+        simulationContextStorage.addContext(id, context);
+        return persisted;
+    }
+
+    public SimulationBasicParameters update(SimulationBasicParameters simulationBasicParameters) {
         return simulationBasicParametersRepository.save(simulationBasicParameters);
     }
 
