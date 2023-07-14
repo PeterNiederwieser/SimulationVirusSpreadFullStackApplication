@@ -14,6 +14,8 @@ public class ColorHandler {
             case WATER -> generateRandomColorInRange(ColorConstants.COLOR_WATER, ColorConstants.COLOR_VALUE_RANGE);
             case ACCESSIBLE_TERRAIN ->
                     generateRandomColorInRange(ColorConstants.COLOR_ACCESSIBLE_TERRAIN, ColorConstants.COLOR_VALUE_RANGE);
+            case INACCESSIBLE_TERRAIN ->
+                    generateRandomColorInRange(ColorConstants.COLOR_INACCESSIBLE_TERRAIN, ColorConstants.COLOR_VALUE_RANGE);
         };
     }
 
