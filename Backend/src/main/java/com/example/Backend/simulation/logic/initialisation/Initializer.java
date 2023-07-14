@@ -24,12 +24,12 @@ public class Initializer {
     public void initializeSimulation(Context context) throws IOException {
         territoryCreator.generateTerritoryFromImage(context);
         territoryPrinter.printTerritory(context);
-        setInitializedPopulation(context);
+        initializePopulation(context);
         initializeStartingStateOfInfections(context);
     }
 
     public void reInitializeSimulation(Context context) {
-        setInitializedPopulation(context);
+        initializePopulation(context);
         initializeStartingStateOfInfections(context);
     }
 
@@ -41,7 +41,7 @@ public class Initializer {
         }
     }
 
-    private void setInitializedPopulation(Context context) {
+    private void initializePopulation(Context context) {
         int NUMBER_OF_ANIMALS = context.getNUMBER_OF_ANIMALS();
         List<Animal> population = context.getPopulation();
         for (int i = 0; i < NUMBER_OF_ANIMALS; i++) {
