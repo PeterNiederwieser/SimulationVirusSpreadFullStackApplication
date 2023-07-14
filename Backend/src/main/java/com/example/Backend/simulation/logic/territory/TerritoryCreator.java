@@ -15,8 +15,7 @@ import java.io.IOException;
 @Service
 public class TerritoryCreator {
     public void generateTerritoryFromImage(Context context) throws IOException {
-        String filePathOfImage = MainConstants.filePathOfTerritoryImage;
-        BufferedImage image = ImageIO.read(new File(filePathOfImage));
+        BufferedImage image = ImageIO.read(new File(MainConstants.filePathOfTerritoryImage));
         SurfaceType[][] map = new SurfaceType[MainConstants.TERRITORY_HEIGHT][MainConstants.TERRITORY_WIDTH];
         for (int x = 0; x < MainConstants.TERRITORY_HEIGHT; x++) {
             for (int y = 0; y < MainConstants.TERRITORY_WIDTH; y++) {
