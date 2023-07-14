@@ -34,7 +34,7 @@ public class SimulationBasicParametersService {
     public SimulationBasicParameters create(SimulationBasicParameters simulationBasicParameters) throws IOException {
         SimulationBasicParameters persisted = simulationBasicParametersRepository.save(simulationBasicParameters);
         long id = persisted.getId();
-        Context context = new Context(Integer.parseInt(persisted.getNumberOfAnimals()), Integer.parseInt(persisted.getNumberOfInitialInfections()), Float.parseFloat(persisted.getVirusInfectiousness()), Float.parseFloat(persisted.getMortalityRate()));
+        Context context = new Context(id, Integer.parseInt(persisted.getNumberOfAnimals()), Integer.parseInt(persisted.getNumberOfInitialInfections()), Float.parseFloat(persisted.getVirusInfectiousness()), Float.parseFloat(persisted.getMortalityRate()));
         initializer.initializeSimulation(context);
         simulationContextStorage.addContext(id, context);
         return persisted;
