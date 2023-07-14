@@ -2,6 +2,7 @@ package com.example.Backend.simulation.logic.simulationPhase;
 
 import com.example.Backend.simulation.data.Animal;
 import com.example.Backend.simulation.data.Context;
+import com.example.Backend.simulation.data.MainConstants;
 import com.example.Backend.simulation.logic.simulationPhase.utils.PhaseUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,11 @@ public class Dying implements Phase {
             if (isAnimalDying(animal, context)) {
                 List<Animal> population = context.getPopulation();
                 population.remove(animal);
-                context.setTotalNumberOfDeadAnimals(context.getTotalNumberOfDeadAnimals() + 1);
-                context.setNumberOfAnimalDeathsInCurrentTimeInterval(context.getNumberOfAnimalDeathsInCurrentTimeInterval() + 1);
             }
         });
     }
 
     private boolean isAnimalDying(Animal animal, Context context) {
-        return ((context.getStepNumber() - animal.getStartOfSevereIllness()) >= context.getDURATION_OF_SEVERE_ILLNESS());
+        return ((context.getStepNumber() - animal.getStartOfSevereIllness()) >= MainConstants.DURATION_OF_SEVERE_ILLNESS);
     }
 }

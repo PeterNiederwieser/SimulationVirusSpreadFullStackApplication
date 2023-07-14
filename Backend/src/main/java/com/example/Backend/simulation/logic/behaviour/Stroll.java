@@ -1,9 +1,6 @@
 package com.example.Backend.simulation.logic.behaviour;
 
-import com.example.Backend.simulation.data.Animal;
-import com.example.Backend.simulation.data.BehaviourType;
-import com.example.Backend.simulation.data.Context;
-import com.example.Backend.simulation.data.Position;
+import com.example.Backend.simulation.data.*;
 import com.example.Backend.simulation.logic.utils.TerritoryFieldUtils;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +19,7 @@ public class Stroll implements Behaviour {
     }
 
     private void performNextStep(Animal animal, Context context) {
-        int MAX_TRIALS_OF_DIRECTION_CHANGE = context.getMAX_TRIALS_OF_DIRECTION_CHANGE_FOR_SINGLE_MOVE();
+        int MAX_TRIALS_OF_DIRECTION_CHANGE = MainConstants.MAX_TRIALS_OF_DIRECTION_CHANGE_FOR_SINGLE_MOVE;
         int numberOfTrials = 0;
         int nextX, nextY;
         do {
@@ -41,7 +38,7 @@ public class Stroll implements Behaviour {
 
     private void setNewRandomVelocity(Animal animal, Context context) {
         float maxAnimalSpeed = animal.getMax_speed();
-        float speed = (float) Math.random() * (maxAnimalSpeed - context.getMIN_ANIMAL_SPEED()) + context.getMIN_ANIMAL_SPEED();
+        float speed = (float) Math.random() * (maxAnimalSpeed - MainConstants.MIN_ANIMAL_SPEED) + MainConstants.MIN_ANIMAL_SPEED;
         float nextVelocityX = (float) (Math.random() * speed * 2) - speed;
         int randomSign = Math.random() < 0.5 ? 1 : -1;
         float nextVelocityY = (float) Math.sqrt(Math.pow(speed, 2) - Math.pow(nextVelocityX, 2)) * randomSign;

@@ -1,9 +1,6 @@
 package com.example.Backend.simulation.logic.simulationPhase;
 
-import com.example.Backend.simulation.data.Animal;
-import com.example.Backend.simulation.data.BehaviourType;
-import com.example.Backend.simulation.data.Context;
-import com.example.Backend.simulation.data.HealthState;
+import com.example.Backend.simulation.data.*;
 import com.example.Backend.simulation.logic.simulationPhase.utils.PhaseUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -32,7 +29,7 @@ public class SevereIllness implements Phase {
     private static void changeStatesForSevereIllness(Context context, Animal animal) {
         animal.setHealthState(HealthState.SEVERELY_ILL);
         animal.setStartOfSevereIllness(context.getStepNumber());
-        animal.setMax_speed(context.getMAX_SEVERELY_ILL_ANIMAL_SPEED());
+        animal.setMax_speed(MainConstants.MAX_SEVERELY_ILL_ANIMAL_SPEED);
         animal.setBehaviourType(BehaviourType.REST);
     }
 

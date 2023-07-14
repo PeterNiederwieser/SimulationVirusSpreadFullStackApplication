@@ -3,6 +3,7 @@ package com.example.Backend.simulation.logic.simulationPhase;
 import com.example.Backend.simulation.data.Animal;
 import com.example.Backend.simulation.data.Context;
 import com.example.Backend.simulation.data.HealthState;
+Refimport com.example.Backend.simulation.data.MainConstants;
 import com.example.Backend.simulation.logic.simulationPhase.utils.PhaseUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class VirusSpread implements Phase {
             population.stream()
                     .filter(animal -> animal.getX() != infectedAnimal.getX() && animal.getY() != infectedAnimal.getY())
                     .forEach(otherAnimal -> {
-                        if (isOtherAnimalWithinInfectionRadius(otherAnimal, infectedAnimal, context) && otherAnimal.getHealthState().equals(HealthState.HEALTHY)) {
+                        if (isOtherAnimalWithinInfectionRadius(otherAnimal, infectedAnimal) && otherAnimal.getHealthState().equals(HealthState.HEALTHY)) {
                             changeStatesInCaseOfInfection(otherAnimal, context);
                         }
                     });
@@ -37,14 +38,13 @@ public class VirusSpread implements Phase {
         float PROBABILITY_OF_INFECTION = context.getPROBABILITY_OF_INFECTION();
         if (Math.random() <= PROBABILITY_OF_INFECTION) {
             animal.setHealthState(HealthState.INFECTED);
-            context.setNumberOfNewInfectionsInCurrentTimeInterval(context.getNumberOfNewInfectionsInCurrentTimeInterval() + 1);
             animal.setMomentOfInfection(context.getStepNumber());
-            animal.setMax_speed(context.getMAX_INFECTED_ANIMAL_SPEED());
+            animal.setMax_speed(MainConstants.MAX_INFECTED_ANIMAL_SPEED);
         }
     }
 
-    private boolean isOtherAnimalWithinInfectionRadius(Animal otherAnimal, Animal infectedAnimal, Context context) {
-        int INFECTION_RADIUS = context.getINFECTION_RADIUS();
+    private boolean isOtherAnimalWithinInfectionRadius(Animal otherAnimal, Animal infectedAnimal) {
+        int INFECTION_RADIUS = MainConstants.INFECTION_RADIUS;
         return (getDistanceBetweenAnimals(otherAnimal, infectedAnimal) <= (double) INFECTION_RADIUS);
     }
 

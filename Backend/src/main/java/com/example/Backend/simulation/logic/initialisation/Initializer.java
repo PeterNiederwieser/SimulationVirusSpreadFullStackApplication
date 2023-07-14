@@ -46,15 +46,15 @@ public class Initializer {
         List<Animal> population = context.getPopulation();
         for (int i = 0; i < NUMBER_OF_ANIMALS; i++) {
             Position position = getRandomInitialPosition(context);
-            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(Math.random() * context.getTIME_OF_RECOVERY()), context.getMIN_TIME_FOR_SEVERE_ILLNESS_AFTER_INFECTION());
+            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(Math.random() * MainConstants.TIME_OF_RECOVERY), MainConstants.MIN_TIME_FOR_SEVERE_ILLNESS_AFTER_INFECTION);
             boolean isGettingSeverelyIll = Math.random() <= context.getPROBABILITY_OF_FATAL_INFECTION_COURSE();
-            population.add(new Animal(position.x(), position.y(), context.getMAX_ANIMAL_SPEED(), HealthState.HEALTHY, BehaviourType.STROLL, timeOfPossibleSevereIllnessAfterInfection, isGettingSeverelyIll));
+            population.add(new Animal(position.x(), position.y(), MainConstants.MAX_ANIMAL_SPEED, HealthState.HEALTHY, BehaviourType.STROLL, timeOfPossibleSevereIllnessAfterInfection, isGettingSeverelyIll));
         }
     }
 
     private Position getRandomInitialPosition(Context context) {
-        int MAP_HEIGHT = context.getTERRITORY_HEIGHT();
-        int MAP_WIDTH = context.getTERRITORY_WIDTH();
+        int MAP_HEIGHT = MainConstants.TERRITORY_HEIGHT;
+        int MAP_WIDTH = MainConstants.TERRITORY_WIDTH;
         int x, y;
         do {
             x = (int) Math.round(Math.random() * MAP_HEIGHT);

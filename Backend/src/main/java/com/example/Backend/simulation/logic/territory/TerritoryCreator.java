@@ -1,6 +1,7 @@
 package com.example.Backend.simulation.logic.territory;
 
 import com.example.Backend.simulation.data.Context;
+import com.example.Backend.simulation.data.MainConstants;
 import com.example.Backend.simulation.data.SurfaceType;
 import com.example.Backend.simulation.logic.territory.utils.ColorConstants;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,11 @@ import java.io.IOException;
 @Service
 public class TerritoryCreator {
     public void generateTerritoryFromImage(Context context) throws IOException {
-        String filePathOfImage = context.getFilePathOfTerritoryImage();
+        String filePathOfImage = MainConstants.filePathOfTerritoryImage;
         BufferedImage image = ImageIO.read(new File(filePathOfImage));
-        SurfaceType[][] map = new SurfaceType[context.getTERRITORY_HEIGHT()][context.getTERRITORY_WIDTH()];
-        for (int x = 0; x < context.getTERRITORY_HEIGHT(); x++) {
-            for (int y = 0; y < context.getTERRITORY_WIDTH(); y++) {
+        SurfaceType[][] map = new SurfaceType[MainConstants.TERRITORY_HEIGHT][MainConstants.TERRITORY_WIDTH];
+        for (int x = 0; x < MainConstants.TERRITORY_HEIGHT; x++) {
+            for (int y = 0; y < MainConstants.TERRITORY_WIDTH; y++) {
                 Color pixelColor = new Color(image.getRGB(x, y));
                 SurfaceType surfaceType = getSurfaceTypeFromColor(pixelColor);
                 map[x][y] = surfaceType;

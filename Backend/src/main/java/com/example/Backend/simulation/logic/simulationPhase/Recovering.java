@@ -3,6 +3,7 @@ package com.example.Backend.simulation.logic.simulationPhase;
 import com.example.Backend.simulation.data.Animal;
 import com.example.Backend.simulation.data.Context;
 import com.example.Backend.simulation.data.HealthState;
+import com.example.Backend.simulation.data.MainConstants;
 import com.example.Backend.simulation.logic.simulationPhase.utils.PhaseUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,6 @@ public class Recovering implements Phase {
     private boolean isAnimalRecovered(Animal animal, Context context) {
         int currentStepNumber = context.getStepNumber();
         int timeSinceInfection = currentStepNumber - animal.getMomentOfInfection();
-        return (timeSinceInfection >= context.getTIME_OF_RECOVERY());
+        return (timeSinceInfection >= MainConstants.TIME_OF_RECOVERY);
     }
 }
