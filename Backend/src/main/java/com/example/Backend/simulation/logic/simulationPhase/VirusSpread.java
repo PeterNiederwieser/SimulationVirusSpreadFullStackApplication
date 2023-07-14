@@ -3,7 +3,7 @@ package com.example.Backend.simulation.logic.simulationPhase;
 import com.example.Backend.simulation.data.Animal;
 import com.example.Backend.simulation.data.Context;
 import com.example.Backend.simulation.data.HealthState;
-Refimport com.example.Backend.simulation.data.MainConstants;
+import com.example.Backend.simulation.data.MainConstants;
 import com.example.Backend.simulation.logic.simulationPhase.utils.PhaseUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class VirusSpread implements Phase {
         if (Math.random() <= PROBABILITY_OF_INFECTION) {
             animal.setHealthState(HealthState.INFECTED);
             animal.setMomentOfInfection(context.getStepNumber());
-            animal.setMax_speed(MainConstants.MAX_INFECTED_ANIMAL_SPEED);
+            animal.setMax_speed(MainConstants.MAX_ANIMAL_SPEED);
         }
     }
 
