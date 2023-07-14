@@ -1,6 +1,6 @@
 import OverviewItem from "./OverviewItem.jsx";
 
-function OverviewSimulations({simulationsBasicData, setSimulationsBasicData}) {
+function OverviewSimulations({runSimulation, simulationsBasicData, setSimulationsBasicData}) {
     if(simulationsBasicData == null) {
         return;
     }
@@ -8,7 +8,7 @@ function OverviewSimulations({simulationsBasicData, setSimulationsBasicData}) {
         <div className="overview-simulations">
             OverviewSimulations:
             {simulationsBasicData.map(item => (
-                <OverviewItem key={item.id} item={item} setSimulationsBasicData={setSimulationsBasicData}/>
+                <OverviewItem key={item.id} item={item} runSimulation={runSimulation} setSimulationsBasicData={setSimulationsBasicData}/>
             ))
             }
         </div>
