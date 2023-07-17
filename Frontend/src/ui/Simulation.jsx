@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom"
 import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
@@ -6,7 +6,7 @@ import {getSimulationData, setupWebSocket} from "../service/WebSocketFunctions.j
 import MainSection from "./components/MainSection.jsx";
 
 function Simulation() {
-    let receivedSimulationData = {};
+    const receivedSimulationData = useRef([]);
 
     const navigate = useNavigate();
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
