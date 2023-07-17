@@ -5,7 +5,6 @@ import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/re
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
 import {getSimulationData, setupWebSocket} from "../service/WebSocketFunctions.js";
 import MainSection from "./components/MainSection.jsx";
-import "./Simulation.css";
 
 function Simulation() {
     let receivedSimulationData = {};
