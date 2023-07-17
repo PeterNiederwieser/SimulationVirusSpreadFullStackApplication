@@ -34,16 +34,16 @@ public class SimulationDataWebSocketEndpoint {
         long simulationId = request.simulationId();
         Context context = simulationManager.getSimulationContext(simulationId);
         List<SimulationData> requestedSimulationData;
-        startSimulationIfNotStartedYet(simulationId, context);
+        startSimulationIfNotStartedYet(context);
         requestedSimulationData = getRequestedSimulationData(request, context);
         System.out.println("requestedSimulationData.size() = " + requestedSimulationData.size());
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(requestedSimulationData);
     }
 
-    private void startSimulationIfNotStartedYet(long simulationId, Context context) throws IOException {
+    private void startSimulationIfNotStartedYet(Context context) {
         if (!context.isSimulationsStartBeenTriggered()) {
-            simulationManager.runSimulation(simulationId, context);
+            simulationManager.runSimulation(context);
             context.setSimulationsStartBeenTriggered(true);
         }
     }
