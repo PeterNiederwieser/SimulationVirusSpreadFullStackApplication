@@ -1,4 +1,5 @@
 import FormSimulationParameters from "./FormSimulationParameters.jsx";
+import SimulationSection from "./SimulationSection.jsx";
 
 function MainSection({updateFormObject, formObject, onSubmit}) {
     return (
@@ -8,6 +9,7 @@ function MainSection({updateFormObject, formObject, onSubmit}) {
                 formObject={formObject}
                 onSubmit={onSubmit}
             />
+            <SimulationSection />
         </div>
     )
 }
