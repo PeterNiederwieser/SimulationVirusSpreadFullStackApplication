@@ -1,6 +1,5 @@
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom"
-import FormSimulationParameters from "./components/FormSimulationParameters.jsx";
 import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
 import {getSimulationData, setupWebSocket} from "../service/WebSocketFunctions.js";
