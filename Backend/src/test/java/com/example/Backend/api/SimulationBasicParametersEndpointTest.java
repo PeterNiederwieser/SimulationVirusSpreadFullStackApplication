@@ -62,12 +62,10 @@ class SimulationBasicParametersEndpointTest {
         SimulationBasicParameters simulationBasicParameters = SimulationBasicParameters.builder()
                 .simulationName("testSimulationName")
                 .numberOfAnimals("testNumberOfAnimals")
-                .mortalityRate("testMortalityRate")
                 .build();
         String body = """
                     {"simulationName": "testSimulationName",
-                    "numberOfAnimals": "testNumberOfAnimals",
-                    "mortalityRate": "testMortalityRate"}
+                    "numberOfAnimals": "testNumberOfAnimals"
                 """;
 
         mockMvc.perform(MockMvcRequestBuilders.request(HttpMethod.valueOf(httpMethodName), url)
