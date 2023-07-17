@@ -1,13 +1,13 @@
-function FormInput({updateFormObject, value, name, placeholder}) {
+function FormInput({updateFormObject, value, name, label, classNameLabel, classNameInput}) {
     return (
-        <div className="form-item">
+        <div className="form-input">
+            <div className={classNameLabel}>{label}</div>
             <input
-                className="form-input"
+                className={classNameInput}
                 type="text"
                 value={value}
                 name={name}
                 onChange={event => updateFormObject(event.target.name, event.target.value)}
-                placeholder={placeholder}
             />
         </div>
     )
