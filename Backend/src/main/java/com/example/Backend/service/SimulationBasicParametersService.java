@@ -4,7 +4,6 @@ import com.example.Backend.persistence.entity.SimulationBasicParameters;
 import com.example.Backend.persistence.repository.SimulationBasicParametersRepository;
 import com.example.Backend.simulation.data.Context;
 import com.example.Backend.simulation.logic.initialisation.Initializer;
-import com.example.Backend.simulation.logic.territory.TerritoryCreator;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
