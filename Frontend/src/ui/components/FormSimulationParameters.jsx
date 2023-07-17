@@ -7,31 +7,25 @@ function FormSimulationParameters({updateFormObject, formObject, onSubmit}) {
                 updateFormObject={updateFormObject}
                 value={formObject.simulationName}
                 name="simulationName"
-                placeholder="Simulation Name"
+                label="Simulation Name: "
+                classNameLabel="label-long"
+                classNameInput="input-long"
             />
             <FormInput
                 updateFormObject={updateFormObject}
                 value={formObject.numberOfAnimals}
                 name="numberOfAnimals"
-                placeholder="Number of Animals (100 to 1000)"
+                label="Number of Animals (range 100 to 1000): "
+                classNameLabel="label-long"
+                classNameInput="input-long"
             />
             <FormInput
                 updateFormObject={updateFormObject}
                 value={formObject.numberOfInitialInfections}
                 name="numberOfInitialInfections"
-                placeholder="Number of initial infections"
-            />
-            <FormInput
-                updateFormObject={updateFormObject}
-                value={formObject.virusInfectiousness}
-                name="virusInfectiousness"
-                placeholder="Virus infectiousness (0 to 100)"
-            />
-            <FormInput
-                updateFormObject={updateFormObject}
-                value={formObject.mortalityRate}
-                name="mortalityRate"
-                placeholder="Mortality rate (0 to 100)"
+                label="Number of initial infections: "
+                classNameLabel="label-long"
+                classNameInput="input-long"
             />
             <button className="form-button" onClick={() => onSubmit(formObject)}>Submit</button>
         </div>

@@ -20,7 +20,5 @@ public class SimulationBasicParameters {
     private String simulationName;
     private String numberOfAnimals;
     private String numberOfInitialInfections;
-    private String virusInfectiousness;
-    private String mortalityRate;
     private boolean isSimulationCompleted;
 }

@@ -4,6 +4,8 @@ import FormSimulationParameters from "./components/FormSimulationParameters.jsx"
 import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
 import {getSimulationData, setupWebSocket} from "../service/WebSocketFunctions.js";
+import MainSection from "./components/MainSection.jsx";
+import "./Simulation.css";
 
 function Simulation() {
     let receivedSimulationData = {};
@@ -21,8 +23,6 @@ function Simulation() {
             simulationName: "",
             numberOfAnimals: "",
             numberOfInitialInfections: "",
-            virusInfectiousness: "",
-            mortalityRate: ""
         }
     }
 
@@ -55,19 +55,19 @@ function Simulation() {
     }
 
     return (
-        <>
-            <div>Enter the key data for your simulation:</div>
-            <FormSimulationParameters
-                updateFormObject={updateFormObject}
-                formObject={formObject}
-                onSubmit={onSubmit}
-            />
+        <div className="simulation">
             <OverviewSimulations
                 runSimulation={runSimulation}
                 simulationsBasicData={simulationsBasicData}
                 setSimulationsBasicData={setSimulationsBasicData}
             />
-        </>
+            <MainSection
+                updateFormObject={updateFormObject}
+                formObject={formObject}
+                onSubmit={onSubmit}
+            />
+
+        </div>
     )
 }
 
