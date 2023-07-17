@@ -1,103 +1,125 @@
 body {
-  margin: 0 auto;
-  padding: 0rem;
-  text-align: center;
-  background-color: darkseagreen;
+    margin: 0 auto;
+    padding: 0rem;
+    text-align: center;
+    background-color: darkseagreen;
 }
+
 .simulation {
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    flex-grow: 1;
 }
 
 .overview-simulations {
-  width: 20%;
-  height: 100vh;
-  background-color: #747bff;
-  overflow-y: scroll;
-  padding: 20px;
-  padding-top: 40px;
+    width: 20%;
+    height: 100vh;
+    background-color: #747bff;
+    overflow-y: scroll;
+    padding: 20px;
+    padding-top: 40px;
 }
 
 .main-section {
-  width: 80%;
-  display: flex;
-  flex-direction: row;
-  background-color: aquamarine;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    background-color: aquamarine;
 }
 
 .overview-item {
-  margin-top: 40px;
-  padding: 20px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
 }
 
 .overview-item-name {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .overview-item-details {
-  margin-top: 10px;
-  font-size: 12px;
+    margin-top: 10px;
+    font-size: 12px;
 }
 
 .overview-item-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .overview-item-details-buttons {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 button {
-  margin: 2px;
-  width: 70px;
+    margin: 2px;
+    width: 70px;
 }
 
 .form {
-  padding: 40px;
-  width: 100%;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
+    padding-top: 40px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
 }
+
 .form-button {
-  align-items: center;
-  justify-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-input {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .label-long {
-  width: 400px;
-  text-align: left;
+    width: 400px;
+    text-align: left;
 }
 
 .label-short {
-  width: 150px;
-  text-align: left;
+    width: 150px;
+    text-align: left;
 }
 
 .input-long {
-  width: 150px;
+    width: 150px;
 }
+
 .input-short {
-  width: 40px;
+    width: 40px;
 }
+
+.simulation-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+}
+
+.canvas {
+    flex: 2;
+}
+
+.diagrams {
+    flex: 1;
+}
+
+
