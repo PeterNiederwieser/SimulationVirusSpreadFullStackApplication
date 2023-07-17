@@ -11,15 +11,12 @@ import java.util.List;
 @Service
 public class SimulationDataService {
     private final SimulationDataRepository simulationDataRepository;
-    private final SimulationManager simulationManager;
 
-    public SimulationDataService(SimulationDataRepository simulationDataRepository, SimulationManager simulationManager) {
+    public SimulationDataService(SimulationDataRepository simulationDataRepository) {
         this.simulationDataRepository = simulationDataRepository;
-        this.simulationManager = simulationManager;
     }
 
     public List<SimulationData> getSimulationData(long simulationId, int stepNumberLowerBorder, int stepNumberUpperBorder) throws IOException {
-        simulationManager.runDemandedSimulationSteps(simulationId,500);
         return simulationDataRepository.findBySimulationIdAndStepNumberBetween(simulationId, stepNumberLowerBorder, stepNumberUpperBorder);
     }
 }
