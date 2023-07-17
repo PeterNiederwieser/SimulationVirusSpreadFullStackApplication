@@ -29,7 +29,8 @@ public class DataStorage implements Phase {
                     .yPosition(animal.getY())
                     .healthState(animal.getHealthState().toString())
                     .build();
-            simulationDataRepository.save(simulationData);
+            context.getSimulationDataStorage().add(simulationData);
+            // simulationDataRepository.save(simulationData);
         });
     }
 }
