@@ -1,5 +1,6 @@
 package com.example.Backend.api;
 
+import com.example.Backend.api.webSocketConfiguration.data.RequestBodySimData;
 import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.service.SimulationDataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +16,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
+@Controller
 public class SimulationDataWebSocketEndpoint {
     private final SimulationDataService simulationDataService;
 
@@ -23,24 +24,19 @@ public class SimulationDataWebSocketEndpoint {
         this.simulationDataService = simulationDataService;
     }
 
-    @MessageMapping("/websocket-endpoint")
-    public void getDataForNextSteps(@Payload String message, Session session) throws IOException {
-        String[] values = message.split(",");
-        long simulationId = Long.parseLong(values[0]);
-        int stepNumberFloor = Integer.parseInt(values[1]);
-        int stepNumberCeil = Integer.parseInt(values[2]);
-        List<SimulationData> simulationData = simulationDataService.getSimulationData(simulationId, stepNumberFloor, stepNumberCeil);
+    @MessageMapping("/request")
+    @SendTo("/topic/data")
+    public String getDataForNextSteps(RequestBodySimData request) throws IOException {
+        System.out.println("message simulationId: " + request.simulationId());
+        System.out.println("stepNumberCeil = " + request.stepNumberCeil());
+        System.out.println("stepNumberFloor = " + request.stepNumberFloor());
+        System.out.println("simulationId = " + request.simulationId());
+        List<SimulationData> simulationData = simulationDataService.getSimulationData(request.simulationId(), request.stepNumberFloor(), request.stepNumberCeil());
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonData;
-        try {
-            jsonData = objectMapper.writeValueAsString(simulationData);
-        } catch (Exception error) {
-            System.out.println("Error in WebSocket parsing to Json: " + error);
-        }
-        try {
-            session.getBasicRemote().sendText(jsonData);
-        } catch (Exception error) {
-            System.out.println("Error in WebSocket sending data to client: " + error);
-        }
+        String jsonData = objectMapper.writeValueAsString(simulationData);
+        // System.out.println("jsonData: " + jsonData);
+        //session.getBasicRemote().sendText(jsonData);
+        System.out.println("jsonData: " + jsonData);
+        return jsonData;
     }
 }
