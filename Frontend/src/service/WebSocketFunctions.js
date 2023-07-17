@@ -10,7 +10,12 @@ export function setupWebSocket(receivedSimulationData) {
         console.log("WebSocket Connection established Simulation: ");
         stompClient.subscribe("/topic/data", (data) => {
             console.log("response: ", JSON.parse(data.body));
-            receivedSimulationData = {...receivedSimulationData, ...data};
+            const dataArray = JSON.parse(data.body);
+            dataArray.forEach(item => {
+                receivedSimulationData.current = [...receivedSimulationData.current, item];
+            })
+            console.log("receivedSimulationData: ", receivedSimulationData.current);
+            console.log("number of elements in receivedSimulationData: ", receivedSimulationData.length);
         });
     };
 
@@ -38,6 +43,5 @@ export function getSimulationData(simulationId, receivedSimulationData, stompCli
         })
         stepNumberFloor += NUMBER_OF_SIM_DATA_PER_REQUEST;
         stepNumberCeil += NUMBER_OF_SIM_DATA_PER_REQUEST;
-        console.log(receivedSimulationData);
-    }, 2000);
+    }, 4000);
 }
