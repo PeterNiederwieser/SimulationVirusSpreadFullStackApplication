@@ -42,7 +42,7 @@ public class Initializer {
         for (int i = 0; i < NUMBER_OF_ANIMALS; i++) {
             Position position = getRandomInitialPosition(context);
             int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(Math.random() * MainConstants.TIME_OF_RECOVERY), MainConstants.MIN_TIME_FOR_SEVERE_ILLNESS_AFTER_INFECTION);
-            boolean isGettingSeverelyIll = Math.random() <= context.getPROBABILITY_OF_FATAL_INFECTION_COURSE();
+            boolean isGettingSeverelyIll = Math.random() <= MainConstants.PROBABILITY_OF_FATAL_INFECTION_COURSE;
             population.add(new Animal(position.x(), position.y(), MainConstants.MAX_ANIMAL_SPEED, HealthState.HEALTHY, BehaviourType.STROLL, timeOfPossibleSevereIllnessAfterInfection, isGettingSeverelyIll));
         }
     }
