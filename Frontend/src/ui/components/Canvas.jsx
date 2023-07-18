@@ -1,16 +1,25 @@
 import {useEffect, useRef, useState} from "react";
 import {
     ANIMAL_RADIUS,
-    HEIGHT_CANVAS,
+    HEIGHT_CANVAS, LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST,
     TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
     WIDTH_CANVAS
 } from "../../data/constants.js";
+import {getSimulationData} from "../../service/WebSocketFunctions.js";
 
-function Canvas({receivedSimulationData}) {
+function Canvas({
+                    receivedSimulationData,
+                    isSimulationRunning,
+                    setIsSimulationRunning,
+                    stompClient,
+                    selectedSimulationId
+                }) {
     const canvasRef = useRef(null);
     const stepNumberRef = useRef(0);
     const [buttonText, setButtonText] = useState("Stop");
-    const [isSimulationOngoing, setIsSimulationOngoing] = useState(true);
+
+
+    // useRef for upperStepBorder and lowerStepBorder!!
 
     function drawBackground(context) {
         const image = new Image();
@@ -31,10 +40,10 @@ function Canvas({receivedSimulationData}) {
         do {
             const singleAnimalData = simulationData.current.shift();
             dataStepNumber = singleAnimalData.stepNumber;
-            if(dataStepNumber === stepNumber) {
+            if (dataStepNumber === stepNumber) {
                 displayAnimal(context, singleAnimalData);
             }
-        } while(dataStepNumber === stepNumber);
+        } while (dataStepNumber === stepNumber);
         console.log("simulationData.current.length: ", simulationData.current.length);
     }
 
@@ -51,40 +60,49 @@ function Canvas({receivedSimulationData}) {
         }
     }
 
+    function manageDataSupply(receivedSimulationData) {
+        if (receivedSimulationData.current.length() <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST) {
+            console.log("fetch data in manageDataSupply")
+            getSimulationData(selectedSimulationId, stompClient);
+        }
+    }
+    console.log(isSimulationRunning);
     useEffect(() => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext("2d");
-        let intervalId = null;
-        function draw() {
-            stepNumberRef.current = stepNumberRef.current + 1;
-            context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
-            drawBackground(context);
-            drawAnimals(context, receivedSimulationData, stepNumberRef.current);
-            if(!isSimulationOngoing) {
-                clearInterval(intervalId);
+        if (isSimulationRunning) {
+            const canvas = canvasRef.current;
+            const context = canvas.getContext("2d");
+            let intervalId = null;
+            function executeSimulation() {
+                console.log("executeSimulation")
+                manageDataSupply(receivedSimulationData);
+                if (!isSimulationRunning || receivedSimulationData.current.length() === 0) {
+                    clearInterval(intervalId);
+                } else {
+                    stepNumberRef.current = stepNumberRef.current + 1;
+                    context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
+                    drawBackground(context);
+                    drawAnimals(context, receivedSimulationData, stepNumberRef.current);
+                }
             }
+            intervalId = setInterval(executeSimulation, TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS);
         }
-        if(isSimulationOngoing) {
-            intervalId = setInterval(draw, TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS);
-        }
-    }, [isSimulationOngoing]);
+    }, [isSimulationRunning]);
 
     function handleOnClickButton() {
         setButtonText(prev => {
-            if (prev === "Stop") {
-                return "Continue";
-            } else {
-                return "Stop";
-            }
+            return prev === "Stop" ? "Continue" : "Stop";
         });
-        setIsSimulationOngoing(prev => !prev);
+        setIsSimulationRunning(prev => !prev);
     }
 
     return (
-        <div className="canvas">
-            <canvas ref={canvasRef} width={WIDTH_CANVAS} height={HEIGHT_CANVAS}/>
-            <button type="button" onClick={handleOnClickButton}>{buttonText}</button>
-        </div>
+        <>
+            {isSimulationRunning &&
+                (<div className="canvas">
+                    <canvas ref={canvasRef} width={WIDTH_CANVAS} height={HEIGHT_CANVAS}/>
+                    <button type="button" onClick={handleOnClickButton}>{buttonText}</button>
+                </div>)}
+        </>
     )
 }
 
