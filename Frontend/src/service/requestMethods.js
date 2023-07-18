@@ -43,11 +43,3 @@ export async function deleteSimulationBasicDataById(id) {
         console.log("Error in deleteSimulationBasicDataById: ", error);
     }
 }
-
-export async function getSimulationData(simulationId) {
-    try {
-        await axios.get(URL_SIMULATION_DATA + `/` + `${simulationId}`);
-    } catch (error) {
-        console.log("Error in getSimulationData: ", error);
-    }
-}
