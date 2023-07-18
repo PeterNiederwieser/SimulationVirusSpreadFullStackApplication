@@ -14,6 +14,5 @@ public class InfectionAnalysis implements Phase {
                 .filter(animal -> animal.getHealthState().equals(HealthState.INFECTED) || animal.getHealthState().equals(HealthState.SEVERELY_ILL))
                 .count();
         context.setNumberOfInfections(numberOfInfections);
-        System.out.println("numberOfInfections = " + numberOfInfections);
     }
 }
