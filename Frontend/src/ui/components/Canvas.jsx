@@ -1,33 +1,40 @@
 import {useEffect, useRef, useState} from "react";
+import {
+    ANIMAL_RADIUS,
+    HEIGHT_CANVAS,
+    TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
+    WIDTH_CANVAS
+} from "../../data/constants.js";
 
 function Canvas({receivedSimulationData}) {
     const canvasRef = useRef(null);
+    const stepNumberRef = useRef(0);
     const [buttonText, setButtonText] = useState("Stop");
     const [isSimulationOngoing, setIsSimulationOngoing] = useState(true);
 
     function drawBackground(context) {
         const image = new Image();
-        image.src = "../../../public/map.png";
+        image.src = "/map.png";
         context.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
     }
 
-    function drawBackground1(context) {
-        context.fillStyle = "#000000";
-        context.fillRect(0, 0, 800, 800);
+    function displayAnimal(context, data) {
+        context.fillStyle = getColorForHealthState(data.healthState);
+        context.beginPath();
+        context.arc(data.xposition, data.yposition, ANIMAL_RADIUS, 0, Math.PI * 2);
+        context.closePath();
+        context.fill();
     }
 
     function drawAnimals(context, simulationData, stepNumber) {
-        const simulationDataArray = simulationData.current;
-        const currentStepData = simulationDataArray.filter(item => item.stepNumber === stepNumber);
-        for (const data of currentStepData) {
-            context.fillStyle = getColorForHealthState(data.healthState);
-            context.beginPath();
-            context.arc(data.xposition, data.yposition, 4, 0, Math.PI * 2);
-            context.closePath();
-            context.fill();
-            /*const index = simulationData.current.indexOf(data);
-            simulationData.current.splice(index,1);*/
-        }
+        let dataStepNumber;
+        do {
+            const singleAnimalData = simulationData.current.shift();
+            dataStepNumber = singleAnimalData.stepNumber;
+            if(dataStepNumber === stepNumber) {
+                displayAnimal(context, singleAnimalData);
+            }
+        } while(dataStepNumber === stepNumber);
         console.log("simulationData.current.length: ", simulationData.current.length);
     }
 
@@ -47,21 +54,20 @@ function Canvas({receivedSimulationData}) {
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
-        let stepNumber = 0;
-
-        function render() {
-            console.log("isSimulationOngoing ", isSimulationOngoing);
-            if (isSimulationOngoing) {
-                stepNumber = stepNumber + 1;
-                context.clearRect(0, 0, 800, 800);
-                drawBackground1(context);
-                drawAnimals(context, receivedSimulationData, stepNumber);
-                setTimeout(render, 100);
+        let intervalId = null;
+        function draw() {
+            stepNumberRef.current = stepNumberRef.current + 1;
+            context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
+            drawBackground(context);
+            drawAnimals(context, receivedSimulationData, stepNumberRef.current);
+            if(!isSimulationOngoing) {
+                clearInterval(intervalId);
             }
         }
-
-        render();
-    }, [isSimulationOngoing])
+        if(isSimulationOngoing) {
+            intervalId = setInterval(draw, TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS);
+        }
+    }, [isSimulationOngoing]);
 
     function handleOnClickButton() {
         setButtonText(prev => {
@@ -76,7 +82,7 @@ function Canvas({receivedSimulationData}) {
 
     return (
         <div className="canvas">
-            <canvas ref={canvasRef} width={1200} height={1200}/>
+            <canvas ref={canvasRef} width={WIDTH_CANVAS} height={HEIGHT_CANVAS}/>
             <button type="button" onClick={handleOnClickButton}>{buttonText}</button>
         </div>
     )
