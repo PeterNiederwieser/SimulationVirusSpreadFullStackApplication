@@ -35,7 +35,7 @@ public class VirusSpread implements Phase {
     }
 
     private void changeStatesInCaseOfInfection(Animal animal, Context context) {
-        float PROBABILITY_OF_INFECTION = context.getPROBABILITY_OF_INFECTION();
+        float PROBABILITY_OF_INFECTION = MainConstants.PROBABILITY_OF_INFECTION;
         if (Math.random() <= PROBABILITY_OF_INFECTION) {
             animal.setHealthState(HealthState.INFECTED);
             animal.setMomentOfInfection(context.getStepNumber());
