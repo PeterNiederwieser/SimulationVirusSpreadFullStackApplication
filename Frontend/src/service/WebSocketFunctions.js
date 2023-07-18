@@ -13,7 +13,7 @@ export function setupWebSocket(receivedSimulationData, setIsGraphicsShown) {
             dataArray.forEach(item => {
                 receivedSimulationData.current = [...receivedSimulationData.current, item];
             })
-            if (receivedSimulationData.current.length > 0) {
+            if (receivedSimulationData.current.length > 50000) {
                 setIsGraphicsShown(true);
             }
         });
@@ -43,5 +43,5 @@ export function getSimulationData(simulationId, stompClient) {
         })
         stepNumberFloor += NUMBER_OF_SIM_DATA_PER_REQUEST;
         stepNumberCeil += NUMBER_OF_SIM_DATA_PER_REQUEST;
-    }, 700);
+    }, 500);
 }
