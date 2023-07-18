@@ -1,1 +1,1 @@
-export const NUMBER_OF_SIM_DATA_PER_REQUEST = 60;
+export const NUMBER_OF_SIM_DATA_PER_REQUEST = 300;
