@@ -6,7 +6,7 @@ import {
     WEBSOCKET_SUBSCRIPTION_DESTINATION
 } from "../data/constants_url.js";
 
-export function setupWebSocket(receivedSimulationData, setIsGraphicsShown) {
+export function setupWebSocket(receivedSimulationData, setIsSimulationRunning) {
     const stompClient = new StompJs.Client({
         brokerURL: URL_WEBSOCKET_ENDPOINT
     });
@@ -18,8 +18,8 @@ export function setupWebSocket(receivedSimulationData, setIsGraphicsShown) {
             dataArray.forEach(item => {
                 receivedSimulationData.current = [...receivedSimulationData.current, item];
             })
-            if (receivedSimulationData.current.length > 50000) {
-                setIsGraphicsShown(true);
+            if (receivedSimulationData.current.length >= NUMBER_OF_SIM_DATA_PER_REQUEST) {
+                setIsSimulationRunning(true);
             }
         });
     };
