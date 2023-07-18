@@ -111,15 +111,15 @@ button {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: blue;
 }
 
 .canvas {
-    flex: 2;
+    width: 1200px;
+    height: 1200px;
 }
 
 .diagrams {
-    flex: 1;
+
 }
 
 

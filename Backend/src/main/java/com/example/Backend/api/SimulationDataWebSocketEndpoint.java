@@ -27,16 +27,10 @@ public class SimulationDataWebSocketEndpoint {
     @MessageMapping("/request")
     @SendTo("/topic/data")
     public String getDataForNextSteps(RequestBodySimData request) throws IOException {
-        System.out.println("message simulationId: " + request.simulationId());
-        System.out.println("stepNumberCeil = " + request.stepNumberCeil());
-        System.out.println("stepNumberFloor = " + request.stepNumberFloor());
-        System.out.println("simulationId = " + request.simulationId());
         long simulationId = request.simulationId();
         Context context = simulationManager.getSimulationContext(simulationId);
-        List<SimulationData> requestedSimulationData;
         startSimulationIfNotStartedYet(context);
-        requestedSimulationData = getRequestedSimulationData(request, context);
-        System.out.println("requestedSimulationData.size() = " + requestedSimulationData.size());
+        List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(requestedSimulationData);
     }

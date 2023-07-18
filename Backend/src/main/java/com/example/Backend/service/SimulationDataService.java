@@ -2,7 +2,6 @@ package com.example.Backend.service;
 
 import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.persistence.repository.SimulationDataRepository;
-import com.example.Backend.simulation.SimulationManager;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -16,7 +15,7 @@ public class SimulationDataService {
         this.simulationDataRepository = simulationDataRepository;
     }
 
-    public List<SimulationData> getSimulationData(long simulationId, int stepNumberLowerBorder, int stepNumberUpperBorder) throws IOException {
+    public List<SimulationData> getSimulationData(long simulationId, int stepNumberLowerBorder, int stepNumberUpperBorder) {
         return simulationDataRepository.findBySimulationIdAndStepNumberBetween(simulationId, stepNumberLowerBorder, stepNumberUpperBorder);
     }
 }

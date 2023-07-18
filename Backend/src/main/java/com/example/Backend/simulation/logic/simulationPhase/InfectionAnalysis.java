@@ -5,7 +5,6 @@ import com.example.Backend.simulation.data.HealthState;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
 @Service
 @Order(7)
 public class InfectionAnalysis implements Phase {

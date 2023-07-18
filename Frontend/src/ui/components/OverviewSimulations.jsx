@@ -1,7 +1,7 @@
 import OverviewItem from "./OverviewItem.jsx";
 
 function OverviewSimulations({runSimulation, simulationsBasicData, setSimulationsBasicData}) {
-    if(simulationsBasicData == null) {
+    if (simulationsBasicData == null) {
         return (
             <div className="overview-simulations">Overview of your simulations:</div>
         );
@@ -10,10 +10,12 @@ function OverviewSimulations({runSimulation, simulationsBasicData, setSimulation
         <div className="overview-simulations">
             Overview of your simulations:
             {simulationsBasicData.map(item => (
-                <OverviewItem key={item.id} item={item} runSimulation={runSimulation} setSimulationsBasicData={setSimulationsBasicData}/>
+                <OverviewItem key={item.id} item={item} runSimulation={runSimulation}
+                              setSimulationsBasicData={setSimulationsBasicData}/>
             ))
             }
         </div>
     )
 }
+
 export default OverviewSimulations

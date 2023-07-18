@@ -30,13 +30,13 @@ public class Stroll implements Behaviour {
                 animal.setY(nextY);
                 break;
             } else {
-                setNewRandomVelocity(animal, context);
+                setNewRandomVelocity(animal);
             }
             numberOfTrials++;
         } while (numberOfTrials < MAX_TRIALS_OF_DIRECTION_CHANGE);
     }
 
-    private void setNewRandomVelocity(Animal animal, Context context) {
+    private void setNewRandomVelocity(Animal animal) {
         float maxAnimalSpeed = animal.getMax_speed();
         float speed = (float) Math.random() * (maxAnimalSpeed - MainConstants.MIN_ANIMAL_SPEED) + MainConstants.MIN_ANIMAL_SPEED;
         float nextVelocityX = (float) (Math.random() * speed * 2) - speed;
@@ -57,7 +57,7 @@ public class Stroll implements Behaviour {
         float velocityX = animal.getVelocityX();
         float velocityY = animal.getVelocityY();
         if (velocityX == 0.0 && velocityY == 0.0) {
-            setNewRandomVelocity(animal, context);
+            setNewRandomVelocity(animal);
         }
     }
 

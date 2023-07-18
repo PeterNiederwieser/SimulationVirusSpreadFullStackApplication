@@ -1,12 +1,15 @@
 package com.example.Backend.simulation;
 
+import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.persistence.repository.SimulationDataRepository;
 import com.example.Backend.service.SimulationContextStorage;
 import com.example.Backend.simulation.data.Context;
 import com.example.Backend.simulation.logic.simulationPhase.Phase;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class SimulationManager {
@@ -30,16 +33,13 @@ public class SimulationManager {
         return simulationContextStorage.getContext(simulationId);
     }
 
-    /*public void saveSimulationToDbAsynchronously(long id) {
+    public void saveSimulationToDbAsynchronously(long id) {
         Context context = simulationContextStorage.getContext(id);
         List<SimulationData> simulationDataStorage = context.getSimulationDataStorage();
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-            try {
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            simulationDataRepository.saveAll(simulationDataStorage);
+            context.setCompleteSimulationDataSavedToDb(true);
         });
         Runtime.getRuntime().addShutdownHook(new Thread(() -> future.cancel(true)));
-    }*/
+    }
 }
