@@ -1,11 +1,16 @@
 import Canvas from "./Canvas.jsx";
 import Diagrams from "./Diagrams.jsx";
 
-function SimulationSection() {
+function SimulationSection({receivedSimulationData, isGraphicsShown}) {
     return (
         <div className="simulation-section">
-            <Canvas/>
-            <Diagrams/>
+            <Canvas
+                receivedSimulationData={receivedSimulationData}
+                isGraphicsShown={isGraphicsShown}
+            />
+            <Diagrams
+                receivedSimulationData={receivedSimulationData}
+            />
         </div>
     )
 }
