@@ -1,5 +1,4 @@
 import {useState, useEffect, useRef} from "react";
-import {useNavigate} from "react-router-dom"
 import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
 import {getSimulationData, setupWebSocket} from "../service/WebSocketFunctions.js";
@@ -8,8 +7,8 @@ import MainSection from "./components/MainSection.jsx";
 function Simulation() {
     const receivedSimulationData = useRef([]);
 
-    const navigate = useNavigate();
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
+    const [isGraphicsShown, setIsGraphicsShown] = useState(false);
 
     useEffect(() => {
         getAllSimulationsBasicData()
@@ -48,8 +47,8 @@ function Simulation() {
     }
 
     function runSimulation(simulationId) {
-        const stompClient = setupWebSocket(receivedSimulationData);
-        getSimulationData(simulationId, receivedSimulationData, stompClient);
+        const stompClient = setupWebSocket(receivedSimulationData, setIsGraphicsShown);
+        getSimulationData(simulationId, stompClient);
     }
 
     return (
@@ -63,8 +62,9 @@ function Simulation() {
                 updateFormObject={updateFormObject}
                 formObject={formObject}
                 onSubmit={onSubmit}
+                receivedSimulationData={receivedSimulationData}
+                isGraphicsShown={isGraphicsShown}
             />
-
         </div>
     )
 }
