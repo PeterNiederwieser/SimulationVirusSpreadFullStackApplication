@@ -1,52 +1,30 @@
 package com.example.Backend.api;
 
 import com.example.Backend.api.webSocketConfiguration.data.RequestBodySimData;
-import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.service.SimulationDataService;
+import com.example.Backend.service.SimulationDataWebSocketService;
 import com.example.Backend.simulation.SimulationManager;
-import com.example.Backend.simulation.data.Context;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class SimulationDataWebSocketEndpoint {
     private final SimulationDataService simulationDataService;
+    private final SimulationDataWebSocketService simulationDataWebSocketService;
     private final SimulationManager simulationManager;
 
-    public SimulationDataWebSocketEndpoint(SimulationDataService simulationDataService, SimulationManager simulationManager) {
+    public SimulationDataWebSocketEndpoint(SimulationDataService simulationDataService, SimulationManager simulationManager, SimulationDataWebSocketService simulationDataWebSocketService) {
         this.simulationDataService = simulationDataService;
         this.simulationManager = simulationManager;
+        this.simulationDataWebSocketService = simulationDataWebSocketService;
     }
 
     @MessageMapping("/request")
     @SendTo("/topic/data")
-    public String getDataForNextSteps(RequestBodySimData request) throws IOException {
-        long simulationId = request.simulationId();
-        Context context = simulationManager.getSimulationContext(simulationId);
-        startSimulationIfNotStartedYet(context);
-        List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(requestedSimulationData);
-    }
-
-    private void startSimulationIfNotStartedYet(Context context) {
-        if (!context.isSimulationsStartBeenTriggered()) {
-            simulationManager.runSimulation(context);
-            context.setSimulationsStartBeenTriggered(true);
-        }
-    }
-
-    private List<SimulationData> getRequestedSimulationData(RequestBodySimData request, Context context) throws IOException {
-        return context.isCompleteSimulationDataSavedToDb() ?
-                simulationDataService.getSimulationData(request.simulationId(), request.stepNumberFloor(), request.stepNumberCeil()) :
-                context.getSimulationDataStorage().stream()
-                        .filter(simulationData -> simulationData.getStepNumber() >= request.stepNumberFloor() && simulationData.getStepNumber() < request.stepNumberCeil())
-                        .toList();
+    public String getDataByIdAndStepNumbers(RequestBodySimData request) throws IOException {
+        return simulationDataWebSocketService.findByIdAndStepNumbers(request);
     }
 }
