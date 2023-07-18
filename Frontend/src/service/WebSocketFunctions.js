@@ -1,14 +1,19 @@
-import {NUMBER_OF_SIM_DATA_PER_REQUEST} from "../data/constants.js";
+import {NUMBER_OF_SIM_DATA_PER_REQUEST, TIME_BETWEEN_TWO_DATA_REQUESTS_IN_MS} from "../data/constants.js";
 import * as StompJs from "@stomp/stompjs";
+import {
+    URL_WEBSOCKET_ENDPOINT,
+    WEBSOCKET_PUBLISH_DESTINATION,
+    WEBSOCKET_SUBSCRIPTION_DESTINATION
+} from "../data/constants_url.js";
 
 export function setupWebSocket(receivedSimulationData, setIsGraphicsShown) {
     const stompClient = new StompJs.Client({
-        brokerURL: "ws://localhost:8080/websocket-endpoint"
+        brokerURL: URL_WEBSOCKET_ENDPOINT
     });
 
     stompClient.onConnect = () => {
         console.log("WebSocket Connection established: ");
-        stompClient.subscribe("/topic/data", (data) => {
+        stompClient.subscribe(WEBSOCKET_SUBSCRIPTION_DESTINATION, (data) => {
             const dataArray = JSON.parse(data.body);
             dataArray.forEach(item => {
                 receivedSimulationData.current = [...receivedSimulationData.current, item];
@@ -38,10 +43,10 @@ export function getSimulationData(simulationId, stompClient) {
             stepNumberCeil: stepNumberCeil
         }
         stompClient.publish({
-            destination: "/app/request",
+            destination: WEBSOCKET_PUBLISH_DESTINATION,
             body: JSON.stringify(message)
         })
         stepNumberFloor += NUMBER_OF_SIM_DATA_PER_REQUEST;
         stepNumberCeil += NUMBER_OF_SIM_DATA_PER_REQUEST;
-    }, 500);
+    }, TIME_BETWEEN_TWO_DATA_REQUESTS_IN_MS);
 }
