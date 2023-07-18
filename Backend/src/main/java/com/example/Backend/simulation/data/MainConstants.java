@@ -13,5 +13,7 @@ public interface MainConstants {
     int TERRITORY_GENERATION_SCALE_FACTOR = 1;
     int TERRITORY_WIDTH = 800;
     int TERRITORY_HEIGHT = 800;
+    float PROBABILITY_OF_INFECTION = 0.8F;
+    float PROBABILITY_OF_FATAL_INFECTION_COURSE = 0.5F;
     String filePathOfTerritoryImage = "Backend/src/main/resources/MapImage_by_DALL·E .png";
 }
