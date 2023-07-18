@@ -1,7 +1,7 @@
 import FormSimulationParameters from "./FormSimulationParameters.jsx";
 import SimulationSection from "./SimulationSection.jsx";
 
-function MainSection({updateFormObject, formObject, onSubmit, receivedSimulationData, isGraphicsShown}) {
+function MainSection({updateFormObject, formObject, onSubmit, receivedSimulationData, isSimulationRunning, setIsSimulationRunning, stompClient, selectedSimulationId}) {
     return (
         <div className="main-section">
             <FormSimulationParameters
@@ -9,10 +9,13 @@ function MainSection({updateFormObject, formObject, onSubmit, receivedSimulation
                 formObject={formObject}
                 onSubmit={onSubmit}
             />
-            {isGraphicsShown && <SimulationSection
+            <SimulationSection
                 receivedSimulationData={receivedSimulationData}
-                isGraphicsShown={isGraphicsShown}
-            />}
+                isSimulationRunning={isSimulationRunning}
+                setIsSimulationRunning={setIsSimulationRunning}
+                stompClient={stompClient}
+                selectedSimulationId={selectedSimulationId}
+            />
         </div>
     )
 }

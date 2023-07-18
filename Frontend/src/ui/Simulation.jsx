@@ -6,9 +6,10 @@ import MainSection from "./components/MainSection.jsx";
 
 function Simulation() {
     const receivedSimulationData = useRef([]);
-
+    const [selectedSimulationId, setSelectedSimulationId] = useState(null);
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
-    const [isGraphicsShown, setIsGraphicsShown] = useState(false);
+    const [isSimulationRunning, setIsSimulationRunning] = useState(false);
+    const [stompClient, setStompClient] = useState(null);
 
     useEffect(() => {
         getAllSimulationsBasicData()
@@ -47,8 +48,9 @@ function Simulation() {
     }
 
     function runSimulation(simulationId) {
-        const stompClient = setupWebSocket(receivedSimulationData, setIsGraphicsShown);
-        getSimulationData(simulationId, stompClient);
+        const stompClient = setupWebSocket(receivedSimulationData, setIsSimulationRunning);
+        setSelectedSimulationId(simulationId);
+        setStompClient(stompClient);
     }
 
     return (
@@ -63,7 +65,10 @@ function Simulation() {
                 formObject={formObject}
                 onSubmit={onSubmit}
                 receivedSimulationData={receivedSimulationData}
-                isGraphicsShown={isGraphicsShown}
+                isSimulationRunning={isSimulationRunning}
+                setIsSimulationRunning={setIsSimulationRunning}
+                stompClient={stompClient}
+                selectedSimulationId={selectedSimulationId}
             />
         </div>
     )
