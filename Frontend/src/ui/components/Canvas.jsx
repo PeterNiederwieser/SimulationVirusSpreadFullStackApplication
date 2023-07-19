@@ -1,23 +1,24 @@
 import {useEffect, useRef, useState} from "react";
-import {getSimulationData} from "../../service/WebSocketFunctions.js";
+import {getSimulationData} from "../../service/webSocketFunctions.js";
 import {
-    ANIMAL_RADIUS,
-    HEIGHT_CANVAS, LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST, NUMBER_OF_SIM_DATA_PER_REQUEST,
+    HEIGHT_CANVAS, LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST, NUMBER_OF_SIM_STEPS_PER_REQUEST,
     TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
     WIDTH_CANVAS
 } from "../../data/constants.js";
+import {drawAnimals, drawBackground} from "../../service/drawing.js";
+import {handleStopContinueButton} from "../../service/eventHandler.js";
 
 function Canvas({
                     receivedSimulationData,
                     isSimulationRunning,
-                    setIsSimulationRunning,
                     stompClient,
-                    selectedSimulationId
+                    selectedSimulationId,
+                    isDataAwaitedRef
                 }) {
     const canvasRef = useRef(null);
     const stepNumberRef = useRef(0);
     const stepNumberFloorRef = useRef(0);
-    const stepNumberCeilRef = useRef(NUMBER_OF_SIM_DATA_PER_REQUEST);
+    const stepNumberCeilRef = useRef(NUMBER_OF_SIM_STEPS_PER_REQUEST);
     const [buttonText, setButtonText] = useState("Stop");
     const [isSimulationPaused, setIsSimulationPaused] = useState(false);
     let intervalId = null;
@@ -32,53 +33,17 @@ function Canvas({
         }
     }, [isSimulationRunning, isSimulationPaused]);
 
-    function drawBackground(context) {
-        const image = new Image();
-        image.src = "/map.png";
-        context.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
-    }
-
-    function displayAnimal(context, data) {
-        context.fillStyle = getColorForHealthState(data.healthState);
-        context.beginPath();
-        context.arc(data.xposition, data.yposition, ANIMAL_RADIUS, 0, Math.PI * 2);
-        context.closePath();
-        context.fill();
-    }
-
-    function drawAnimals(context, simulationData, stepNumber) {
-        let dataStepNumber;
-        do {
-            const singleAnimalData = simulationData.current.shift();
-            dataStepNumber = singleAnimalData.stepNumber;
-            if (dataStepNumber === stepNumber) {
-                displayAnimal(context, singleAnimalData);
-            }
-        } while (dataStepNumber === stepNumber);
-    }
-
-    function getColorForHealthState(healthState) {
-        switch (healthState) {
-            case "HEALTHY":
-                return "#38f5f5";
-            case "INFECTED":
-                return "#fa602d";
-            case "SEVERELY_ILL":
-                return "#000000";
-            case "RECOVERED":
-                return "#f5e616";
-        }
-    }
-
-    function manageDataSupply(receivedSimulationData, stepNumberFloorRef, stepNumberCeilRef) {
-        if (receivedSimulationData.current.length <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST) {
+    function manageDataSupply() {
+        if (receivedSimulationData.current.length <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST && !isDataAwaitedRef.current) {
             getSimulationData(selectedSimulationId, stompClient, stepNumberFloorRef, stepNumberCeilRef);
-            stepNumberFloorRef.current += NUMBER_OF_SIM_DATA_PER_REQUEST;
-            stepNumberCeilRef.current += NUMBER_OF_SIM_DATA_PER_REQUEST;
+            isDataAwaitedRef.current = true;
+            stepNumberFloorRef.current += NUMBER_OF_SIM_STEPS_PER_REQUEST;
+            stepNumberCeilRef.current += NUMBER_OF_SIM_STEPS_PER_REQUEST;
         }
     }
+
     function executeSimulation(context) {
-        manageDataSupply(receivedSimulationData, stepNumberFloorRef, stepNumberCeilRef);
+        manageDataSupply();
         if (receivedSimulationData.current.length !== 0) {
             stepNumberRef.current = stepNumberRef.current + 1;
             context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
@@ -87,22 +52,13 @@ function Canvas({
         }
     }
 
-    function handleOnClickButton() {
-        if(!isSimulationPaused) {
-            clearInterval(intervalId);
-        }
-        setButtonText(prev => {
-            return prev === "Stop" ? "Continue" : "Stop";
-        });
-        setIsSimulationPaused(prev => !prev);
-    }
-
     return (
         <>
             {isSimulationRunning &&
                 (<div className="canvas">
                     <canvas ref={canvasRef} width={WIDTH_CANVAS} height={HEIGHT_CANVAS}/>
-                    <button type="button" onClick={handleOnClickButton}>{buttonText}</button>
+                    <button type="button"
+                            onClick={() => handleStopContinueButton(isSimulationPaused, setIsSimulationPaused, intervalId, setButtonText)}>{buttonText}</button>
                 </div>)}
         </>
     )
