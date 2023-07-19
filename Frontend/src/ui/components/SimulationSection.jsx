@@ -4,9 +4,9 @@ import Diagrams from "./Diagrams.jsx";
 function SimulationSection({
                                receivedSimulationData,
                                isSimulationRunning,
-                               setIsSimulationRunning,
                                stompClient,
-                               selectedSimulationId
+                               selectedSimulationId,
+                               isDataAwaitedRef
                            }) {
     return (
         <>
@@ -14,9 +14,9 @@ function SimulationSection({
                 <Canvas
                     receivedSimulationData={receivedSimulationData}
                     isSimulationRunning={isSimulationRunning}
-                    setIsSimulationRunning={setIsSimulationRunning}
                     stompClient={stompClient}
                     selectedSimulationId={selectedSimulationId}
+                    isDataAwaitedRef={isDataAwaitedRef}
                 />
                 <Diagrams
                     receivedSimulationData={receivedSimulationData}
