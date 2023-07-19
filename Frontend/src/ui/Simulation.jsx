@@ -1,11 +1,12 @@
 import {useState, useEffect, useRef} from "react";
 import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
-import {getSimulationData, setupWebSocket} from "../service/WebSocketFunctions.js";
+import {setupWebSocket} from "../service/webSocketFunctions.js";
 import MainSection from "./components/MainSection.jsx";
 
 function Simulation() {
     const receivedSimulationData = useRef([]);
+    const isDataAwaitedRef = useRef(false);
     const [selectedSimulationId, setSelectedSimulationId] = useState(null);
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
     const [stompClient, setStompClient] = useState(null);
@@ -48,7 +49,7 @@ function Simulation() {
     }
 
     function runSimulation(simulationId) {
-        const stompClient = setupWebSocket(receivedSimulationData, setIsSimulationRunning);
+        const stompClient = setupWebSocket(receivedSimulationData, setIsSimulationRunning, isDataAwaitedRef);
         setSelectedSimulationId(simulationId);
         setStompClient(stompClient);
     }
@@ -66,9 +67,9 @@ function Simulation() {
                 onSubmit={onSubmit}
                 receivedSimulationData={receivedSimulationData}
                 isSimulationRunning={isSimulationRunning}
-                setIsSimulationRunning={setIsSimulationRunning}
                 stompClient={stompClient}
                 selectedSimulationId={selectedSimulationId}
+                isDataAwaitedRef={isDataAwaitedRef}
             />
         </div>
     )
