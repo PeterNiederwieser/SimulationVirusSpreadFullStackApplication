@@ -22,9 +22,13 @@ public class SimulationDataWebSocketService {
     public String findByIdAndStepNumbers(RequestBodySimData request) throws JsonProcessingException {
         long simulationId = request.simulationId();
         Context context = simulationManager.getSimulationContext(simulationId);
+        System.out.println("Simulation started");
         startSimulationIfNotStartedYet(context);
+        System.out.println("Simulation ended");
         List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
+        System.out.println("got data");
         ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("mapped data");
         return objectMapper.writeValueAsString(requestedSimulationData);
     }
 

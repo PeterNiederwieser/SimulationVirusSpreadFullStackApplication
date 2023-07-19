@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {
     ANIMAL_RADIUS,
-    HEIGHT_CANVAS, LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST,
+    HEIGHT_CANVAS, LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST, NUMBER_OF_SIM_DATA_PER_REQUEST,
     TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
     WIDTH_CANVAS
 } from "../../data/constants.js";
@@ -17,9 +17,9 @@ function Canvas({
     const canvasRef = useRef(null);
     const stepNumberRef = useRef(0);
     const [buttonText, setButtonText] = useState("Stop");
-
-
-    // useRef for upperStepBorder and lowerStepBorder!!
+    const stepNumberFloorRef = useRef(0);
+    const stepNumberCeilRef = useRef(NUMBER_OF_SIM_DATA_PER_REQUEST);
+    let intervalId = null;
 
     function drawBackground(context) {
         const image = new Image();
@@ -44,7 +44,7 @@ function Canvas({
                 displayAnimal(context, singleAnimalData);
             }
         } while (dataStepNumber === stepNumber);
-        console.log("simulationData.current.length: ", simulationData.current.length);
+        console.log("in draw animals: simulationData.current.length: ", simulationData.current.length);
     }
 
     function getColorForHealthState(healthState) {
@@ -60,30 +60,38 @@ function Canvas({
         }
     }
 
-    function manageDataSupply(receivedSimulationData) {
-        if (receivedSimulationData.current.length() <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST) {
+    function manageDataSupply(receivedSimulationData, stepNumberFloorRef, stepNumberCeilRef) {
+        if (receivedSimulationData.current.length <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST) {
             console.log("fetch data in manageDataSupply")
-            getSimulationData(selectedSimulationId, stompClient);
+            getSimulationData(selectedSimulationId, stompClient, stepNumberFloorRef, stepNumberCeilRef);
+            console.log("recData after getSimulationData: ", receivedSimulationData.current.length);
+            stepNumberFloorRef.current += NUMBER_OF_SIM_DATA_PER_REQUEST;
+            stepNumberCeilRef.current += NUMBER_OF_SIM_DATA_PER_REQUEST;
         }
     }
+
     console.log(isSimulationRunning);
+
     useEffect(() => {
         if (isSimulationRunning) {
             const canvas = canvasRef.current;
             const context = canvas.getContext("2d");
-            let intervalId = null;
+
             function executeSimulation() {
                 console.log("executeSimulation")
-                manageDataSupply(receivedSimulationData);
-                if (!isSimulationRunning || receivedSimulationData.current.length() === 0) {
+                manageDataSupply(receivedSimulationData, stepNumberFloorRef, stepNumberCeilRef);
+                if (!isSimulationRunning) {
+                    console.log("clear Interval");
                     clearInterval(intervalId);
-                } else {
+                } else if (receivedSimulationData.current.length !== 0) {
+                    console.log("paint");
                     stepNumberRef.current = stepNumberRef.current + 1;
                     context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
                     drawBackground(context);
                     drawAnimals(context, receivedSimulationData, stepNumberRef.current);
                 }
             }
+
             intervalId = setInterval(executeSimulation, TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS);
         }
     }, [isSimulationRunning]);

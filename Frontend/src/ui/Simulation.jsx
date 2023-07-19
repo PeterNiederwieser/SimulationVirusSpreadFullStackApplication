@@ -8,8 +8,8 @@ function Simulation() {
     const receivedSimulationData = useRef([]);
     const [selectedSimulationId, setSelectedSimulationId] = useState(null);
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
-    const [isSimulationRunning, setIsSimulationRunning] = useState(false);
     const [stompClient, setStompClient] = useState(null);
+    const [isSimulationRunning, setIsSimulationRunning] = useState(false);
 
     useEffect(() => {
         getAllSimulationsBasicData()
