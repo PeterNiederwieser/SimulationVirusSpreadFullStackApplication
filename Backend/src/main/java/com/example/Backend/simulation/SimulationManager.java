@@ -1,5 +1,6 @@
 package com.example.Backend.simulation;
 
+import com.example.Backend.api.webSocketConfiguration.data.RequestBodySimData;
 import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.persistence.repository.SimulationDataRepository;
 import com.example.Backend.service.SimulationContextStorage;
@@ -7,7 +8,6 @@ import com.example.Backend.simulation.data.Context;
 import com.example.Backend.simulation.logic.simulationPhase.Phase;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,12 +25,14 @@ public class SimulationManager {
         this.simulationDataRepository = simulationDataRepository;
     }
 
-    public void runSimulation(Context context) {
-        simulator.simulate(context, phases);
-    }
-
     public Context getSimulationContext(long simulationId) {
         return simulationContextStorage.getContext(simulationId);
+    }
+
+    public void runRequiredSteps(RequestBodySimData request) {
+        long id = request.simulationId();
+        Context context = getSimulationContext(id);
+        simulator.simulateRequiredSteps(context, phases, request.stepNumberFloor(), request.stepNumberCeil());
     }
 
     public void saveSimulationToDbAsynchronously(long id) {

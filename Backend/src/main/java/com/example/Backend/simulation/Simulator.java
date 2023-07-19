@@ -8,8 +8,8 @@ import java.util.List;
 @Service
 public class Simulator {
 
-    public void simulate(Context context, List<Phase> phases) {
-        while(context.getNumberOfInfections() != 0) {
+    public void simulateRequiredSteps(Context context, List<Phase> phases, int stepNumberFloor, int stepNumberCeil) {
+        for (int i = stepNumberFloor; i < stepNumberCeil; i++) {
             simulatePhases(context, phases);
         }
     }

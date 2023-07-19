@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class SimulationDataWebSocketService {
     private final SimulationManager simulationManager;
@@ -23,20 +24,13 @@ public class SimulationDataWebSocketService {
         long simulationId = request.simulationId();
         Context context = simulationManager.getSimulationContext(simulationId);
         System.out.println("Simulation started");
-        startSimulationIfNotStartedYet(context);
-        System.out.println("Simulation ended");
+        simulationManager.runRequiredSteps(request);
+        System.out.println("Steps computed");
         List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
         System.out.println("got data");
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println("mapped data");
         return objectMapper.writeValueAsString(requestedSimulationData);
-    }
-
-    private void startSimulationIfNotStartedYet(Context context) {
-        if (!context.isSimulationsStartBeenTriggered()) {
-            simulationManager.runSimulation(context);
-            context.setSimulationsStartBeenTriggered(true);
-        }
     }
 
     private List<SimulationData> getRequestedSimulationData(RequestBodySimData request, Context context) {
