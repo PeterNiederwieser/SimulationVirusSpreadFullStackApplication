@@ -113,6 +113,11 @@ button {
     justify-content: center;
 }
 
+.canvas-diagrams {
+    display: flex;
+    flex-direction: row;
+}
+
 .canvas {
 }
 
