@@ -1,4 +1,3 @@
-import React from "react";
 import {useEffect, useRef, useState} from "react";
 import {getSimulationData} from "../../service/webSocketFunctions.js";
 import {
@@ -14,7 +13,7 @@ import {handleEndSimulation, handleStopContinue} from "../../service/eventHandle
 import {Chart} from "react-google-charts";
 
 function Canvas({
-                    receivedSimulationData,
+                    receivedSimulationDataRef,
                     isSimulationRunning,
                     setIsSimulationRunning,
                     stompClient,
@@ -30,7 +29,7 @@ function Canvas({
     const [pieChartData, setPieChartData] = useState([]);
     const [intervalId, setIntervalId] = useState(null);
     let context = null;
-    const statistics = {
+    const statisticsRef = useRef({
         newInfectionsPerTimeRange: [],
         newDeathsPerTimeRange: [],
         timeRange: TIME_RANGE_FOR_STATISTICS_IN_STEPS,
@@ -39,8 +38,14 @@ function Canvas({
         totalNumberOfCurrentRecoveredAnimals: 0,
         totalNumberOfCurrentInfectedAnimals: 0,
         totalNumberOfCurrentSeverelyIllAnimals: 0,
-        totalNumberOfDeadAnimals: 0
-    }
+        totalNumberOfDeadAnimals: 0,
+        bufferHealthyAnimals: 0,
+        bufferRecoveredAnimals: 0,
+        bufferInfectedAnimals: 0,
+        bufferSeverelyIllAnimals: 0
+    });
+
+    console.log("_________________________________________________NEW RENDER _______________________");
 
     useEffect(() => {
         if (isSimulationRunning && !isSimulationPaused) {
@@ -57,7 +62,7 @@ function Canvas({
     }, [isSimulationRunning, isSimulationPaused]);
 
     function manageDataSupply() {
-        if (receivedSimulationData.current.length <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST && !isDataAwaitedRef.current) {
+        if (receivedSimulationDataRef.current.length <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST && !isDataAwaitedRef.current) {
             getSimulationData(selectedSimulationId, stompClient, stepNumberFloorRef, stepNumberCeilRef);
             isDataAwaitedRef.current = true;
             stepNumberFloorRef.current += NUMBER_OF_SIM_STEPS_PER_REQUEST;
@@ -67,17 +72,18 @@ function Canvas({
 
     function executeSimulation(context) {
         manageDataSupply();
-        if (receivedSimulationData.current.length !== 0) {
+        if (receivedSimulationDataRef.current.length !== 0) {
             stepNumberRef.current = stepNumberRef.current + 1;
             context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
             drawBackground(context);
-            processDataPerStepNumber(context, receivedSimulationData, stepNumberRef.current, statistics);
-            updateDiagrams(statistics, stepNumberRef.current, setPieChartData);
+            processDataPerStepNumber(context, receivedSimulationDataRef, stepNumberRef.current, statisticsRef.current);
+            updateDiagrams(statisticsRef.current, stepNumberRef.current, setPieChartData);
         }
     }
 
     const optionsPieChart = {
         title: "",
+        colors: ["#38f5f5", "#f5e616", "#fa602d", "#7F00FF", "#000000"],
         is3D: true,
     };
 
@@ -97,7 +103,7 @@ function Canvas({
                     <div>
                         <Chart
                             chartType="PieChart"
-                            data={[["Task", "Hours per Day"], ["Work", 11], ["Eat", 2]]}
+                            data={pieChartData}
                             options={optionsPieChart}
                             width={"100%"}
                             height={"400px"}

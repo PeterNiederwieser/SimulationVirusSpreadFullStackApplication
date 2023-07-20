@@ -7,6 +7,7 @@ function MainSection({
                          onSubmit,
                          receivedSimulationData,
                          isSimulationRunning,
+                         setIsSimulationRunning,
                          stompClient,
                          selectedSimulationId,
                          isDataAwaitedRef
@@ -21,6 +22,7 @@ function MainSection({
             <SimulationSection
                 receivedSimulationData={receivedSimulationData}
                 isSimulationRunning={isSimulationRunning}
+                setIsSimulationRunning={setIsSimulationRunning}
                 stompClient={stompClient}
                 selectedSimulationId={selectedSimulationId}
                 isDataAwaitedRef={isDataAwaitedRef}

@@ -67,6 +67,7 @@ function Simulation() {
                 onSubmit={onSubmit}
                 receivedSimulationData={receivedSimulationData}
                 isSimulationRunning={isSimulationRunning}
+                setIsSimulationRunning={setIsSimulationRunning}
                 stompClient={stompClient}
                 selectedSimulationId={selectedSimulationId}
                 isDataAwaitedRef={isDataAwaitedRef}
