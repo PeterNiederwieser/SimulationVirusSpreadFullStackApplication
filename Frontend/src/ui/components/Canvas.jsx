@@ -1,3 +1,4 @@
+import React from "react";
 import {useEffect, useRef, useState} from "react";
 import {getSimulationData} from "../../service/webSocketFunctions.js";
 import {
@@ -8,13 +9,14 @@ import {
     TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
     WIDTH_CANVAS
 } from "../../data/constants.js";
-import {drawBackground, processDataPerStepNumber} from "../../service/drawing.js";
-import {handleStopContinueButton} from "../../service/eventHandler.js";
+import {drawBackground, processDataPerStepNumber, updateDiagrams} from "../../service/drawing.js";
+import {handleEndSimulation, handleStopContinue} from "../../service/eventHandler.js";
 import {Chart} from "react-google-charts";
 
 function Canvas({
                     receivedSimulationData,
                     isSimulationRunning,
+                    setIsSimulationRunning,
                     stompClient,
                     selectedSimulationId,
                     isDataAwaitedRef
@@ -26,7 +28,7 @@ function Canvas({
     const [buttonText, setButtonText] = useState("Stop");
     const [isSimulationPaused, setIsSimulationPaused] = useState(false);
     const [pieChartData, setPieChartData] = useState([]);
-    let intervalId = null;
+    const [intervalId, setIntervalId] = useState(null);
     let context = null;
     const statistics = {
         newInfectionsPerTimeRange: [],
@@ -37,17 +39,20 @@ function Canvas({
         totalNumberOfCurrentRecoveredAnimals: 0,
         totalNumberOfCurrentInfectedAnimals: 0,
         totalNumberOfCurrentSeverelyIllAnimals: 0,
-        totalNumberOfDeadAnimals: 0,
-        bufferNewInfections: 0,
-        bufferDeaths: 0
+        totalNumberOfDeadAnimals: 0
     }
 
     useEffect(() => {
-        clearInterval(intervalId);
         if (isSimulationRunning && !isSimulationPaused) {
             const canvas = canvasRef.current;
             context = canvas.getContext("2d");
-            intervalId = setInterval(() => executeSimulation(context), TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS);
+            const newIntervalId = setInterval(() => executeSimulation(context), TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS);
+            setIntervalId(prev => {
+                if(prev) {
+                    clearInterval(prev);
+                }
+                return newIntervalId;
+            });
         }
     }, [isSimulationRunning, isSimulationPaused]);
 
@@ -67,30 +72,38 @@ function Canvas({
             context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
             drawBackground(context);
             processDataPerStepNumber(context, receivedSimulationData, stepNumberRef.current, statistics);
+            updateDiagrams(statistics, stepNumberRef.current, setPieChartData);
         }
     }
 
     const optionsPieChart = {
-        title: ""
-    }
+        title: "",
+        is3D: true,
+    };
 
     return (
         <>
             {isSimulationRunning &&
-                (<div>
+                (<div className="canvas-diagrams">
                     <div className="canvas">
                         <canvas ref={canvasRef} width={WIDTH_CANVAS} height={HEIGHT_CANVAS}/>
                         <button type="button"
-                                onClick={() => handleStopContinueButton(isSimulationPaused, setIsSimulationPaused, intervalId, setButtonText)}>{buttonText}</button>
+                                onClick={() => handleStopContinue(isSimulationPaused, setIsSimulationPaused, intervalId, setButtonText)}>{buttonText}
+                        </button>
+                        <button type="button"
+                                onClick={() => handleEndSimulation(setIsSimulationRunning, stompClient, intervalId)}> End
+                        </button>
                     </div>
-                    <Chart
-                        chartType="PieChart"
-                        data={pieChartData}
-                        options={optionsPieChart}
-                        width={"100%"}
-                        height={"400px"}
-                        legendToggle={true}
-                    />
+                    <div>
+                        <Chart
+                            chartType="PieChart"
+                            data={[["Task", "Hours per Day"], ["Work", 11], ["Eat", 2]]}
+                            options={optionsPieChart}
+                            width={"100%"}
+                            height={"400px"}
+                            legendToggle={true}
+                        />
+                    </div>
                 </div>)
             }
         </>
