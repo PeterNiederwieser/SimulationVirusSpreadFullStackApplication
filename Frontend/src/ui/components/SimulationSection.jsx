@@ -2,7 +2,7 @@ import Canvas from "./Canvas.jsx";
 import Diagrams from "./Diagrams.jsx";
 
 function SimulationSection({
-                               receivedSimulationData,
+                               receivedSimulationDataRef,
                                isSimulationRunning,
                                setIsSimulationRunning,
                                stompClient,
@@ -13,7 +13,7 @@ function SimulationSection({
         <>
             {isSimulationRunning && <div className="simulation-section">
                 <Canvas
-                    receivedSimulationData={receivedSimulationData}
+                    receivedSimulationDataRef={receivedSimulationDataRef}
                     isSimulationRunning={isSimulationRunning}
                     setIsSimulationRunning={setIsSimulationRunning}
                     stompClient={stompClient}
@@ -21,7 +21,7 @@ function SimulationSection({
                     isDataAwaitedRef={isDataAwaitedRef}
                 />
                 <Diagrams
-                    receivedSimulationData={receivedSimulationData}
+                    receivedSimulationDataRef={receivedSimulationDataRef}
                     isSimulationRunning={isSimulationRunning}
                 />
             </div>}

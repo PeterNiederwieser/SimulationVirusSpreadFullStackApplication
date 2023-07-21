@@ -5,7 +5,7 @@ import {setupWebSocket} from "../service/webSocketFunctions.js";
 import MainSection from "./components/MainSection.jsx";
 
 function Simulation() {
-    const receivedSimulationData = useRef([]);
+    const receivedSimulationDataRef = useRef([]);
     const isDataAwaitedRef = useRef(false);
     const [selectedSimulationId, setSelectedSimulationId] = useState(null);
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
@@ -49,7 +49,7 @@ function Simulation() {
     }
 
     function runSimulation(simulationId) {
-        const stompClient = setupWebSocket(receivedSimulationData, setIsSimulationRunning, isDataAwaitedRef);
+        const stompClient = setupWebSocket(receivedSimulationDataRef, setIsSimulationRunning, isDataAwaitedRef);
         setSelectedSimulationId(simulationId);
         setStompClient(stompClient);
     }
@@ -65,7 +65,7 @@ function Simulation() {
                 updateFormObject={updateFormObject}
                 formObject={formObject}
                 onSubmit={onSubmit}
-                receivedSimulationData={receivedSimulationData}
+                receivedSimulationDataRef={receivedSimulationDataRef}
                 isSimulationRunning={isSimulationRunning}
                 setIsSimulationRunning={setIsSimulationRunning}
                 stompClient={stompClient}

@@ -5,7 +5,7 @@ function MainSection({
                          updateFormObject,
                          formObject,
                          onSubmit,
-                         receivedSimulationData,
+                         receivedSimulationDataRef,
                          isSimulationRunning,
                          setIsSimulationRunning,
                          stompClient,
@@ -20,7 +20,7 @@ function MainSection({
                 onSubmit={onSubmit}
             />
             <SimulationSection
-                receivedSimulationData={receivedSimulationData}
+                receivedSimulationDataRef={receivedSimulationDataRef}
                 isSimulationRunning={isSimulationRunning}
                 setIsSimulationRunning={setIsSimulationRunning}
                 stompClient={stompClient}
