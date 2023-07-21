@@ -8,7 +8,7 @@ import {
     TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
     WIDTH_CANVAS
 } from "../../data/constants.js";
-import {drawBackground, processDataPerStepNumber, updateDiagrams} from "../../service/drawing.js";
+import {drawBackground, processDataPerStepNumber, resetBuffer, updateDiagrams} from "../../service/drawing.js";
 import {handleEndSimulation, handleStopContinue} from "../../service/eventHandler.js";
 import {Chart} from "react-google-charts";
 
@@ -26,26 +26,27 @@ function Canvas({
     const stepNumberCeilRef = useRef(NUMBER_OF_SIM_STEPS_PER_REQUEST);
     const [buttonText, setButtonText] = useState("Stop");
     const [isSimulationPaused, setIsSimulationPaused] = useState(false);
-    const [pieChartData, setPieChartData] = useState([]);
+    const [pieChartData, setPieChartData] = useState([["status", "Number of Animals"], ["healthy", 100], ["recovered", 0],
+        ["infected", 0], ["severely ill", 0], ["dead", 0]]);
+    const [lineChartData, setLineChartData] = useState([["Time", "New Infections", "New Deaths"], [0, 0, 0]]);
+    const [areaChartData, setAreaChartData] = useState([["Time", "Infections", "Deaths"], [0, 0, 0]]);
     const [intervalId, setIntervalId] = useState(null);
     let context = null;
     const statisticsRef = useRef({
-        newInfectionsPerTimeRange: [],
-        newDeathsPerTimeRange: [],
         timeRange: TIME_RANGE_FOR_STATISTICS_IN_STEPS,
-        totalNumberOfInitialAnimals: 0,
-        totalNumberOfCurrentHealthyAnimals: 0,
-        totalNumberOfCurrentRecoveredAnimals: 0,
-        totalNumberOfCurrentInfectedAnimals: 0,
-        totalNumberOfCurrentSeverelyIllAnimals: 0,
-        totalNumberOfDeadAnimals: 0,
-        bufferHealthyAnimals: 0,
-        bufferRecoveredAnimals: 0,
-        bufferInfectedAnimals: 0,
-        bufferSeverelyIllAnimals: 0
+        numberOfInitialAnimals: 0,
+        numberOfCurrentHealthyAnimals: 0,
+        numberOfCurrentRecoveredAnimals: 0,
+        numberOfCurrentInfectedAnimals: 0,
+        numberOfCurrentSeverelyIllAnimals: 0,
+        numberOfNewInfectionsInActualStep: 0,
+        numberOfDeathsInActualStep: 0,
+        numberOfDeaths: 0,
+        numberOfInfections: 0,
+        bufferNewInfections: 0,
+        bufferDeadAnimals: 0,
+        storageNumberOfHealthyAnimals: 0,
     });
-
-    console.log("_________________________________________________NEW RENDER _______________________");
 
     useEffect(() => {
         if (isSimulationRunning && !isSimulationPaused) {
@@ -53,7 +54,7 @@ function Canvas({
             context = canvas.getContext("2d");
             const newIntervalId = setInterval(() => executeSimulation(context), TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS);
             setIntervalId(prev => {
-                if(prev) {
+                if (prev) {
                     clearInterval(prev);
                 }
                 return newIntervalId;
@@ -77,15 +78,40 @@ function Canvas({
             context.clearRect(0, 0, WIDTH_CANVAS, HEIGHT_CANVAS);
             drawBackground(context);
             processDataPerStepNumber(context, receivedSimulationDataRef, stepNumberRef.current, statisticsRef.current);
-            updateDiagrams(statisticsRef.current, stepNumberRef.current, setPieChartData);
+            updateDiagrams(statisticsRef.current, stepNumberRef.current, setPieChartData, setLineChartData, setAreaChartData);
         }
     }
 
     const optionsPieChart = {
         title: "",
+        height: 200,
         colors: ["#38f5f5", "#f5e616", "#fa602d", "#7F00FF", "#000000"],
         is3D: true,
+        curveType: "function",
+        legend: {position: "right"},
     };
+    const optionsLineChart = {
+        title: "New Infections / Deaths per timeunit",
+        height: 300,
+        colors: ["#fa602d", "#000000"],
+        legend: {position: "bottom"},
+        curveType: "function",
+        vAxis: {minValue: 0, title: "number", titleTextStyle: {color: "#333"}},
+        hAxis: {minValue: 0, title: "Time", titleTextStyle: {color: "#333"}},
+        chartArea: {width: "70%", height: "70%"}
+    };
+
+    const optionsAreaChart = {
+        title: "Total infections / deaths",
+        height: 300,
+        colors: ["#fa602d", "#000000"],
+        legend: {position: "bottom"},
+        curveType: "function",
+        vAxis: {minValue: 0, title: "number", titleTextStyle: {color: "#333"}},
+        hAxis: {minValue: 0, title: "Time", titleTextStyle: {color: "#333"}},
+        chartArea: {width: "70%", height: "70%"}
+    };
+
 
     return (
         <>
@@ -105,8 +131,24 @@ function Canvas({
                             chartType="PieChart"
                             data={pieChartData}
                             options={optionsPieChart}
-                            width={"100%"}
-                            height={"400px"}
+                            width="500px"
+                            height="250px"
+                            legendToggle={true}
+                        />
+                        <Chart
+                            chartType="LineChart"
+                            data={lineChartData}
+                            options={optionsLineChart}
+                            width="100%"
+                            height="250px"
+                            legendToggle={true}
+                        />
+                        <Chart
+                            chartType="AreaChart"
+                            data={areaChartData}
+                            options={optionsAreaChart}
+                            width="100%"
+                            height="250px"
                             legendToggle={true}
                         />
                     </div>
