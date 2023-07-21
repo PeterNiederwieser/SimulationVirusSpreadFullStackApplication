@@ -5,7 +5,7 @@ import {
     WEBSOCKET_SUBSCRIPTION_DESTINATION
 } from "../data/constants_url.js";
 
-export function setupWebSocket(receivedSimulationData, setIsSimulationRunning, isDataAwaitedRef) {
+export function setupWebSocket(receivedSimulationDataRef, setIsSimulationRunning, isDataAwaitedRef) {
     const stompClient = new StompJs.Client({
         brokerURL: URL_WEBSOCKET_ENDPOINT
     });
@@ -15,9 +15,9 @@ export function setupWebSocket(receivedSimulationData, setIsSimulationRunning, i
         setIsSimulationRunning(true);
         stompClient.subscribe(WEBSOCKET_SUBSCRIPTION_DESTINATION, (data) => {
             const dataArray = JSON.parse(data.body);
-            receivedSimulationData.current = [...receivedSimulationData.current, ...dataArray];
+            receivedSimulationDataRef.current = [...receivedSimulationDataRef.current, ...dataArray];
             isDataAwaitedRef.current = false;
-            console.log("data received, current data: ", receivedSimulationData.current.length);
+            console.log("data received, current data: ", receivedSimulationDataRef.current.length);
         });
     };
 
