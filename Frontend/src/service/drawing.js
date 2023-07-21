@@ -23,7 +23,7 @@ function getColorForHealthState(healthState) {
         case "INFECTED":
             return "#fa602d";
         case "SEVERELY_ILL":
-            return "#000000";
+            return "#7F00FF";
     }
 }
 
@@ -34,13 +34,20 @@ function setTotalNumberOfInitialAnimals(statistics) {
 }
 
 function updateNumberOfDeadAnimals(statistics) {
-    statistics.totalNumberOfDeadAnimals = statistics.totalNumberOfInitialAnimals - (statistics.totalNumberOfCurrentHealthyAnimals
-        + statistics.totalNumberOfCurrentRecoveredAnimals + statistics.totalNumberOfCurrentInfectedAnimals
-        + statistics.totalNumberOfCurrentSeverelyIllAnimals);
+    statistics.totalNumberOfDeadAnimals = (statistics.totalNumberOfInitialAnimals - statistics.totalNumberOfDeadAnimals)
+        - (statistics.totalNumberOfCurrentHealthyAnimals + statistics.totalNumberOfCurrentRecoveredAnimals + statistics.totalNumberOfCurrentInfectedAnimals
+            + statistics.totalNumberOfCurrentSeverelyIllAnimals);
 
 }
 
-function updateStatistics(singleAnimalData, stepNumber, statistics) {
+function resetCurrentData(statistics) {
+    statistics.totalNumberOfCurrentHealthyAnimals = 0;
+    statistics.totalNumberOfCurrentRecoveredAnimals = 0;
+    statistics.totalNumberOfCurrentInfectedAnimals = 0;
+    statistics.totalNumberOfCurrentSeverelyIllAnimals = 0;
+}
+
+function updateStatisticsForSingleAnimal(singleAnimalData, stepNumber, statistics) {
     switch (singleAnimalData.healthState) {
         case "HEALTHY":
             statistics.totalNumberOfCurrentHealthyAnimals += 1;
@@ -55,27 +62,54 @@ function updateStatistics(singleAnimalData, stepNumber, statistics) {
             statistics.totalNumberOfCurrentSeverelyIllAnimals += 1;
             break;
     }
-    if (stepNumber === 1) {
-        setTotalNumberOfInitialAnimals(statistics);
+}
+
+export function updateDiagrams(statistics, stepNumber, setPieChartData) {
+    if (stepNumber % TIME_RANGE_FOR_STATISTICS_IN_STEPS === 0) {
+        updatePieChartData(statistics, setPieChartData);
+        console.log("healthy: ", statistics.totalNumberOfCurrentHealthyAnimals);
+        console.log("recovered: ", statistics.totalNumberOfCurrentRecoveredAnimals);
+        console.log("infected: ", statistics.totalNumberOfCurrentInfectedAnimals);
+        console.log("sevill: ", statistics.totalNumberOfCurrentSeverelyIllAnimals);
+        console.log("dead: ", statistics.totalNumberOfDeadAnimals);
+        console.log("all: ", statistics.totalNumberOfInitialAnimals);
     }
-    updateNumberOfDeadAnimals(statistics);
 }
 
-function updateDiagrams(statistics) {
-    console.log("number of initial animals: ", statistics.totalNumberOfInitialAnimals);
-}
-
-export function processDataPerStepNumber(context, simulationData, stepNumber, statistics) {
+export function processDataPerStepNumber(context, receivedSimulationDataRef, stepNumber, statistics) {
     let dataStepNumber;
+    resetCurrentData(statistics);
+    let counter = 0;
     do {
-        const singleAnimalData = simulationData.current.shift();
+        const singleAnimalData = receivedSimulationDataRef.current.shift();
         dataStepNumber = singleAnimalData.stepNumber;
         if (dataStepNumber === stepNumber) {
+            counter++;
             drawAnimal(context, singleAnimalData);
-            updateStatistics(singleAnimalData, stepNumber, statistics);
-        }
-        if (stepNumber % TIME_RANGE_FOR_STATISTICS_IN_STEPS === 0) {
-            updateDiagrams(statistics);
+            updateStatisticsForSingleAnimal(singleAnimalData, stepNumber, statistics);
         }
     } while (dataStepNumber === stepNumber);
+    if (statistics.totalNumberOfInitialAnimals === 0 && stepNumber === 1) {
+        setTotalNumberOfInitialAnimals(statistics);
+        console.log("______________________________________");
+        console.log("healthy: ", statistics.totalNumberOfCurrentHealthyAnimals);
+        console.log("recovered: ", statistics.totalNumberOfCurrentRecoveredAnimals);
+        console.log("infected: ", statistics.totalNumberOfCurrentInfectedAnimals);
+        console.log("sevill: ", statistics.totalNumberOfCurrentSeverelyIllAnimals);
+        console.log("dead: ", statistics.totalNumberOfDeadAnimals);
+        console.log("all: ", statistics.totalNumberOfInitialAnimals);
+    }
+    updateNumberOfDeadAnimals(statistics);
+    console.log("counter for step " + stepNumber + " : " + counter);
+}
+
+function updatePieChartData(statistics, setPieChartData) {
+    setPieChartData([
+        ["status", "Number of Animals"],
+        ["healthy", statistics.totalNumberOfCurrentHealthyAnimals],
+        ["recovered", statistics.totalNumberOfCurrentRecoveredAnimals],
+        ["infected", statistics.totalNumberOfCurrentInfectedAnimals],
+        ["severely ill", statistics.totalNumberOfCurrentSeverelyIllAnimals],
+        ["dead", statistics.totalNumberOfDeadAnimals]
+    ]);
 }
