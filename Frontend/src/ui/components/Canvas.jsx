@@ -84,31 +84,33 @@ function Canvas({
 
     const optionsPieChart = {
         title: "",
-        height: 200,
+        height: 300,
         colors: ["#38f5f5", "#f5e616", "#fa602d", "#7F00FF", "#000000"],
         is3D: true,
         curveType: "function",
         legend: {position: "right"},
     };
     const optionsLineChart = {
-        title: "New Infections / Deaths per timeunit",
-        height: 300,
+        title: "New Infections / Deaths per time",
+        height: 450,
+        width: 250,
         colors: ["#fa602d", "#000000"],
         legend: {position: "bottom"},
         curveType: "function",
-        vAxis: {minValue: 0, title: "number", titleTextStyle: {color: "#333"}},
-        hAxis: {minValue: 0, title: "Time", titleTextStyle: {color: "#333"}},
+        vAxis: {minValue: 10, title: "number", titleTextStyle: {color: "#333"}},
+        hAxis: {minValue: 0, title: "time", titleTextStyle: {color: "#333"}},
         chartArea: {width: "70%", height: "70%"}
     };
 
     const optionsAreaChart = {
         title: "Total infections / deaths",
-        height: 300,
+        height: 450,
+        width: 250,
         colors: ["#fa602d", "#000000"],
         legend: {position: "bottom"},
         curveType: "function",
         vAxis: {minValue: 0, title: "number", titleTextStyle: {color: "#333"}},
-        hAxis: {minValue: 0, title: "Time", titleTextStyle: {color: "#333"}},
+        hAxis: {minValue: 0, title: "time", titleTextStyle: {color: "#333"}},
         chartArea: {width: "70%", height: "70%"}
     };
 
@@ -126,31 +128,29 @@ function Canvas({
                                 onClick={() => handleEndSimulation(setIsSimulationRunning, stompClient, intervalId)}> End
                         </button>
                     </div>
-                    <div>
-                        <Chart
-                            chartType="PieChart"
-                            data={pieChartData}
-                            options={optionsPieChart}
-                            width="500px"
-                            height="250px"
-                            legendToggle={true}
-                        />
-                        <Chart
-                            chartType="LineChart"
-                            data={lineChartData}
-                            options={optionsLineChart}
-                            width="100%"
-                            height="250px"
-                            legendToggle={true}
-                        />
-                        <Chart
-                            chartType="AreaChart"
-                            data={areaChartData}
-                            options={optionsAreaChart}
-                            width="100%"
-                            height="250px"
-                            legendToggle={true}
-                        />
+                    <div className="charts">
+                        <div className="line-charts">
+                            <Chart
+                                chartType="LineChart"
+                                data={lineChartData}
+                                options={optionsLineChart}
+                                legendToggle={true}
+                            />
+                            <Chart
+                                chartType="AreaChart"
+                                data={areaChartData}
+                                options={optionsAreaChart}
+                                legendToggle={true}
+                            />
+                        </div>
+                        <div className="pie-chart">
+                            <Chart
+                                chartType="PieChart"
+                                data={pieChartData}
+                                options={optionsPieChart}
+                                legendToggle={true}
+                            />
+                        </div>
                     </div>
                 </div>)
             }
