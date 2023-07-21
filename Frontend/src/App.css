@@ -121,8 +121,19 @@ button {
 .canvas {
 }
 
-.diagrams {
+.charts {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
 
+.line-charts {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.pie-chart {
 }
 
 
