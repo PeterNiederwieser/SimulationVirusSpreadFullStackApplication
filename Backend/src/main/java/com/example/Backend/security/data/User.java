@@ -17,6 +17,8 @@ public class User {
     @GeneratedValue
     private long id;
     private String username;
+    @Column(unique = true)
+    private String email;
     private String password;
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> authorities;
