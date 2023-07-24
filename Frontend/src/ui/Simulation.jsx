@@ -3,6 +3,7 @@ import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/re
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
 import {setupWebSocket} from "../service/webSocketFunctions.js";
 import MainSection from "./components/MainSection.jsx";
+import {NUMBER_OF_SIM_DATA_PER_REQUEST} from "../data/constants.js";
 
 function Simulation() {
     const receivedSimulationDataRef = useRef([]);
@@ -11,6 +12,7 @@ function Simulation() {
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
     const [stompClient, setStompClient] = useState(null);
     const [isSimulationRunning, setIsSimulationRunning] = useState(false);
+    const [numberOfSimStepsPerRequest, setNumberOfSimStepsPerRequest] = useState(0);
 
     useEffect(() => {
         getAllSimulationsBasicData()
@@ -52,6 +54,9 @@ function Simulation() {
         const stompClient = setupWebSocket(receivedSimulationDataRef, setIsSimulationRunning, isDataAwaitedRef);
         setSelectedSimulationId(simulationId);
         setStompClient(stompClient);
+        const numberOfAnimals = simulationsBasicData.filter(item => item.id === simulationId)[0].numberOfAnimals;
+        const numberSimStepsPerRequest = Math.round(NUMBER_OF_SIM_DATA_PER_REQUEST / numberOfAnimals);
+        setNumberOfSimStepsPerRequest(numberSimStepsPerRequest);
     }
 
     return (
@@ -71,6 +76,7 @@ function Simulation() {
                 stompClient={stompClient}
                 selectedSimulationId={selectedSimulationId}
                 isDataAwaitedRef={isDataAwaitedRef}
+                numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
             />
         </div>
     )
