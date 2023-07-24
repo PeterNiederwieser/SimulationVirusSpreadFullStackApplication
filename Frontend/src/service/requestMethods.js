@@ -1,5 +1,5 @@
 import axios from "axios";
-import {URL_SIMULATION_BASIC_DATA, URL_SIMULATION_DATA} from "../data/constants_url.js";
+import {URL_LOGIN, URL_REGISTER, URL_SIMULATION_BASIC_DATA} from "../data/constants_url.js";
 
 
 export async function getAllSimulationsBasicData() {
@@ -20,9 +20,28 @@ export async function getSimulationBasicDataById(id) {
     }
 }
 
+export async function getJwt(headers) {
+    try {
+        const response = await axios.get(URL_LOGIN, {headers: headers});
+        console.log("jwt: " + response.data);
+        return response.data;
+    } catch (error) {
+        console.log("Error in getJwt: ", error);
+    }
+}
+
 export async function postSimulationBasicData(basicData) {
     try {
         await axios.post(URL_SIMULATION_BASIC_DATA, basicData);
+    } catch (error) {
+        console.log("Error in postSimulationParameters: ", error);
+    }
+}
+
+export async function postRegistration(data) {
+    try {
+        const response = await axios.post(URL_REGISTER, data);
+        return response.data;
     } catch (error) {
         console.log("Error in postSimulationParameters: ", error);
     }
