@@ -1,6 +1,6 @@
 import './App.css';
 import {RouterProvider, createBrowserRouter} from "react-router-dom";
-import Landing from "./ui/Landing.jsx";
+import Landing from "./ui/SignIn.jsx";
 import Simulation from "./ui/Simulation.jsx";
 
 function App() {
