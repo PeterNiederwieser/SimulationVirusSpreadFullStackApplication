@@ -2,6 +2,7 @@
 from MUI (mui.com) under MIT-licence (see the licence at the bottom of this file */
 
 import * as React from 'react';
+import { Buffer } from 'buffer';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,35 +16,42 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {getJwt} from "../service/requestMethods.js";
 
-function Copyright(props) {
+function LabelEndOfPage(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
+            {'Virus Spread Simulations '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
     );
 }
 
-//const defaultTheme = createTheme();
+const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const handleSubmit = (event) => {
+    const handleLogin = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
             email: data.get('email'),
             password: data.get('password'),
         });
+        const headers = new Headers();
+        const auth = Buffer.from(data.get('email') + ':' + data.get('password')).toString('base64')
+        headers.set('Authorization', 'Basic ' + auth);
+
+        getJwt(headers)
+            .then(jwt => {
+                localStorage.setItem('jwt', jwt);
+            })
+            .catch(error => console.log('error in handleLogin: ' + error));
     };
 
     return (
         <>
-            {/*<ThemeProvider theme={defaultTheme}>*/}
+            <ThemeProvider theme={defaultTheme}>
                 <Grid container component="main" sx={{height: '100vh'}}>
                     <CssBaseline/>
                     <Grid
@@ -76,7 +84,7 @@ export default function SignIn() {
                             <Typography component="h1" variant="h5">
                                 Sign in
                             </Typography>
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
+                            <Box component="form" noValidate onSubmit={handleLogin} sx={{mt: 1}}>
                                 <TextField
                                     margin="normal"
                                     required
@@ -121,12 +129,12 @@ export default function SignIn() {
                                         </Link>
                                     </Grid>
                                 </Grid>
-                                <Copyright sx={{mt: 5}}/>
+                                <LabelEndOfPage sx={{mt: 5}}/>
                             </Box>
                         </Box>
                     </Grid>
                 </Grid>
-           {/* </ThemeProvider>*/}
+           </ThemeProvider>
         </>
     );
 }
