@@ -1,7 +1,7 @@
 package com.example.Backend.security.endpoint;
 
 import com.example.Backend.security.data.RegistrationDTO;
-import com.example.Backend.security.service.RegisterService;
+import com.example.Backend.security.logic.RegisterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
