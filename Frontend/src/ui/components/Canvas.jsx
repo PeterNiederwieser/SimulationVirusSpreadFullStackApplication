@@ -3,7 +3,6 @@ import {getSimulationData} from "../../service/webSocketFunctions.js";
 import {
     HEIGHT_CANVAS,
     LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST,
-    NUMBER_OF_SIM_STEPS_PER_REQUEST,
     TIME_RANGE_FOR_STATISTICS_IN_STEPS,
     TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
     WIDTH_CANVAS
@@ -18,12 +17,13 @@ function Canvas({
                     setIsSimulationRunning,
                     stompClient,
                     selectedSimulationId,
-                    isDataAwaitedRef
+                    isDataAwaitedRef,
+                    numberOfSimStepsPerRequest
                 }) {
     const canvasRef = useRef(null);
     const stepNumberRef = useRef(0);
     const stepNumberFloorRef = useRef(0);
-    const stepNumberCeilRef = useRef(NUMBER_OF_SIM_STEPS_PER_REQUEST);
+    const stepNumberCeilRef = useRef(numberOfSimStepsPerRequest);
     const [buttonText, setButtonText] = useState("Stop");
     const [isSimulationPaused, setIsSimulationPaused] = useState(false);
     const [pieChartData, setPieChartData] = useState([["status", "Number of Animals"], ["healthy", 100], ["recovered", 0],
@@ -66,8 +66,8 @@ function Canvas({
         if (receivedSimulationDataRef.current.length <= LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST && !isDataAwaitedRef.current) {
             getSimulationData(selectedSimulationId, stompClient, stepNumberFloorRef, stepNumberCeilRef);
             isDataAwaitedRef.current = true;
-            stepNumberFloorRef.current += NUMBER_OF_SIM_STEPS_PER_REQUEST;
-            stepNumberCeilRef.current += NUMBER_OF_SIM_STEPS_PER_REQUEST;
+            stepNumberFloorRef.current += numberOfSimStepsPerRequest;
+            stepNumberCeilRef.current += numberOfSimStepsPerRequest;
         }
     }
 
