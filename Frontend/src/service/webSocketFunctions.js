@@ -9,7 +9,6 @@ export function setupWebSocket(receivedSimulationDataRef, setIsSimulationRunning
     const stompClient = new StompJs.Client({
         brokerURL: URL_WEBSOCKET_ENDPOINT
     });
-
     stompClient.onConnect = () => {
         console.log("WebSocket Connection established: ");
         setIsSimulationRunning(true);
@@ -17,7 +16,6 @@ export function setupWebSocket(receivedSimulationDataRef, setIsSimulationRunning
             const dataArray = JSON.parse(data.body);
             receivedSimulationDataRef.current = [...receivedSimulationDataRef.current, ...dataArray];
             isDataAwaitedRef.current = false;
-            console.log("data received, current data: ", receivedSimulationDataRef.current.length);
         });
     };
 
