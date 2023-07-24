@@ -1,4 +1,4 @@
-export const NUMBER_OF_SIM_STEPS_PER_REQUEST = 200;
+export const NUMBER_OF_SIM_DATA_PER_REQUEST = 15000;
 export const TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS = 100;
 export const ANIMAL_RADIUS = 4;
 export const WIDTH_CANVAS = 800;
