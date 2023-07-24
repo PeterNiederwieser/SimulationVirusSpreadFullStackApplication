@@ -7,7 +7,9 @@ function SimulationSection({
                                setIsSimulationRunning,
                                stompClient,
                                selectedSimulationId,
-                               isDataAwaitedRef
+                               isDataAwaitedRef,
+                               numberOfAnimals,
+                               numberOfSimStepsPerRequest
                            }) {
     return (
         <>
@@ -19,6 +21,8 @@ function SimulationSection({
                     stompClient={stompClient}
                     selectedSimulationId={selectedSimulationId}
                     isDataAwaitedRef={isDataAwaitedRef}
+                    numberOfAnimals={numberOfAnimals}
+                    numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
                 />
                 <Diagrams
                     receivedSimulationDataRef={receivedSimulationDataRef}
