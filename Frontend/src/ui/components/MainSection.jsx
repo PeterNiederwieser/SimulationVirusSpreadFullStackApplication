@@ -10,7 +10,8 @@ function MainSection({
                          setIsSimulationRunning,
                          stompClient,
                          selectedSimulationId,
-                         isDataAwaitedRef
+                         isDataAwaitedRef,
+                         numberOfSimStepsPerRequest
                      }) {
     return (
         <div className="main-section">
@@ -26,6 +27,7 @@ function MainSection({
                 stompClient={stompClient}
                 selectedSimulationId={selectedSimulationId}
                 isDataAwaitedRef={isDataAwaitedRef}
+                numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
             />
         </div>
     )
