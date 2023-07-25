@@ -41,7 +41,7 @@ export default function Register() {
         const data = new FormData(event.currentTarget);
         console.log({
             username: data.get('username'),
-            email: data.get('email');
+            email: data.get('email'),
             password: data.get('password'),
         });
         postRegistration(data)
@@ -81,11 +81,13 @@ export default function Register() {
                                 alignItems: 'center',
                             }}
                         >
+                            <div style={{margin: "100px"}}>
+                            </div>
                             <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                                <LockOutlinedIcon/>
+                               {/* <LockOutlinedIcon/>*/}
                             </Avatar>
                             <Typography component="h1" variant="h5">
-                                Sign in
+                                Register
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleRegister} sx={{mt: 1}}>
                                 <TextField
@@ -118,17 +120,13 @@ export default function Register() {
                                     id="password"
                                     autoComplete="current-password"
                                 />
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary"/>}
-                                    label="Remember me"
-                                />
                                 <Button
                                     type="submit"
                                     fullWidth
                                     variant="contained"
                                     sx={{mt: 3, mb: 2}}
                                 >
-                                    Sign In
+                                    Register
                                 </Button>
                                 <LabelEndOfPage sx={{mt: 5}}/>
                             </Box>
