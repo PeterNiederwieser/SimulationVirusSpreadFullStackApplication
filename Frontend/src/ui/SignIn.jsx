@@ -2,7 +2,7 @@
 from MUI (mui.com) under MIT-licence (see the licence at the bottom of this file */
 
 import * as React from 'react';
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,10 +17,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {getJwt} from "../service/requestMethods.js";
+import {useNavigate} from "react-router-dom";
+import {handleLogin} from "../service/authentication.js";
 
 function LabelEndOfPage(props) {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        <Typography variant="body2" color="text.secondary" align="center" {...props} style={{marginTop: "150px"}}>
             {'Virus Spread Simulations '}
             {new Date().getFullYear()}
             {'.'}
@@ -31,20 +33,7 @@ function LabelEndOfPage(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const handleLogin = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-        const auth = Buffer.from(data.get('email') + ':' + data.get('password')).toString('base64');
-        getJwt(auth)
-            .then(jwt => {
-                localStorage.setItem('jwt', jwt);
-            })
-            .catch(error => console.log('error in handleLogin: ' + error));
-    };
+    const navigate = useNavigate();
 
     return (
         <>
@@ -75,13 +64,14 @@ export default function SignIn() {
                                 alignItems: 'center',
                             }}
                         >
-                            <Typography component="h1" variant="h5" style={{marginBottom: '10px', fontSize: '35px', marginTop: '180px'}}>
+                            <Typography component="h1" variant="h5"
+                                        style={{marginBottom: '10px', fontSize: '35px', marginTop: '180px'}}>
                                 Virus Spread Simulations
                             </Typography>
                             <Typography style={{marginBottom: '10px', fontSize: '30px'}}>
                                 Sign in
                             </Typography>
-                            <Box component="form" noValidate onSubmit={handleLogin} sx={{mt: 1}}>
+                            <Box component="form" noValidate onSubmit={event => handleLogin(event, navigate)} sx={{mt: 1}} style={{width: "500px"}}>
                                 <TextField
                                     margin="normal"
                                     required
@@ -101,10 +91,6 @@ export default function SignIn() {
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
-                                />
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary"/>}
-                                    label="Remember me"
                                 />
                                 <Button
                                     type="submit"
@@ -126,7 +112,7 @@ export default function SignIn() {
                         </Box>
                     </Grid>
                 </Grid>
-           </ThemeProvider>
+            </ThemeProvider>
         </>
     );
 }
