@@ -38,11 +38,8 @@ export default function SignIn() {
             email: data.get('email'),
             password: data.get('password'),
         });
-        const headers = new Headers();
-        const auth = Buffer.from(data.get('email') + ':' + data.get('password')).toString('base64')
-        headers.set('Authorization', 'Basic ' + auth);
-
-        getJwt(headers)
+        const auth = Buffer.from(data.get('email') + ':' + data.get('password')).toString('base64');
+        getJwt(auth)
             .then(jwt => {
                 localStorage.setItem('jwt', jwt);
             })
