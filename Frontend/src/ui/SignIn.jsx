@@ -60,7 +60,7 @@ export default function SignIn() {
                         sm={4}
                         md={7}
                         sx={{
-                            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                            backgroundImage: '',
                             backgroundRepeat: 'no-repeat',
                             backgroundColor: (t) =>
                                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -78,10 +78,10 @@ export default function SignIn() {
                                 alignItems: 'center',
                             }}
                         >
-                            {/*<Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                                <LockOutlinedIcon/>
-                            </Avatar>*/}
-                            <Typography component="h1" variant="h5">
+                            <Typography component="h1" variant="h5" style={{marginBottom: '10px', fontSize: '35px', marginTop: '180px'}}>
+                                Virus Spread Simulations
+                            </Typography>
+                            <Typography style={{marginBottom: '10px', fontSize: '30px'}}>
                                 Sign in
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleLogin} sx={{mt: 1}}>
