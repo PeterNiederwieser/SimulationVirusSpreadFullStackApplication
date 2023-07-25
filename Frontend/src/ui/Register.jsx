@@ -39,16 +39,8 @@ export default function Register() {
     const handleRegister = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            username: data.get('username'),
-            email: data.get('email'),
-            password: data.get('password'),
-        });
         postRegistration(data)
-            .then(response => {
-                console.log("responseFromRegistration: " + response);
-                navigate("/");
-            })
+            .then(() => navigate("/"))
             .catch(error => console.log("Error in handleRegister: " + error));
     };
 
