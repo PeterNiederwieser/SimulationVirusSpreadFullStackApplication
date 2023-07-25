@@ -39,8 +39,13 @@ export async function postSimulationBasicData(basicData) {
 }
 
 export async function postRegistration(data) {
+    const customConfiguration = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
     try {
-        const response = await axios.post(URL_REGISTER, data);
+        const response = await axios.post(URL_REGISTER, data, customConfiguration);
         return response.data;
     } catch (error) {
         console.log("Error in postSimulationParameters: ", error);
