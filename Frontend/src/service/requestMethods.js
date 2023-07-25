@@ -20,9 +20,15 @@ export async function getSimulationBasicDataById(id) {
     }
 }
 
-export async function getJwt(headers) {
+export async function getJwt(auth) {
+    const customConfiguration = {
+        headers: {
+            'Authorization': 'Basic ' + auth,
+            'Content-Type': 'application/json'
+        }
+    };
     try {
-        const response = await axios.get(URL_LOGIN, {headers: headers});
+        const response = await axios.get(URL_LOGIN, customConfiguration);
         console.log("jwt: " + response.data);
         return response.data;
     } catch (error) {
@@ -48,7 +54,7 @@ export async function postRegistration(data) {
         const response = await axios.post(URL_REGISTER, data, customConfiguration);
         return response.data;
     } catch (error) {
-        console.log("Error in postSimulationParameters: ", error);
+        console.log("Error in postRegistration: ", error);
     }
 }
 
