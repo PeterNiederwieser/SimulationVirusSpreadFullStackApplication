@@ -2,7 +2,6 @@
 from MUI (mui.com) under MIT-licence (see the licence at the bottom of this file */
 
 import * as React from 'react';
-import {Buffer} from 'buffer';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,11 +16,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {postRegistration} from "../service/requestMethods.js";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {handleRegister} from "../service/authentication.js";
 
 function LabelEndOfPage(props) {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        <Typography variant="body2" color="text.secondary" align="center" {...props} style={{marginTop: "150px"}}>
             {'Virus Spread Simulations '}
             <Link color="inherit" href="http://localhost:5173">
                 Home
@@ -36,13 +36,6 @@ const defaultTheme = createTheme();
 
 export default function Register() {
     const navigate = useNavigate();
-    const handleRegister = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        postRegistration(data)
-            .then(() => navigate("/"))
-            .catch(error => console.log("Error in handleRegister: " + error));
-    };
 
     return (
         <>
@@ -73,13 +66,14 @@ export default function Register() {
                                 alignItems: 'center',
                             }}
                         >
-                            <Typography component="h1" variant="h5" style={{marginBottom: '10px', fontSize: '35px', marginTop: '180px'}}>
+                            <Typography component="h1" variant="h5"
+                                        style={{marginBottom: '10px', fontSize: '35px', marginTop: '180px'}}>
                                 Virus Spread Simulations
                             </Typography>
                             <Typography style={{marginBottom: '10px', fontSize: '30px'}}>
-                                Register
+                                Registration
                             </Typography>
-                            <Box component="form" noValidate onSubmit={handleRegister} sx={{mt: 1}}>
+                            <Box component="form" noValidate onSubmit={event => handleRegister(event, navigate)} sx={{mt: 1}} style={{width: "500px"}}>
                                 <TextField
                                     margin="normal"
                                     required
