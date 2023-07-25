@@ -63,7 +63,7 @@ export default function Register() {
                         sm={4}
                         md={7}
                         sx={{
-                            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                            backgroundImage: '',
                             backgroundRepeat: 'no-repeat',
                             backgroundColor: (t) =>
                                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -81,12 +81,10 @@ export default function Register() {
                                 alignItems: 'center',
                             }}
                         >
-                            <div style={{margin: "100px"}}>
-                            </div>
-                            <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-                               {/* <LockOutlinedIcon/>*/}
-                            </Avatar>
-                            <Typography component="h1" variant="h5">
+                            <Typography component="h1" variant="h5" style={{marginBottom: '10px', fontSize: '35px', marginTop: '180px'}}>
+                                Virus Spread Simulations
+                            </Typography>
+                            <Typography style={{marginBottom: '10px', fontSize: '30px'}}>
                                 Register
                             </Typography>
                             <Box component="form" noValidate onSubmit={handleRegister} sx={{mt: 1}}>
@@ -94,10 +92,10 @@ export default function Register() {
                                     margin="normal"
                                     required
                                     fullWidth
-                                    id="username"
+                                    id="userName"
                                     label="Username"
-                                    name="username"
-                                    autoComplete="username"
+                                    name="userName"
+                                    autoComplete="userName"
                                     autoFocus
                                 />
                                 <TextField
