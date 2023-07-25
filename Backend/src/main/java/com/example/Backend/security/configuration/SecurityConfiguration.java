@@ -45,6 +45,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/register").permitAll();
                     auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers("/websocket-endpoint").permitAll();
                     auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll();
                     auth.anyRequest().authenticated();
                 })
