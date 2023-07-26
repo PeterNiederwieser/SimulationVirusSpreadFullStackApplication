@@ -5,6 +5,7 @@ import {
     getAllSimulationsBasicData,
     updateSimulationBasicData
 } from "../../service/requestMethods.js";
+import Button from "@mui/material/Button";
 
 function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
     function initFormObject() {
@@ -58,11 +59,20 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
         <div className="overview-item">
             <div className="overview-item-heading">
                 <div className="overview-item-name">Simulation: {item.simulationName}</div>
-                <button className="overview-item-button" type="button" onClick={() => runSimulation(item.id)}>
-                    Run
-                </button>
-                <button className="overview-item-button" type="button" onClick={toggleDetails}>Details</button>
-                <button className="overview-item-button" type="button" onClick={deleteItem}>Delete</button>
+                <div className="overview-item-buttons">
+                    <Button id="item-button" onClick={() => runSimulation(item.id)} variant="contained"
+                            sx={{ width: 90, height: 35}}>
+                        Run
+                    </Button>
+                    <Button id="item-button" onClick={toggleDetails} variant="contained"
+                            sx={{ width: 90, height: 35}}>
+                        Details
+                    </Button>
+                    <Button id="item-button" onClick={deleteItem} variant="contained"
+                        sx={{ width: 90, height: 35}}>
+                        Delete
+                    </Button>
+                </div>
             </div>
             <div className="overview-item-details">
                 {isDetailedViewShown && (
@@ -85,10 +95,15 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                                 id="input-short"
                             />
                         </div>
-                        <div className="overview-item-details-buttons">
-                            <button className="overview-item-button" type="button" onClick={updateItem}>Update</button>
-                            <button className="overview-item-button" type="button" onClick={toggleDetails}>Close
-                            </button>
+                        <div className="overview-item-buttons">
+                            <Button id="item-button" onClick={updateItem} variant="contained"
+                                    sx={{ width: 90, height: 35}}>
+                                Update
+                            </Button>
+                            <Button id="item-button" onClick={toggleDetails} variant="contained"
+                                    sx={{ width: 90, height: 35}}>
+                                Close
+                            </Button>
                         </div>
                     </div>
                 )}
