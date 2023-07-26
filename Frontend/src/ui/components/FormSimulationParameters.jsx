@@ -1,33 +1,42 @@
 import FormInput from "./FormInput.jsx";
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
 function FormSimulationParameters({updateFormObject, formObject, onSubmit}) {
     return (
         <div className="form">
-            <FormInput
-                updateFormObject={updateFormObject}
-                value={formObject.simulationName}
-                name="simulationName"
-                label="Simulation Name: "
-                classNameLabel="label-long"
-                classNameInput="input-long"
-            />
-            <FormInput
-                updateFormObject={updateFormObject}
-                value={formObject.numberOfAnimals}
-                name="numberOfAnimals"
-                label="Number of Animals (range 100 to 1000): "
-                classNameLabel="label-long"
-                classNameInput="input-long"
-            />
-            <FormInput
-                updateFormObject={updateFormObject}
-                value={formObject.numberOfInitialInfections}
-                name="numberOfInitialInfections"
-                label="Number of initial infections: "
-                classNameLabel="label-long"
-                classNameInput="input-long"
-            />
-            <button className="form-button" onClick={() => onSubmit(formObject)}>Submit</button>
+            <div className="form-section">
+                <div className="form-heading">
+                    Please enter the basic preconditions for your simulation:
+                </div>
+                <div className="form-input-container">
+                    <FormInput
+                        updateFormObject={updateFormObject}
+                        value={formObject.simulationName}
+                        name="simulationName"
+                        label="Simulation Name"
+                        id="input-long"
+                    />
+                    <FormInput
+                        updateFormObject={updateFormObject}
+                        value={formObject.numberOfAnimals}
+                        name="numberOfAnimals"
+                        label="Number of Animals"
+                        id="input-long"
+                    />
+                    <FormInput
+                        updateFormObject={updateFormObject}
+                        value={formObject.numberOfInitialInfections}
+                        name="numberOfInitialInfections"
+                        label="Number of initial infections"
+                        id="input-long"
+                    />
+                </div>
+                <div className="form-container-button">
+                    <Button id="form-button" onClick={() => onSubmit(formObject)} endIcon={<SendIcon/>}
+                            variant="contained">Submit</Button>
+                </div>
+            </div>
         </div>
     )
 }
