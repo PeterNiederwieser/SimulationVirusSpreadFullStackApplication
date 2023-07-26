@@ -6,7 +6,6 @@ function FormInput({updateFormObject, value, name, label, id}) {
         <div className="form-input">
             <TextField
                 margin="normal"
-                required
                 fullWidth
                 name={name}
                 value={value}
