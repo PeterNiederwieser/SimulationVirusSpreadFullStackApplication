@@ -1,8 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap%22");
+
+:root {
+    --main-font-family: "Poppins", sans-serif;
+
+    --color1: #0B0C10;
+    --color2: #585f65;
+    --color3: #8f9193;
+    --color4: #66FCF1;
+    --color5: #45A29E;
+}
+
+* {
+    font-family: var(--main-font-family);
+}
+
+.navbar {
+    background-color: var(--color1);
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.navbar-topic {
+    text-align: left;
+    padding-left: 50px;
+    font-size: 30px;
+    width: 40%;
+    color: var(--color4);
+    font-weight: 800;
+}
+
+.navbar-items {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    color: var(--color4);
+    font-weight: 800;
+    gap: 100px;
+    font-size: 20px;
+    justify-content: right;
+    padding-right: 50px;
+}
+
+.navbar-item {
+    cursor: pointer;
+}
+
 body {
     margin: 0 auto;
     padding: 0rem;
     text-align: center;
-    background-color: #747bff;
+    background-color: #221f43;
 }
 
 .simulation {
@@ -15,7 +64,7 @@ body {
 .overview-simulations {
     width: 20%;
     height: 100vh;
-    background-color: #747bff;
+    background-color: var(--color1);
     overflow-y: scroll;
     padding: 20px;
     padding-top: 40px;
@@ -25,7 +74,7 @@ body {
     width: 80%;
     display: flex;
     flex-direction: column;
-    background-color: aquamarine;
+    background-color: var(--color1);
 }
 
 .overview-item {
@@ -66,18 +115,31 @@ button {
 
 .form {
     padding-top: 40px;
+    padding-left: 200px;
     width: 100%;
-    height: 200px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-start;
+    justify-content: center;
 }
 
-.form-button {
-    align-items: center;
-    justify-content: center;
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-heading {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color5);
+    text-align: left;
+}
+
+.form-input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .form-input {
@@ -87,22 +149,33 @@ button {
     justify-content: center;
 }
 
-.label-long {
-    width: 400px;
-    text-align: left;
+.form-container-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
-.label-short {
-    width: 150px;
-    text-align: left;
+#form-button {
+    justify-content: center;
+    width: 278px;
+    border-radius: 40px;
+    background-color: var(--color5);
+    color: blacK;
+    border-color: black;
 }
 
-.input-long {
-    width: 150px;
+#input-long {
+    height: 20px;
+    width: 250px;
+    /*background-color: var(--color3);*/
+
 }
 
-.input-short {
-    width: 40px;
+#input-short {
+    height: 20px;
+    width: 180px;
+    border-radius: 5px;
 }
 
 .simulation-section {
