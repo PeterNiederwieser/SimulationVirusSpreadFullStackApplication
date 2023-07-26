@@ -34,12 +34,12 @@
 }
 
 body {
-    background-image: radial-gradient( var(--color3), var(--color1));
+    background-image: radial-gradient(var(--color3), var(--color1));
 }
 
 .navbar {
     background-color: transparent;
-    height: 100px;
+    height: 80px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -90,6 +90,7 @@ body {
     overflow-y: scroll;
     padding: 20px;
     padding-top: 40px;
+    color: white;
 }
 
 .main-section {
@@ -117,6 +118,9 @@ body {
 .overview-item-details {
     margin-top: 10px;
     font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .overview-item-detail {
@@ -130,19 +134,36 @@ body {
     margin-top: 20px;
 }
 
+.overview-item-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+}
+
+#item-button {
+    border-radius: 15px;
+    background-color: var(--color6);
+    color: blacK;
+}
+
+#item-button:hover {
+    background-color: white;
+}
+
 button {
     margin: 2px;
     width: 70px;
 }
 
 .form {
-    padding-top: 40px;
     padding-left: 200px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .form-section {
@@ -187,6 +208,10 @@ button {
     border-color: black;
 }
 
+#form-button:hover {
+    background-color: white;
+}
+
 #input-long {
     height: 20px;
     width: 250px;
@@ -209,17 +234,31 @@ button {
 }
 
 .canvas-diagrams {
+    width: 100%;
     display: flex;
     flex-direction: row;
 }
 
-.canvas {
+.canvas-section {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.canvas-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
 }
 
 .charts {
     display: flex;
     flex-direction: column;
     gap: 50px;
+    width: 40%;
 }
 
 .line-charts {
@@ -229,6 +268,10 @@ button {
 }
 
 .pie-chart {
+    display: flex;
+    flex-direction: row;
 }
+
+
 
 
