@@ -3,19 +3,42 @@
 :root {
     --main-font-family: "Poppins", sans-serif;
 
-    --color1: #0B0C10;
-    --color2: #585f65;
-    --color3: #8f9193;
-    --color4: #66FCF1;
-    --color5: #45A29E;
+    --color1: #09011f;
+    --color2: #0d2863;
+    --color3: #173e81;
+    --color4: #245da5;
+    --color5: #3481cb;
+    --color6: #4aa6e6;
+    --color7: #81d9f0;
+
+    --fontColor1: #FFFFFF;
+    --fontColor2: #616264;
+    --fontColor3: #81b4e5;
+
+    /*--color1: #15073e;
+    --color2: #0d2863;
+    --color3: #173e81;
+    --color4: #245da5;
+    --color5: #3481cb;
+    --color6: #4aa6e6;
+    --color7: #81d9f0;
+
+
+    #4aa6e6
+    #173e81
+    */
 }
 
 * {
     font-family: var(--main-font-family);
 }
 
+body {
+    background-image: radial-gradient( var(--color3), var(--color1));
+}
+
 .navbar {
-    background-color: var(--color1);
+    background-color: transparent;
     height: 100px;
     display: flex;
     flex-direction: row;
@@ -27,7 +50,7 @@
     padding-left: 50px;
     font-size: 30px;
     width: 40%;
-    color: var(--color4);
+    color: var(--fontColor1);
     font-weight: 800;
 }
 
@@ -35,7 +58,7 @@
     display: flex;
     flex-direction: row;
     width: 60%;
-    color: var(--color4);
+    color: var(--fontColor1);
     font-weight: 800;
     gap: 100px;
     font-size: 20px;
@@ -51,7 +74,6 @@ body {
     margin: 0 auto;
     padding: 0rem;
     text-align: center;
-    background-color: #221f43;
 }
 
 .simulation {
@@ -64,7 +86,7 @@ body {
 .overview-simulations {
     width: 20%;
     height: 100vh;
-    background-color: var(--color1);
+    background-color: transparent;
     overflow-y: scroll;
     padding: 20px;
     padding-top: 40px;
@@ -74,13 +96,13 @@ body {
     width: 80%;
     display: flex;
     flex-direction: column;
-    background-color: var(--color1);
+    background-color: transparent;
 }
 
 .overview-item {
     margin-top: 40px;
     padding: 20px;
-    background-color: white;
+    background-color: var(--color2);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -132,7 +154,7 @@ button {
 .form-heading {
     font-size: 20px;
     font-weight: 800;
-    color: var(--color5);
+    color: var(--fontColor1);
     text-align: left;
 }
 
@@ -159,8 +181,8 @@ button {
 #form-button {
     justify-content: center;
     width: 278px;
-    border-radius: 40px;
-    background-color: var(--color5);
+    border-radius: 20px;
+    background-color: var(--color6);
     color: blacK;
     border-color: black;
 }
