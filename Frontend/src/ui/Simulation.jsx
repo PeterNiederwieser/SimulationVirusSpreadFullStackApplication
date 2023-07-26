@@ -4,6 +4,8 @@ import OverviewSimulations from "./components/OverviewSimulations.jsx";
 import {setupWebSocket} from "../service/webSocketFunctions.js";
 import MainSection from "./components/MainSection.jsx";
 import {NUMBER_OF_SIM_DATA_PER_REQUEST} from "../data/constants.js";
+import Navbar from "./components/Navbar.jsx";
+
 
 function Simulation() {
     const receivedSimulationDataRef = useRef([]);
@@ -60,24 +62,27 @@ function Simulation() {
     }
 
     return (
-        <div className="simulation">
-            <OverviewSimulations
-                runSimulation={runSimulation}
-                simulationsBasicData={simulationsBasicData}
-                setSimulationsBasicData={setSimulationsBasicData}
-            />
-            <MainSection
-                updateFormObject={updateFormObject}
-                formObject={formObject}
-                onSubmit={onSubmit}
-                receivedSimulationDataRef={receivedSimulationDataRef}
-                isSimulationRunning={isSimulationRunning}
-                setIsSimulationRunning={setIsSimulationRunning}
-                stompClient={stompClient}
-                selectedSimulationId={selectedSimulationId}
-                isDataAwaitedRef={isDataAwaitedRef}
-                numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
-            />
+        <div className="container">
+            <Navbar/>
+            <div className="simulation">
+                <OverviewSimulations
+                    runSimulation={runSimulation}
+                    simulationsBasicData={simulationsBasicData}
+                    setSimulationsBasicData={setSimulationsBasicData}
+                />
+                <MainSection
+                    updateFormObject={updateFormObject}
+                    formObject={formObject}
+                    onSubmit={onSubmit}
+                    receivedSimulationDataRef={receivedSimulationDataRef}
+                    isSimulationRunning={isSimulationRunning}
+                    setIsSimulationRunning={setIsSimulationRunning}
+                    stompClient={stompClient}
+                    selectedSimulationId={selectedSimulationId}
+                    isDataAwaitedRef={isDataAwaitedRef}
+                    numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
+                />
+            </div>
         </div>
     )
 }
