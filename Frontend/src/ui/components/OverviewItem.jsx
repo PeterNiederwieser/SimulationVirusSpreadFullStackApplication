@@ -73,8 +73,7 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                                 value={formObject.numberOfAnimals}
                                 name="numberOfAnimals"
                                 label="Number of animals: "
-                                classNameLabel="label-short"
-                                classNameInput="input-short"
+                                id="input-short"
                             />
                         </div>
                         <div className="overview-item-detail">
@@ -83,8 +82,7 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                                 value={formObject.numberOfInitialInfections}
                                 name="numberOfInitialInfections"
                                 label="Initial infections: "
-                                classNameLabel="label-short"
-                                classNameInput="input-short"
+                                id="input-short"
                             />
                         </div>
                         <div className="overview-item-details-buttons">
