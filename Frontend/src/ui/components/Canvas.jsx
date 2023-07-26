@@ -10,6 +10,7 @@ import {
 import {drawBackground, processDataPerStepNumber, resetBuffer, updateDiagrams} from "../../service/drawing.js";
 import {handleEndSimulation, handleStopContinue} from "../../service/eventHandler.js";
 import {Chart} from "react-google-charts";
+import Button from "@mui/material/Button";
 
 function Canvas({
                     receivedSimulationDataRef,
@@ -85,6 +86,7 @@ function Canvas({
     const optionsPieChart = {
         title: "",
         height: 300,
+        width: 550,
         colors: ["#38f5f5", "#f5e616", "#fa602d", "#7F00FF", "#000000"],
         is3D: true,
         curveType: "function",
@@ -119,14 +121,22 @@ function Canvas({
         <>
             {isSimulationRunning &&
                 (<div className="canvas-diagrams">
-                    <div className="canvas">
+                    <div className="canvas-section">
                         <canvas ref={canvasRef} width={WIDTH_CANVAS} height={HEIGHT_CANVAS}/>
-                        <button type="button"
-                                onClick={() => handleStopContinue(isSimulationPaused, setIsSimulationPaused, intervalId, setButtonText)}>{buttonText}
-                        </button>
-                        <button type="button"
-                                onClick={() => handleEndSimulation(setIsSimulationRunning, stompClient, intervalId)}> End
-                        </button>
+                        <div className="canvas-buttons">
+                            <Button id="item-button"
+                                    onClick={() => handleStopContinue(isSimulationPaused, setIsSimulationPaused, intervalId, setButtonText)}
+                                    variant="contained"
+                                    sx={{width: 90, height: 35}}>
+                                {buttonText}
+                            </Button>
+                            <Button id="item-button"
+                                    onClick={() => handleEndSimulation(setIsSimulationRunning, stompClient, intervalId)}
+                                    variant="contained"
+                                    sx={{width: 90, height: 35}}>
+                                End
+                            </Button>
+                        </div>
                     </div>
                     <div className="charts">
                         <div className="line-charts">
