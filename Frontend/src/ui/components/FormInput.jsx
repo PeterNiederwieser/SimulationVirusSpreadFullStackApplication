@@ -14,16 +14,16 @@ function FormInput({updateFormObject, value, name, label, id}) {
                 id={id}
                 onChange={event => updateFormObject(event.target.name, event.target.value)}
                 sx={{
-                    "& .MuiInputLabel-root": {color: '#45A29E'},
+                    "& .MuiInputLabel-root": {color: '#FFFFFF'},
                     "& .MuiOutlinedInput-root": {
-                        "& > fieldset": {borderColor: '#1F2833', borderRadius: 5, backgroundColor: '#1F2833'},
+                        "& > fieldset": {borderColor: '#3481cb', borderRadius: 5, backgroundColor: '#173e81'},
                     },
-                    "& .MuiInputLabel-root.Mui-focused": {color: '#45A29E', zIndex: 3},
+                    "& .MuiInputLabel-root.Mui-focused": {color: '#FFFFFF', zIndex: 3},
                     "& .MuiOutlinedInput-root.Mui-focused": {
-                        "& > fieldset": {borderColor: '#45A29E', backgroundColor: '#1F2833'}
+                        "& > fieldset": {borderColor: '#FFFFFF', backgroundColor: '#173e81'}
                     },
                     "& input": {
-                        color: 'white', zIndex: 1
+                        color: '#FFFFFF', zIndex: 1
                     }
                 }}
             />
