@@ -25,6 +25,6 @@ public class SimulationDataWebSocketEndpoint {
     @MessageMapping("/request")
     @SendTo("/topic/data")
     public String getDataByIdAndStepNumbers(RequestBodySimData request) throws IOException {
-        return simulationDataWebSocketService.findByIdAndStepNumbers(request);
+        return simulationDataWebSocketService.getByIdAndStepNumbers(request);
     }
 }

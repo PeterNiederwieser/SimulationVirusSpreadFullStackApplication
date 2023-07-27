@@ -14,19 +14,22 @@ import java.util.List;
 public class SimulationDataWebSocketService {
     private final SimulationManager simulationManager;
     private final SimulationDataService simulationDataService;
+    private final DatabaseStorageService databaseStorageService;
 
-    public SimulationDataWebSocketService(SimulationManager simulationManager, SimulationDataService simulationDataService) {
+    public SimulationDataWebSocketService(SimulationManager simulationManager, SimulationDataService simulationDataService, DatabaseStorageService databaseStorageService) {
         this.simulationManager = simulationManager;
         this.simulationDataService = simulationDataService;
+        this.databaseStorageService = databaseStorageService;
     }
 
-    public String findByIdAndStepNumbers(RequestBodySimData request) throws JsonProcessingException {
+    public String getByIdAndStepNumbers(RequestBodySimData request) throws JsonProcessingException {
         long simulationId = request.simulationId();
         Context context = simulationManager.getSimulationContext(simulationId);
         System.out.println("Simulation started");
         simulationManager.runRequiredSteps(request);
         System.out.println("Steps computed");
         List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
+        databaseStorageService.saveSimDataBatchToDb(requestedSimulationData);
         System.out.println("got data");
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println("mapped data");
