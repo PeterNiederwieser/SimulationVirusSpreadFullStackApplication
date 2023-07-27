@@ -61,15 +61,15 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                 <div className="overview-item-name">Simulation: {item.simulationName}</div>
                 <div className="overview-item-buttons">
                     <Button id="item-button" onClick={() => runSimulation(item.id)} variant="contained"
-                            sx={{ width: 90, height: 35}}>
+                            sx={{width: 90, height: 35}}>
                         Run
                     </Button>
                     <Button id="item-button" onClick={toggleDetails} variant="contained"
-                            sx={{ width: 90, height: 35}}>
+                            sx={{width: 90, height: 35}}>
                         Details
                     </Button>
                     <Button id="item-button" onClick={deleteItem} variant="contained"
-                        sx={{ width: 90, height: 35}}>
+                            sx={{width: 90, height: 35}}>
                         Delete
                     </Button>
                 </div>
@@ -97,11 +97,11 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                         </div>
                         <div className="overview-item-buttons">
                             <Button id="item-button" onClick={updateItem} variant="contained"
-                                    sx={{ width: 90, height: 35}}>
+                                    sx={{width: 90, height: 35}}>
                                 Update
                             </Button>
                             <Button id="item-button" onClick={toggleDetails} variant="contained"
-                                    sx={{ width: 90, height: 35}}>
+                                    sx={{width: 90, height: 35}}>
                                 Close
                             </Button>
                         </div>
