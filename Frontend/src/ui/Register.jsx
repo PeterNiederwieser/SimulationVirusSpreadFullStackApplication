@@ -1,23 +1,18 @@
 /* Source of this React Component Register: free template taken with modifications
 from MUI (mui.com) under MIT-licence (see the licence at the bottom of this file */
 
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {postRegistration} from "../service/requestMethods.js";
 import {useNavigate} from "react-router-dom";
 import {handleRegister} from "../service/authentication.js";
+import {stylingTextfield} from "../data/stylingElements.js";
 
 function LabelEndOfPage(props) {
     return (
@@ -48,7 +43,7 @@ export default function Register() {
                         sm={4}
                         md={7}
                         sx={{
-                            backgroundImage: '',
+                            backgroundImage: 'url(\'/screen.jpg\')',
                             backgroundRepeat: 'no-repeat',
                             backgroundColor: (t) =>
                                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -56,7 +51,8 @@ export default function Register() {
                             backgroundPosition: 'center',
                         }}
                     />
-                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
+                          className="register-right-side">
                         <Box
                             sx={{
                                 my: 8,
@@ -67,13 +63,19 @@ export default function Register() {
                             }}
                         >
                             <Typography component="h1" variant="h5"
-                                        style={{marginBottom: '10px', fontSize: '35px', marginTop: '180px'}}>
+                                        style={{
+                                            marginBottom: '10px',
+                                            fontSize: '35px',
+                                            marginTop: '180px',
+                                            color: 'white'
+                                        }}>
                                 Virus Spread Simulations
                             </Typography>
-                            <Typography style={{marginBottom: '10px', fontSize: '30px'}}>
+                            <Typography style={{marginBottom: '10px', fontSize: '30px', color: 'white'}}>
                                 Registration
                             </Typography>
-                            <Box component="form" noValidate onSubmit={event => handleRegister(event, navigate)} sx={{mt: 1}} style={{width: "500px"}}>
+                            <Box component="form" noValidate onSubmit={event => handleRegister(event, navigate)}
+                                 sx={{mt: 1}} style={{width: "500px"}}>
                                 <TextField
                                     margin="normal"
                                     required
@@ -83,6 +85,7 @@ export default function Register() {
                                     name="userName"
                                     autoComplete="userName"
                                     autoFocus
+                                    sx={stylingTextfield}
                                 />
                                 <TextField
                                     margin="normal"
@@ -93,6 +96,7 @@ export default function Register() {
                                     name="email"
                                     autoComplete="email"
                                     autoFocus
+                                    sx={stylingTextfield}
                                 />
                                 <TextField
                                     margin="normal"
@@ -103,16 +107,17 @@ export default function Register() {
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
+                                    sx={stylingTextfield}
                                 />
                                 <Button
                                     type="submit"
                                     fullWidth
                                     variant="contained"
-                                    sx={{mt: 3, mb: 2}}
+                                    sx={{mt: 3, mb: 2, borderRadius: '15px', color: 'white'}}
                                 >
                                     Register
                                 </Button>
-                                <LabelEndOfPage sx={{mt: 5}}/>
+                                <LabelEndOfPage sx={{mt: 5, color: 'white'}}/>
                             </Box>
                         </Box>
                     </Grid>
