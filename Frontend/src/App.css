@@ -272,6 +272,9 @@ button {
     flex-direction: row;
 }
 
+.signin-right-side, .register-right-side {
+    background-image: radial-gradient(var(--color3), var(--color1));
+}
 
 
 
