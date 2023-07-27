@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import * as React from "react";
+import {stylingTextfield} from "../../data/stylingElements.js";
 
 function FormInput({updateFormObject, value, name, label, id}) {
     return (
@@ -12,19 +12,7 @@ function FormInput({updateFormObject, value, name, label, id}) {
                 label={label}
                 id={id}
                 onChange={event => updateFormObject(event.target.name, event.target.value)}
-                sx={{
-                    "& .MuiInputLabel-root": {color: '#FFFFFF'},
-                    "& .MuiOutlinedInput-root": {
-                        "& > fieldset": {borderColor: '#3481cb', borderRadius: 5, backgroundColor: '#173e81'},
-                    },
-                    "& .MuiInputLabel-root.Mui-focused": {color: '#FFFFFF', zIndex: 3},
-                    "& .MuiOutlinedInput-root.Mui-focused": {
-                        "& > fieldset": {borderColor: '#FFFFFF', backgroundColor: '#173e81'}
-                    },
-                    "& input": {
-                        color: '#FFFFFF', zIndex: 1
-                    }
-                }}
+                sx={stylingTextfield}
             />
         </div>
     )
