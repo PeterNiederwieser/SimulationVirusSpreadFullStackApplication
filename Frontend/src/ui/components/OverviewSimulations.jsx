@@ -12,8 +12,8 @@ function OverviewSimulations({runSimulation, simulationsBasicData, setSimulation
     return (
         <div className="overview-simulations">
             {username ?
-                <div> {username}, here are your simulations: </div> :
-                <div> Overview of your simulations: </div>}
+                <div className="overview-heading"> {username}, here are your simulations: </div> :
+                <div className="overview-heading"> Overview of your simulations: </div>}
             {simulationsBasicData.map(item => (
                 <OverviewItem key={item.id} item={item} runSimulation={runSimulation}
                               setSimulationsBasicData={setSimulationsBasicData}/>
