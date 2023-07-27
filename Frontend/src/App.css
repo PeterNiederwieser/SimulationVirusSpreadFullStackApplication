@@ -2,7 +2,6 @@
 
 :root {
     --main-font-family: "Poppins", sans-serif;
-
     --color1: #09011f;
     --color2: #0d2863;
     --color3: #173e81;
@@ -10,23 +9,9 @@
     --color5: #3481cb;
     --color6: #4aa6e6;
     --color7: #81d9f0;
-
     --fontColor1: #FFFFFF;
     --fontColor2: #616264;
     --fontColor3: #81b4e5;
-
-    /*--color1: #15073e;
-    --color2: #0d2863;
-    --color3: #173e81;
-    --color4: #245da5;
-    --color5: #3481cb;
-    --color6: #4aa6e6;
-    --color7: #81d9f0;
-
-
-    #4aa6e6
-    #173e81
-    */
 }
 
 * {
@@ -101,7 +86,7 @@ body {
 }
 
 .overview-item {
-    margin-top: 40px;
+    margin-top: 25px;
     padding: 20px;
     background-color: var(--color2);
     display: flex;
@@ -115,9 +100,13 @@ body {
     margin-bottom: 20px;
 }
 
+.overview-heading {
+    font-size: 20px;
+    font-weight: 800;
+}
+
 .overview-item-details {
     margin-top: 10px;
-    font-size: 12px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -138,7 +127,6 @@ body {
     display: flex;
     flex-direction: row;
     gap: 10px;
-
 }
 
 #item-button {
@@ -157,11 +145,10 @@ button {
 }
 
 .form {
-    padding-left: 200px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     margin-bottom: 20px;
 }
@@ -170,6 +157,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    padding-top: 40px;
 }
 
 .form-heading {
@@ -182,7 +170,7 @@ button {
 .form-input-container {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 15px;
 }
 
 .form-input {
@@ -215,8 +203,6 @@ button {
 #input-long {
     height: 20px;
     width: 250px;
-    /*background-color: var(--color3);*/
-
 }
 
 #input-short {
