@@ -1,26 +1,25 @@
 package com.example.Backend.service;
 
-import com.example.Backend.persistence.entity.SimulationBasicParameters;
 import com.example.Backend.persistence.repository.SimulationBasicParametersRepository;
+import com.example.Backend.security.data.UserRepository;
 import com.example.Backend.simulation.logic.initialisation.Initializer;
-import com.example.Backend.simulation.logic.territory.TerritoryCreator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class SimulationBasicParametersServiceTest {
     SimulationBasicParametersRepository simulationBasicParametersRepository = Mockito.mock(SimulationBasicParametersRepository.class);
     SimulationContextStorage simulationContextStorage = Mockito.mock(SimulationContextStorage.class);
     Initializer initializer = Mockito.mock(Initializer.class);
+    UserRepository userRepository = Mockito.mock(UserRepository.class);
 
-    SimulationBasicParametersService simulationBasicParametersService = new SimulationBasicParametersService(simulationBasicParametersRepository, simulationContextStorage, initializer);
+    SimulationBasicParametersService simulationBasicParametersService = new SimulationBasicParametersService(simulationBasicParametersRepository, userRepository, simulationContextStorage, initializer);
 
     @Test
     void findAll() {
-        simulationBasicParametersService.findAll();
+        String userEmail = "test@mail.com";
+        simulationBasicParametersService.findAllByUser(userEmail);
 
         Mockito.verify(simulationBasicParametersRepository).findAll();
     }
