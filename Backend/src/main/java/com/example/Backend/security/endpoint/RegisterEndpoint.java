@@ -1,6 +1,6 @@
 package com.example.Backend.security.endpoint;
 
-import com.example.Backend.security.data.RegistrationDTO;
+import com.example.Backend.security.data.Registration;
 import com.example.Backend.security.logic.RegisterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class RegisterEndpoint {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody RegistrationDTO registration) {
+    public void register(@RequestBody Registration registration) {
         registerService.register(registration);
     }
 }

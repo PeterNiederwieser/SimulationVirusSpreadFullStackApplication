@@ -1,6 +1,6 @@
 package com.example.Backend.security.logic;
 
-import com.example.Backend.security.data.RegistrationDTO;
+import com.example.Backend.security.data.Registration;
 import com.example.Backend.security.data.User;
 import com.example.Backend.security.data.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +16,7 @@ public class RegisterService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void register(RegistrationDTO registration) {
+    public void register(Registration registration) {
         String encodedPassword = passwordEncoder.encode(registration.password());
         User user = new User();
         user.setUsername(registration.userName());
