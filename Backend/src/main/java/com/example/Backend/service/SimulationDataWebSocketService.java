@@ -27,7 +27,7 @@ public class SimulationDataWebSocketService {
         Context context = simulationManager.getSimulationContext(simulationId);
         simulationManager.runRequiredSteps(request);
         List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
-        //databaseStorageService.saveSimDataBatchToDb(requestedSimulationData);
+        databaseStorageService.saveSimDataBatchToDb(requestedSimulationData);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(requestedSimulationData);
     }
