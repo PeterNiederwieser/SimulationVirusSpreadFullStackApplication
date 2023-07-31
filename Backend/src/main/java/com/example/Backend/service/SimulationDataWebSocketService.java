@@ -1,6 +1,6 @@
 package com.example.Backend.service;
 
-import com.example.Backend.api.webSocketConfiguration.data.RequestBodySimData;
+import com.example.Backend.api.data.RequestBodySimData;
 import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.simulation.SimulationManager;
 import com.example.Backend.simulation.data.Context;
@@ -25,14 +25,10 @@ public class SimulationDataWebSocketService {
     public String getByIdAndStepNumbers(RequestBodySimData request) throws JsonProcessingException {
         long simulationId = request.simulationId();
         Context context = simulationManager.getSimulationContext(simulationId);
-        System.out.println("Simulation started");
         simulationManager.runRequiredSteps(request);
-        System.out.println("Steps computed");
         List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
-        databaseStorageService.saveSimDataBatchToDb(requestedSimulationData);
-        System.out.println("got data");
+        //databaseStorageService.saveSimDataBatchToDb(requestedSimulationData);
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println("mapped data");
         return objectMapper.writeValueAsString(requestedSimulationData);
     }
 

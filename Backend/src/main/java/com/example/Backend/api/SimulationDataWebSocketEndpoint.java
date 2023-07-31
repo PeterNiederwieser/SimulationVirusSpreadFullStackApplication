@@ -1,6 +1,6 @@
 package com.example.Backend.api;
 
-import com.example.Backend.api.webSocketConfiguration.data.RequestBodySimData;
+import com.example.Backend.api.data.RequestBodySimData;
 import com.example.Backend.service.SimulationDataService;
 import com.example.Backend.service.SimulationDataWebSocketService;
 import com.example.Backend.simulation.SimulationManager;

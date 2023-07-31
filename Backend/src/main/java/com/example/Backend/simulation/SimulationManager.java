@@ -1,6 +1,6 @@
 package com.example.Backend.simulation;
 
-import com.example.Backend.api.webSocketConfiguration.data.RequestBodySimData;
+import com.example.Backend.api.data.RequestBodySimData;
 import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.persistence.repository.SimulationDataRepository;
 import com.example.Backend.service.SimulationContextStorage;
