@@ -18,6 +18,5 @@ public class DatabaseStorageService {
 
     public void saveSimDataBatchToDb(List<SimulationData> simulationDataBatch) {
         simulationDataRepository.saveAll(simulationDataBatch);
-        System.out.println("Simulation data batch was saved to DB");
     }
 }
