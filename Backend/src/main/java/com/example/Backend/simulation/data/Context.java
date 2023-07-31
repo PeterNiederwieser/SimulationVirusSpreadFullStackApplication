@@ -5,24 +5,27 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Data
 public class Context {
     private long simulationId;
-    private int NUMBER_OF_ANIMALS;
-    private int NUMBER_OF_INITIAL_INFECTIONS;
-    private int stepNumber = 1;
-    private List<Animal> population = new ArrayList<>();
-    private SurfaceType[][] territory;
+    private int numberOfAnimals;
+    private int numberOfInitialInfections;
     private int numberOfInfections;
-    private List<SimulationData> simulationDataStorage = new ArrayList<>();
+    private int stepNumber = 1;
     private boolean isCompleteSimulationDataSavedToDb = false;
     private boolean isSimulationsStartBeenTriggered = false;
+    private SurfaceType[][] territory;
+    private List<Animal> population = new ArrayList<>();
+    private List<SimulationData> simulationDataStorage = new ArrayList<>();
+    private final Random random = new Random();
 
-    public Context(long simulationId, int NUMBER_OF_ANIMALS, int NUMBER_OF_INITIAL_INFECTIONS) {
+    public Context(long simulationId, int numberOfAnimals, int numberOfInitialInfections, int seed) {
         this.simulationId = simulationId;
-        this.NUMBER_OF_ANIMALS = NUMBER_OF_ANIMALS;
-        this.NUMBER_OF_INITIAL_INFECTIONS = NUMBER_OF_INITIAL_INFECTIONS;
-        this.numberOfInfections = NUMBER_OF_INITIAL_INFECTIONS;
+        this.numberOfAnimals = numberOfAnimals;
+        this.numberOfInitialInfections = numberOfInitialInfections;
+        this.numberOfInfections = numberOfInitialInfections;
+        this.random.setSeed(seed);
     }
 }
