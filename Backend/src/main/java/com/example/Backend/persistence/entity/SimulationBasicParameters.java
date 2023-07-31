@@ -1,8 +1,10 @@
 package com.example.Backend.persistence.entity;
 
+import com.example.Backend.security.data.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +20,9 @@ public class SimulationBasicParameters {
     @GeneratedValue
     private long id;
     private String simulationName;
-    private String numberOfAnimals;
-    private String numberOfInitialInfections;
+    private int numberOfAnimals;
+    private int numberOfInitialInfections;
     private boolean isSimulationCompleted;
+    @ManyToOne
+    User user;
 }
