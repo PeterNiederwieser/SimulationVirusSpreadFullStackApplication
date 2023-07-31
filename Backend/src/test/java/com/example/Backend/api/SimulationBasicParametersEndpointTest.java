@@ -27,9 +27,10 @@ class SimulationBasicParametersEndpointTest {
 
     @Test
     void getAll() throws Exception {
+        String userEmail = "test@mail.com";
         mockMvc.perform(MockMvcRequestBuilders.get(url))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(simulationBasicParametersService).findAll();
+        Mockito.verify(simulationBasicParametersService).findAllByUser(userEmail);
     }
 
     @Test
@@ -61,13 +62,13 @@ class SimulationBasicParametersEndpointTest {
     void saveAndUpdate(String httpMethodName) throws Exception {
         SimulationBasicParameters simulationBasicParameters = SimulationBasicParameters.builder()
                 .simulationName("testSimulationName")
-                .numberOfAnimals("testNumberOfAnimals")
-                .numberOfInitialInfections("testNumberOfInitialInfections")
+                .numberOfAnimals(10)
+                .numberOfInitialInfections(1)
                 .build();
         String body = """
                     {"simulationName": "testSimulationName",
-                    "numberOfAnimals": "testNumberOfAnimals", 
-                    "numberOfInitialInfections": "testNumberOfInitialInfections"
+                    "numberOfAnimals": 10, 
+                    "numberOfInitialInfections": 1
                 """;
 
         /*mockMvc.perform(MockMvcRequestBuilders.request(HttpMethod.valueOf(httpMethodName), url)

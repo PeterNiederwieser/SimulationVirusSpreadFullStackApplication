@@ -2,6 +2,8 @@ package com.example.Backend.api;
 
 import com.example.Backend.persistence.entity.SimulationBasicParameters;
 import com.example.Backend.service.SimulationBasicParametersService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -18,8 +20,8 @@ public class SimulationBasicParametersEndpoint {
     }
 
     @GetMapping
-    public List<SimulationBasicParameters> get() {
-        return simulationBasicParametersService.findAll();
+    public List<SimulationBasicParameters> getByUser(Authentication authentication) {
+        return simulationBasicParametersService.findAllByUser(authentication.getName());
     }
 
     @GetMapping("{id}")
@@ -29,8 +31,8 @@ public class SimulationBasicParametersEndpoint {
     }
 
     @PostMapping
-    SimulationBasicParameters create(@RequestBody SimulationBasicParameters simulationBasicParameters) throws IOException {
-        return simulationBasicParametersService.create(simulationBasicParameters);
+    SimulationBasicParameters create(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException, ElementNotFoundException {
+        return simulationBasicParametersService.create(simulationBasicParameters, authentication.getName());
     }
 
     @PutMapping

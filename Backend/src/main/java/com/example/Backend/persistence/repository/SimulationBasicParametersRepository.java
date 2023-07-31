@@ -9,4 +9,6 @@ public interface SimulationBasicParametersRepository extends JpaRepository<Simul
     List<SimulationBasicParameters> findBySimulationNameAllIgnoreCase(String simulationName);
 
     List<SimulationBasicParameters> findByIsSimulationCompletedEquals(boolean value);
+
+    List<SimulationBasicParameters> findAllByUserEmail(String userEmail);
 }
