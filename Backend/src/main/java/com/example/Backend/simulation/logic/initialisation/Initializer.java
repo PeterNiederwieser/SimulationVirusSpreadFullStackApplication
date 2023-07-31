@@ -30,19 +30,19 @@ public class Initializer {
 
     private void initializeStartingStateOfInfections(Context context) {
         List<Animal> population = context.getPopulation();
-        int NUMBER_OF_INITIAL_INFECTIONS = context.getNUMBER_OF_INITIAL_INFECTIONS();
+        int NUMBER_OF_INITIAL_INFECTIONS = context.getNumberOfInitialInfections();
         for (int i = 0; i < NUMBER_OF_INITIAL_INFECTIONS; i++) {
             population.get(i).setHealthState(HealthState.INFECTED);
         }
     }
 
     private void initializePopulation(Context context) {
-        int NUMBER_OF_ANIMALS = context.getNUMBER_OF_ANIMALS();
+        int NUMBER_OF_ANIMALS = context.getNumberOfAnimals();
         List<Animal> population = context.getPopulation();
         for (int i = 0; i < NUMBER_OF_ANIMALS; i++) {
             Position position = getRandomInitialPosition(context);
-            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(Math.random() * MainConstants.TIME_OF_RECOVERY), MainConstants.MIN_TIME_FOR_SEVERE_ILLNESS_AFTER_INFECTION);
-            boolean isGettingSeverelyIll = Math.random() <= MainConstants.PROBABILITY_OF_FATAL_INFECTION_COURSE;
+            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(context.getRandom().nextDouble() * MainConstants.TIME_OF_RECOVERY), MainConstants.MIN_TIME_FOR_SEVERE_ILLNESS_AFTER_INFECTION);
+            boolean isGettingSeverelyIll = context.getRandom().nextDouble() <= MainConstants.PROBABILITY_OF_FATAL_INFECTION_COURSE;
             population.add(new Animal(position.x(), position.y(), MainConstants.MAX_ANIMAL_SPEED, HealthState.HEALTHY, BehaviourType.STROLL, timeOfPossibleSevereIllnessAfterInfection, isGettingSeverelyIll));
         }
     }
@@ -52,8 +52,8 @@ public class Initializer {
         int MAP_WIDTH = MainConstants.TERRITORY_WIDTH;
         int x, y;
         do {
-            x = (int) Math.round(Math.random() * MAP_HEIGHT);
-            y = (int) Math.round(Math.random() * MAP_WIDTH);
+            x = (int) Math.round(context.getRandom().nextDouble() * MAP_HEIGHT);
+            y = (int) Math.round(context.getRandom().nextDouble() * MAP_WIDTH);
         } while (territoryFieldUtils.isAreaInaccessible(new Position(x, y), context) || territoryFieldUtils.isFieldOccupied(null, new Position(x, y), context));
         return new Position(x, y);
     }
