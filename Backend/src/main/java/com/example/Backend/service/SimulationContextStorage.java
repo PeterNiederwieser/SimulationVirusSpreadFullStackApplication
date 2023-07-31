@@ -17,8 +17,4 @@ public class SimulationContextStorage {
     public Context getContext(long simulationId) {
         return contextStorage.get(simulationId);
     }
-
-    public void removeContext(long simulationId) {
-        contextStorage.remove(simulationId);
-    }
 }
