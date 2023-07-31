@@ -15,3 +15,31 @@ server:
 rsa:
   private-key: classpath:certificates/private.pem
   public-key: classpath:certificates/public.pem
+constants:
+  seed-limit: 1000
+  time-of-recovery: 200
+  min-time-for-severe-illness-after-infection: 100
+  duration-of-severe-illness: 200
+  infection-radius: 10
+  animal-size: 10
+  max-animal-speed: 2.5F
+  max-severely-ill-animal-speed: 1F
+  min-animal-speed: 1F
+  max-trials-of-direction-change-for-single-move: 200
+  territory-generation-scale-factor: 1
+  territory-width: 800
+  territory-height: 800
+  probability-of-infection: 0.8F
+  probability-of-fatal-infection-course: 0.5F
+  file-path-of-territory-image: "Backend/src/main/resources/MapImage_by_DALL·E .png"
+  color-value-range: 40
+  max-color-value: 255
+  min-color-value: 0
+  color-healthy-animal: "#38f5f5"
+  color-infected-animal: "#fa602d"
+  color-recovered-animal: "#f5e616"
+  color-severely-ill-animal: "#000000"
+  color-water: "#054177"
+  color-accessible-terrain: "#97BC62"
+  color-inaccessible-terrain: "#2C5F2D"
+  color-water-input-image: "#030574"
