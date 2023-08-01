@@ -23,7 +23,7 @@ function Canvas({
                 }) {
     const canvasRef = useRef(null);
     const stepNumberRef = useRef(0);
-    const stepNumberFloorRef = useRef(0);
+    const stepNumberFloorRef = useRef(1);
     const stepNumberCeilRef = useRef(numberOfSimStepsPerRequest);
     const [buttonText, setButtonText] = useState("Stop");
     const [isSimulationPaused, setIsSimulationPaused] = useState(false);

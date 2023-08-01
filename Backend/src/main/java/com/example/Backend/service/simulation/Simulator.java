@@ -1,7 +1,7 @@
-package com.example.Backend.simulation;
+package com.example.Backend.service.simulation;
 
-import com.example.Backend.simulation.data.Context;
-import com.example.Backend.simulation.logic.simulationPhase.Phase;
+import com.example.Backend.data.Context;
+import com.example.Backend.service.simulation.logic.simulationPhase.Phase;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class Simulator {
 
     public void simulateRequiredSteps(Context context, List<Phase> phases, int stepNumberFloor, int stepNumberCeil) {
-        for (int i = stepNumberFloor; i < stepNumberCeil; i++) {
+        for (int i = stepNumberFloor; i <= stepNumberCeil; i++) {
             simulatePhases(context, phases);
         }
     }
