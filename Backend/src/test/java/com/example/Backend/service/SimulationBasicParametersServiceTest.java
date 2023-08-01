@@ -12,13 +12,10 @@ import java.io.IOException;
 
 class SimulationBasicParametersServiceTest {
     SimulationBasicParametersRepository simulationBasicParametersRepository = Mockito.mock(SimulationBasicParametersRepository.class);
-    SimulationContextStorage simulationContextStorage = Mockito.mock(SimulationContextStorage.class);
-    Initializer initializer = Mockito.mock(Initializer.class);
     UserRepository userRepository = Mockito.mock(UserRepository.class);
-    ConfigurationConstants configurationConstants = Mockito.mock(ConfigurationConstants.class);
     SimulationBasicParametersUtils simulationBasicParametersUtils = Mockito.mock(SimulationBasicParametersUtils.class);
     SimulationDataService simulationDataService = Mockito.mock(SimulationDataService.class);
-    SimulationBasicParametersService simulationBasicParametersService = new SimulationBasicParametersService(simulationBasicParametersRepository, simulationDataService, userRepository, simulationContextStorage, initializer, configurationConstants, simulationBasicParametersUtils);
+    SimulationBasicParametersService simulationBasicParametersService = new SimulationBasicParametersService(simulationBasicParametersRepository, simulationDataService, userRepository, simulationBasicParametersUtils);
 
     @Test
     void findAll() {
