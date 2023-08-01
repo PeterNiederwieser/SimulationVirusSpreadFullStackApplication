@@ -37,7 +37,6 @@ public class SimulationBasicParametersService {
     public SimulationBasicParameters create(SimulationBasicParameters simulationBasicParameters, String userEmail) throws IOException {
         User user = findUserByEmail(userEmail);
         simulationBasicParameters.setUser(user);
-        simulationBasicParameters.setSeed(simulationBasicParametersUtils.getRandomSeed());
         SimulationBasicParameters persisted = simulationBasicParametersRepository.save(simulationBasicParameters);
         simulationDataService.deleteAllBySimulationId(persisted.getId());
         simulationBasicParametersUtils.setupSimulation(persisted);

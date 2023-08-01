@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Data
 @ConfigurationProperties("constants")
 public class ConfigurationConstants {
-    private int seedLimit;
     private int timeOfRecovery;
     private int minTimeForSevereIllnessAfterInfection;
     private int durationOfSevereIllness;

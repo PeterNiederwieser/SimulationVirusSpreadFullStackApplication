@@ -44,8 +44,8 @@ public class Initializer {
         List<Animal> population = context.getPopulation();
         for (int i = 0; i < NUMBER_OF_ANIMALS; i++) {
             Position position = getRandomInitialPosition(context);
-            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(context.getRandom().nextDouble() * configurationConstants.getTimeOfRecovery()), configurationConstants.getMinTimeForSevereIllnessAfterInfection());
-            boolean isGettingSeverelyIll = context.getRandom().nextDouble() <= configurationConstants.getProbabilityOfFatalInfectionCourse();
+            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(Math.random() * configurationConstants.getTimeOfRecovery()), configurationConstants.getMinTimeForSevereIllnessAfterInfection());
+            boolean isGettingSeverelyIll = Math.random() <= configurationConstants.getProbabilityOfFatalInfectionCourse();
             population.add(new Animal(position.x(), position.y(), configurationConstants.getMaxAnimalSpeed(), HealthState.HEALTHY, BehaviourType.STROLL, timeOfPossibleSevereIllnessAfterInfection, isGettingSeverelyIll));
         }
     }
@@ -55,8 +55,8 @@ public class Initializer {
         int MAP_WIDTH = configurationConstants.getTerritoryWidth();
         int x, y;
         do {
-            x = (int) Math.round(context.getRandom().nextDouble() * MAP_HEIGHT);
-            y = (int) Math.round(context.getRandom().nextDouble() * MAP_WIDTH);
+            x = (int) Math.round(Math.random() * MAP_HEIGHT);
+            y = (int) Math.round(Math.random() * MAP_WIDTH);
         } while (territoryFieldUtils.isAreaInaccessible(new Position(x, y), context) || territoryFieldUtils.isFieldOccupied(null, new Position(x, y), context));
         return new Position(x, y);
     }
