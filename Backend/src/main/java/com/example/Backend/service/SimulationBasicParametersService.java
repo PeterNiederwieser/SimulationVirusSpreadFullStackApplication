@@ -15,13 +15,11 @@ import java.util.Optional;
 @Service
 public class SimulationBasicParametersService {
     private final SimulationBasicParametersRepository simulationBasicParametersRepository;
-    private final SimulationDataService simulationDataService;
     private final UserRepository userRepository;
     private final SimulationBasicParametersUtils simulationBasicParametersUtils;
 
-    public SimulationBasicParametersService(SimulationBasicParametersRepository simulationBasicParametersRepository, SimulationDataService simulationDataService, UserRepository userRepository, SimulationBasicParametersUtils simulationBasicParametersUtils) {
+    public SimulationBasicParametersService(SimulationBasicParametersRepository simulationBasicParametersRepository, UserRepository userRepository, SimulationBasicParametersUtils simulationBasicParametersUtils) {
         this.simulationBasicParametersRepository = simulationBasicParametersRepository;
-        this.simulationDataService = simulationDataService;
         this.userRepository = userRepository;
         this.simulationBasicParametersUtils = simulationBasicParametersUtils;
     }
@@ -39,7 +37,6 @@ public class SimulationBasicParametersService {
         simulationBasicParameters.setUser(user);
         simulationBasicParameters.setSeed(simulationBasicParametersUtils.getRandomSeed());
         SimulationBasicParameters persisted = simulationBasicParametersRepository.save(simulationBasicParameters);
-        simulationDataService.deleteAllBySimulationId(persisted.getId());
         simulationBasicParametersUtils.setupSimulation(persisted);
         return simulationBasicParameters;
     }

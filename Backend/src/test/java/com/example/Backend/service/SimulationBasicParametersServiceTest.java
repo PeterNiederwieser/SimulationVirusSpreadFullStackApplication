@@ -1,9 +1,7 @@
 package com.example.Backend.service;
 
-import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.persistence.repository.SimulationBasicParametersRepository;
 import com.example.Backend.security.data.UserRepository;
-import com.example.Backend.service.simulation.logic.initialisation.Initializer;
 import com.example.Backend.service.utils.SimulationBasicParametersUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,8 +12,7 @@ class SimulationBasicParametersServiceTest {
     SimulationBasicParametersRepository simulationBasicParametersRepository = Mockito.mock(SimulationBasicParametersRepository.class);
     UserRepository userRepository = Mockito.mock(UserRepository.class);
     SimulationBasicParametersUtils simulationBasicParametersUtils = Mockito.mock(SimulationBasicParametersUtils.class);
-    SimulationDataService simulationDataService = Mockito.mock(SimulationDataService.class);
-    SimulationBasicParametersService simulationBasicParametersService = new SimulationBasicParametersService(simulationBasicParametersRepository, simulationDataService, userRepository, simulationBasicParametersUtils);
+    SimulationBasicParametersService simulationBasicParametersService = new SimulationBasicParametersService(simulationBasicParametersRepository, userRepository, simulationBasicParametersUtils);
 
     @Test
     void findAll() {
@@ -35,7 +32,7 @@ class SimulationBasicParametersServiceTest {
     }
 
     @Test
-    void save() throws IOException {
+    void save() {
         /*SimulationBasicParameters simulationBasicParameters = SimulationBasicParameters.builder().build();
         Mockito.when(simulationBasicParametersRepository.save(simulationBasicParameters)).thenReturn(simulationBasicParameters);
 

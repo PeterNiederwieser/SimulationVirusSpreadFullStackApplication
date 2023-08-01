@@ -13,13 +13,10 @@ import java.util.List;
 @Service
 public class SimulationDataWebSocketService {
     private final SimulationManager simulationManager;
-    private final SimulationDataService simulationDataService;
-    private final DatabaseStorageService databaseStorageService;
 
-    public SimulationDataWebSocketService(SimulationManager simulationManager, SimulationDataService simulationDataService, DatabaseStorageService databaseStorageService) {
+
+    public SimulationDataWebSocketService(SimulationManager simulationManager) {
         this.simulationManager = simulationManager;
-        this.simulationDataService = simulationDataService;
-        this.databaseStorageService = databaseStorageService;
     }
 
     public String getByIdAndStepNumbers(RequestBodySimData request) throws JsonProcessingException {
@@ -31,17 +28,18 @@ public class SimulationDataWebSocketService {
     }
 
     private List<SimulationData> getRequestedSimulationData(RequestBodySimData request, Context context) {
-        boolean isRequestedDataPersisted = simulationDataService.isSimDataPersistedWithStepNumber(request.stepNumberCeil(), request.simulationId());
-        if (isRequestedDataPersisted) {
-            System.out.println("Requested sim data is retrieved from db, steps: " + request.stepNumberFloor() + ", " + request.stepNumberCeil());
-            return simulationDataService.getSimulationData(request.simulationId(), request.stepNumberFloor(), request.stepNumberCeil());
-        } else {
-            simulationManager.runRequiredSteps(request);
+        boolean isRequestedDataInStorage = getIsRequestedDataInStorage(request, context);
+        if (!isRequestedDataInStorage) {
             System.out.println("Requested sim data is computed, steps: " + request.stepNumberFloor() + ", " + request.stepNumberCeil());
-            List<SimulationData> requestedData = getRequiredSimDataFromStorage(request, context);
-            databaseStorageService.saveSimDataBatchToDb(requestedData);
-            return requestedData;
+            simulationManager.runRequiredSteps(request);
         }
+        System.out.println("Requested sim data is retrieved from storage, steps: " + request.stepNumberFloor() + ", " + request.stepNumberCeil());
+        return getRequiredSimDataFromStorage(request, context);
+    }
+
+    private boolean getIsRequestedDataInStorage(RequestBodySimData request, Context context) {
+        return context.getSimulationDataStorage().stream()
+                .anyMatch(data -> data.getStepNumber() == request.stepNumberCeil());
     }
 
     public List<SimulationData> getRequiredSimDataFromStorage(RequestBodySimData request, Context context) {

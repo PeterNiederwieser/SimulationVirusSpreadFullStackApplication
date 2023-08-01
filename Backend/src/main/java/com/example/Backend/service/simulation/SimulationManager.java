@@ -2,7 +2,6 @@ package com.example.Backend.service.simulation;
 
 import com.example.Backend.api.data.RequestBodySimData;
 import com.example.Backend.persistence.entity.SimulationData;
-import com.example.Backend.persistence.repository.SimulationDataRepository;
 import com.example.Backend.service.SimulationContextStorage;
 import com.example.Backend.data.Context;
 import com.example.Backend.service.simulation.logic.simulationPhase.Phase;
@@ -16,13 +15,11 @@ public class SimulationManager {
     private final SimulationContextStorage simulationContextStorage;
     private final Simulator simulator;
     private final List<Phase> phases;
-    private final SimulationDataRepository simulationDataRepository;
 
-    public SimulationManager(SimulationContextStorage simulationContextStorage, Simulator simulator, List<Phase> phases, SimulationDataRepository simulationDataRepository) {
+    public SimulationManager(SimulationContextStorage simulationContextStorage, Simulator simulator, List<Phase> phases) {
         this.simulationContextStorage = simulationContextStorage;
         this.simulator = simulator;
         this.phases = phases;
-        this.simulationDataRepository = simulationDataRepository;
     }
 
     public Context getSimulationContext(long simulationId) {
@@ -39,7 +36,6 @@ public class SimulationManager {
         Context context = simulationContextStorage.getContext(id);
         List<SimulationData> simulationDataStorage = context.getSimulationDataStorage();
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-            simulationDataRepository.saveAll(simulationDataStorage);
             context.setCompleteSimulationDataSavedToDb(true);
         });
         Runtime.getRuntime().addShutdownHook(new Thread(() -> future.cancel(true)));
