@@ -21,4 +21,8 @@ public class SimulationDataService {
     public boolean isSimDataPersistedWithStepNumber(int stepNumber, long simulationId) {
         return simulationDataRepository.existsByStepNumberAndSimulationId(stepNumber, simulationId);
     }
+
+    public void deleteAllBySimulationId(long simulationId) {
+        simulationDataRepository.deleteAllBySimulationId(simulationId);
+    }
 }
