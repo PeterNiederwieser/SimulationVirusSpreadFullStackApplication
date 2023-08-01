@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Async
 @Service
 public class DatabaseStorageService {
     private final SimulationDataRepository simulationDataRepository;
@@ -15,7 +14,7 @@ public class DatabaseStorageService {
     public DatabaseStorageService(SimulationDataRepository simulationDataRepository) {
         this.simulationDataRepository = simulationDataRepository;
     }
-
+    @Async
     public void saveSimDataBatchToDb(List<SimulationData> simulationDataBatch) {
         simulationDataRepository.saveAll(simulationDataBatch);
     }
