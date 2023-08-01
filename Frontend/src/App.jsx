@@ -1,6 +1,6 @@
 import './App.css';
 import {RouterProvider, createBrowserRouter} from "react-router-dom";
-import Landing from "./ui/SignIn.jsx";
+import SignIn from "./ui/SignIn.jsx";
 import Simulation from "./ui/Simulation.jsx";
 import Register from "./ui/Register.jsx";
 
@@ -8,7 +8,7 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Landing/>
+            element: <SignIn/>
         },
         {
             path: "/register",
