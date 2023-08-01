@@ -1,56 +1,26 @@
 import {useState, useEffect, useRef} from "react";
-import {getAllSimulationsBasicData, postSimulationBasicData} from "../service/requestMethods.js";
-import OverviewSimulations from "./components/OverviewSimulations.jsx";
-import {setupWebSocket} from "../service/webSocketFunctions.js";
-import MainSection from "./components/MainSection.jsx";
 import {NUMBER_OF_SIM_DATA_PER_REQUEST} from "../data/constants.js";
+import {getAllSimulationsBasicData} from "../service/requestMethods.js";
+import {setupWebSocket} from "../service/webSocketFunctions.js";
+import {initFormObject, updateFormObject} from "../service/form.js";
+import OverviewSimulations from "./components/OverviewSimulations.jsx";
+import MainSection from "./components/MainSection.jsx";
 import Navbar from "./components/Navbar.jsx";
 
-
 function Simulation() {
-    const receivedSimulationDataRef = useRef([]);
     const isDataAwaitedRef = useRef(false);
+    const receivedSimulationDataRef = useRef([]);
+    const [numberOfSimStepsPerRequest, setNumberOfSimStepsPerRequest] = useState(0);
+    const [isSimulationRunning, setIsSimulationRunning] = useState(false);
     const [selectedSimulationId, setSelectedSimulationId] = useState(null);
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
     const [stompClient, setStompClient] = useState(null);
-    const [isSimulationRunning, setIsSimulationRunning] = useState(false);
-    const [numberOfSimStepsPerRequest, setNumberOfSimStepsPerRequest] = useState(0);
+    const [formObject, setFormObject] = useState(initFormObject());
 
     useEffect(() => {
         getAllSimulationsBasicData()
             .then(data => setSimulationsBasicData(data));
-    }, [])
-
-    function initFormObject() {
-        return {
-            simulationName: "",
-            numberOfAnimals: "",
-            numberOfInitialInfections: "",
-        }
-    }
-
-    const [formObject, setFormObject] = useState(initFormObject());
-
-    function updateFormObject(key, value) {
-        setFormObject(prevObject => {
-            return {
-                ...prevObject,
-                [key]: value
-            }
-        });
-    }
-
-    function onSubmit(formObject) {
-        postSimulationBasicData(formObject)
-            .then(() => {
-                getAllSimulationsBasicData()
-                    .then(data => setSimulationsBasicData(data));
-                setFormObject(initFormObject());
-            })
-            .catch(error => {
-                throw error;
-            });
-    }
+    }, []);
 
     function runSimulation(simulationId) {
         const stompClient = setupWebSocket(receivedSimulationDataRef, setIsSimulationRunning, isDataAwaitedRef);
@@ -73,7 +43,6 @@ function Simulation() {
                 <MainSection
                     updateFormObject={updateFormObject}
                     formObject={formObject}
-                    onSubmit={onSubmit}
                     receivedSimulationDataRef={receivedSimulationDataRef}
                     isSimulationRunning={isSimulationRunning}
                     setIsSimulationRunning={setIsSimulationRunning}
@@ -81,6 +50,8 @@ function Simulation() {
                     selectedSimulationId={selectedSimulationId}
                     isDataAwaitedRef={isDataAwaitedRef}
                     numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
+                    setFormObject={setFormObject}
+                    setSimulationsBasicData={setSimulationsBasicData}
                 />
             </div>
         </div>

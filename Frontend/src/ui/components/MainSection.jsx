@@ -4,21 +4,23 @@ import SimulationSection from "./SimulationSection.jsx";
 function MainSection({
                          updateFormObject,
                          formObject,
-                         onSubmit,
                          receivedSimulationDataRef,
                          isSimulationRunning,
                          setIsSimulationRunning,
                          stompClient,
                          selectedSimulationId,
                          isDataAwaitedRef,
-                         numberOfSimStepsPerRequest
+                         numberOfSimStepsPerRequest,
+                         setFormObject,
+                         setSimulationsBasicData
                      }) {
     return (
         <div className="main-section">
             <FormSimulationParameters
                 updateFormObject={updateFormObject}
                 formObject={formObject}
-                onSubmit={onSubmit}
+                setFormObject={setFormObject}
+                setSimulationsBasicData={setSimulationsBasicData}
             />
             <SimulationSection
                 receivedSimulationDataRef={receivedSimulationDataRef}

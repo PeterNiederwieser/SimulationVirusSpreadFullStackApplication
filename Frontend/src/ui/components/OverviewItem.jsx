@@ -1,59 +1,12 @@
-import {useState} from "react";
-import FormInput from "./FormInput.jsx";
-import {
-    deleteSimulationBasicDataById,
-    getAllSimulationsBasicData,
-    updateSimulationBasicData
-} from "../../service/requestMethods.js";
 import Button from "@mui/material/Button";
+import FormInput from "./FormInput.jsx";
+import {useState} from "react";
+import {initFormObjectInOverview, toggleDetails, updateFormObject} from "../../service/form.js";
+import {updateItem, deleteItem} from "../../service/overviewItem.js";
 
 function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
-    function initFormObject() {
-        return {
-            id: item.id,
-            simulationName: item.simulationName,
-            numberOfAnimals: item.numberOfAnimals,
-            numberOfInitialInfections: item.numberOfInitialInfections
-        }
-    }
-
     const [isDetailedViewShown, setIsDetailedViewShown] = useState(false);
-    const [formObject, setFormObject] = useState(initFormObject());
-
-    function toggleDetails() {
-        setIsDetailedViewShown(prev => !prev);
-    }
-
-    function updateFormObject(key, value) {
-        setFormObject(prevObject => {
-            return {
-                ...prevObject,
-                [key]: value
-            }
-        });
-    }
-
-    function updateItem() {
-        updateSimulationBasicData(formObject)
-            .then(() => {
-                getAllSimulationsBasicData()
-                    .then(data => setSimulationsBasicData(data));
-            })
-            .catch(error => {
-                throw error;
-            });
-    }
-
-    function deleteItem() {
-        deleteSimulationBasicDataById(item.id)
-            .then(() => {
-                getAllSimulationsBasicData()
-                    .then(data => setSimulationsBasicData(data));
-            })
-            .catch(error => {
-                throw error;
-            });
-    }
+    const [formObject, setFormObject] = useState(initFormObjectInOverview(item));
 
     return (
         <div className="overview-item">
@@ -64,11 +17,11 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                             sx={{width: 90, height: 35}}>
                         Run
                     </Button>
-                    <Button id="item-button" onClick={toggleDetails} variant="contained"
+                    <Button id="item-button" onClick={() => toggleDetails(setIsDetailedViewShown)} variant="contained"
                             sx={{width: 90, height: 35}}>
                         Details
                     </Button>
-                    <Button id="item-button" onClick={deleteItem} variant="contained"
+                    <Button id="item-button" onClick={() => deleteItem(item, setSimulationsBasicData)} variant="contained"
                             sx={{width: 90, height: 35}}>
                         Delete
                     </Button>
@@ -84,6 +37,7 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                                 name="numberOfAnimals"
                                 label="Number of animals: "
                                 id="input-short"
+                                setFormObject={setFormObject}
                             />
                         </div>
                         <div className="overview-item-detail">
@@ -93,14 +47,17 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData}) {
                                 name="numberOfInitialInfections"
                                 label="Initial infections: "
                                 id="input-short"
+                                setFormObject={setFormObject}
                             />
                         </div>
                         <div className="overview-item-buttons">
-                            <Button id="item-button" onClick={updateItem} variant="contained"
+                            <Button id="item-button" onClick={() => updateItem(formObject, setSimulationsBasicData)}
+                                    variant="contained"
                                     sx={{width: 90, height: 35}}>
                                 Update
                             </Button>
-                            <Button id="item-button" onClick={toggleDetails} variant="contained"
+                            <Button id="item-button" onClick={() => toggleDetails(setIsDetailedViewShown)}
+                                    variant="contained"
                                     sx={{width: 90, height: 35}}>
                                 Close
                             </Button>

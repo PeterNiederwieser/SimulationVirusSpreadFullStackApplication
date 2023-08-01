@@ -13,7 +13,6 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import {handleRegister} from "../service/authentication.js";
 import {stylingTextfield} from "../data/stylingElements.js";
-
 function LabelEndOfPage(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props} style={{marginTop: "150px"}}>
@@ -28,7 +27,6 @@ function LabelEndOfPage(props) {
 }
 
 const defaultTheme = createTheme();
-
 export default function Register() {
     const navigate = useNavigate();
 

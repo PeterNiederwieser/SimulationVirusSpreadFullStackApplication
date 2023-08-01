@@ -1,16 +1,23 @@
+import Button from "@mui/material/Button";
 import {useEffect, useRef, useState} from "react";
-import {getSimulationData} from "../../service/webSocketFunctions.js";
+import {Chart} from "react-google-charts";
 import {
     HEIGHT_CANVAS,
     LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST,
-    TIME_RANGE_FOR_STATISTICS_IN_STEPS,
     TIMEOUT_FOR_SIMULATION_REPAINT_IN_MS,
     WIDTH_CANVAS
 } from "../../data/constants.js";
-import {drawBackground, processDataPerStepNumber, resetBuffer, updateDiagrams} from "../../service/drawing.js";
+import {optionsLineChart, optionsPieChart, optionsAreaChart} from "../../data/chartOptions.js";
+import {getSimulationData} from "../../service/webSocketFunctions.js";
+import {drawBackground} from "../../service/drawing.js";
+import {
+    initAreaChartData,
+    initLineChartData,
+    initPieChartData, initStatisticsRef,
+    processDataPerStepNumber,
+    updateDiagrams
+} from "../../service/statistics.js";
 import {handleEndSimulation, handleStopContinue} from "../../service/eventHandler.js";
-import {Chart} from "react-google-charts";
-import Button from "@mui/material/Button";
 
 function Canvas({
                     receivedSimulationDataRef,
@@ -25,29 +32,14 @@ function Canvas({
     const stepNumberRef = useRef(0);
     const stepNumberFloorRef = useRef(1);
     const stepNumberCeilRef = useRef(numberOfSimStepsPerRequest);
+    const statisticsRef = useRef(initStatisticsRef());
     const [buttonText, setButtonText] = useState("Stop");
     const [isSimulationPaused, setIsSimulationPaused] = useState(false);
-    const [pieChartData, setPieChartData] = useState([["status", "Number of Animals"], ["healthy", 100], ["recovered", 0],
-        ["infected", 0], ["severely ill", 0], ["dead", 0]]);
-    const [lineChartData, setLineChartData] = useState([["Time", "New Infections", "New Deaths"], [0, 0, 0]]);
-    const [areaChartData, setAreaChartData] = useState([["Time", "Infections", "Deaths"], [0, 0, 0]]);
+    const [pieChartData, setPieChartData] = useState(initPieChartData());
+    const [lineChartData, setLineChartData] = useState(initLineChartData());
+    const [areaChartData, setAreaChartData] = useState(initAreaChartData());
     const [intervalId, setIntervalId] = useState(null);
     let context = null;
-    const statisticsRef = useRef({
-        timeRange: TIME_RANGE_FOR_STATISTICS_IN_STEPS,
-        numberOfInitialAnimals: 0,
-        numberOfCurrentHealthyAnimals: 0,
-        numberOfCurrentRecoveredAnimals: 0,
-        numberOfCurrentInfectedAnimals: 0,
-        numberOfCurrentSeverelyIllAnimals: 0,
-        numberOfNewInfectionsInActualStep: 0,
-        numberOfDeathsInActualStep: 0,
-        numberOfDeaths: 0,
-        numberOfInfections: 0,
-        bufferNewInfections: 0,
-        bufferDeadAnimals: 0,
-        storageNumberOfHealthyAnimals: 0,
-    });
 
     useEffect(() => {
         if (isSimulationRunning && !isSimulationPaused) {
@@ -82,40 +74,6 @@ function Canvas({
             updateDiagrams(statisticsRef.current, stepNumberRef.current, setPieChartData, setLineChartData, setAreaChartData);
         }
     }
-
-    const optionsPieChart = {
-        title: "",
-        height: 300,
-        width: 550,
-        colors: ["#38f5f5", "#f5e616", "#fa602d", "#7F00FF", "#000000"],
-        is3D: true,
-        curveType: "function",
-        legend: {position: "right"},
-    };
-    const optionsLineChart = {
-        title: "New Infections / Deaths per time",
-        height: 450,
-        width: 250,
-        colors: ["#fa602d", "#000000"],
-        legend: {position: "bottom"},
-        curveType: "function",
-        vAxis: {minValue: 10, title: "number", titleTextStyle: {color: "#333"}},
-        hAxis: {minValue: 0, title: "time", titleTextStyle: {color: "#333"}},
-        chartArea: {width: "70%", height: "70%"}
-    };
-
-    const optionsAreaChart = {
-        title: "Total infections / deaths",
-        height: 450,
-        width: 250,
-        colors: ["#fa602d", "#000000"],
-        legend: {position: "bottom"},
-        curveType: "function",
-        vAxis: {minValue: 0, title: "number", titleTextStyle: {color: "#333"}},
-        hAxis: {minValue: 0, title: "time", titleTextStyle: {color: "#333"}},
-        chartArea: {width: "70%", height: "70%"}
-    };
-
 
     return (
         <>

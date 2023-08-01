@@ -1,3 +1,6 @@
+import {getAllSimulationsBasicData, postSimulationBasicData} from "./requestMethods.js";
+import {initFormObject} from "./form.js";
+
 export function handleStopContinue(isSimulationPaused, setIsSimulationPaused, intervalId, setButtonText) {
     if (!isSimulationPaused) {
         clearInterval(intervalId);
@@ -14,4 +17,16 @@ export function handleEndSimulation(setIsSimulationRunning, stompClient, navigat
     stompClient.deactivate()
        .then(() => console.log("Stomp client deactivated"));
     window.location.reload();
+}
+
+export function onSubmit(formObject, setSimulationsBasicData, setFormObject) {
+    postSimulationBasicData(formObject)
+        .then(() => {
+            getAllSimulationsBasicData()
+                .then(data => setSimulationsBasicData(data));
+            setFormObject(initFormObject());
+        })
+        .catch(error => {
+            throw error;
+        });
 }

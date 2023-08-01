@@ -1,7 +1,6 @@
 import axios from "axios";
 import {URL_LOGIN, URL_REGISTER, URL_SIMULATION_BASIC_DATA} from "../data/constants_url.js";
 
-
 export async function getAllSimulationsBasicData() {
     const jwt = localStorage.getItem('jwt');
     const customConfiguration = {

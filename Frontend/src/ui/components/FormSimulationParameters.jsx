@@ -1,8 +1,9 @@
 import FormInput from "./FormInput.jsx";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import {onSubmit} from "../../service/eventHandler.js";
 
-function FormSimulationParameters({updateFormObject, formObject, onSubmit}) {
+function FormSimulationParameters({updateFormObject, formObject, setFormObject, setSimulationsBasicData}) {
     return (
         <div className="form">
             <div className="form-section">
@@ -16,13 +17,15 @@ function FormSimulationParameters({updateFormObject, formObject, onSubmit}) {
                         name="simulationName"
                         label="Simulation Name"
                         id="input-long"
+                        setFormObject={setFormObject}
                     />
                     <FormInput
                         updateFormObject={updateFormObject}
                         value={formObject.numberOfAnimals}
                         name="numberOfAnimals"
-                        label="Number of Animals"
+                        label="Number of Animals (100-1000)"
                         id="input-long"
+                        setFormObject={setFormObject}
                     />
                     <FormInput
                         updateFormObject={updateFormObject}
@@ -30,10 +33,11 @@ function FormSimulationParameters({updateFormObject, formObject, onSubmit}) {
                         name="numberOfInitialInfections"
                         label="Number of initial infections"
                         id="input-long"
+                        setFormObject={setFormObject}
                     />
                 </div>
                 <div className="form-container-button">
-                    <Button id="form-button" onClick={() => onSubmit(formObject)} endIcon={<SendIcon/>}
+                    <Button id="form-button" onClick={() => onSubmit(formObject, setSimulationsBasicData, setFormObject)} endIcon={<SendIcon/>}
                             variant="contained">Submit</Button>
                 </div>
             </div>
