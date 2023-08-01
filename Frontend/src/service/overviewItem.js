@@ -8,10 +8,7 @@ export function updateItem(formObject, setSimulationsBasicData) {
     updateSimulationBasicData(formObject)
         .then(() => {
             getAllSimulationsBasicData()
-                .then(data => {
-                    console.log("data after update: ", data);
-                    setSimulationsBasicData(data);
-                });
+                .then(data => setSimulationsBasicData(data));
         })
         .catch(error => {
             throw error;
