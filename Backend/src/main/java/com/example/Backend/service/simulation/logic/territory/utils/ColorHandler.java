@@ -1,6 +1,6 @@
 package com.example.Backend.service.simulation.logic.territory.utils;
 
-import com.example.Backend.data.Animal;
+import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.data.SurfaceType;
 import org.springframework.stereotype.Service;
 
@@ -8,14 +8,20 @@ import java.awt.*;
 
 @Service
 public class ColorHandler {
+    private final ConfigurationConstants configurationConstants;
+
+    public ColorHandler(ConfigurationConstants configurationConstants) {
+        this.configurationConstants = configurationConstants;
+    }
 
     public Color getColorForSurfaceType(SurfaceType surfaceType) {
         return switch (surfaceType) {
-            case WATER -> generateRandomColorInRange(ColorConstants.COLOR_WATER, ColorConstants.COLOR_VALUE_RANGE);
+            case WATER ->
+                    generateRandomColorInRange(Color.decode(configurationConstants.getColorWater()), configurationConstants.getColorValueRange());
             case ACCESSIBLE_TERRAIN ->
-                    generateRandomColorInRange(ColorConstants.COLOR_ACCESSIBLE_TERRAIN, ColorConstants.COLOR_VALUE_RANGE);
+                    generateRandomColorInRange(Color.decode(configurationConstants.getColorAccessibleTerrain()), configurationConstants.getColorValueRange());
             case INACCESSIBLE_TERRAIN ->
-                    generateRandomColorInRange(ColorConstants.COLOR_INACCESSIBLE_TERRAIN, ColorConstants.COLOR_VALUE_RANGE);
+                    generateRandomColorInRange(Color.decode(configurationConstants.getColorInaccessibleTerrain()), configurationConstants.getColorValueRange());
         };
     }
 
@@ -27,8 +33,8 @@ public class ColorHandler {
     }
 
     private int limitColorValue(int color) {
-        int MAX_COLOR_VALUR = ColorConstants.MAX_COLOR_VALUE;
-        int MIN_COLOR_VALUE = ColorConstants.MIN_COLOR_VALUE;
+        int MAX_COLOR_VALUR = configurationConstants.getMaxColorValue();
+        int MIN_COLOR_VALUE = configurationConstants.getMinColorValue();
         return Math.min(Math.max(color, MIN_COLOR_VALUE), MAX_COLOR_VALUR);
     }
 }

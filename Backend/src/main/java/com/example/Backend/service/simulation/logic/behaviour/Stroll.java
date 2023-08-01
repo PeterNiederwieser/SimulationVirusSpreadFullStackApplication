@@ -1,5 +1,6 @@
 package com.example.Backend.service.simulation.logic.behaviour;
 
+import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.data.*;
 import com.example.Backend.service.simulation.logic.utils.TerritoryFieldUtils;
 import org.springframework.stereotype.Service;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class Stroll implements Behaviour {
     private final TerritoryFieldUtils territoryFieldUtils;
+    private final ConfigurationConstants configurationConstants;
 
-    public Stroll(TerritoryFieldUtils territoryFieldUtils) {
+    public Stroll(TerritoryFieldUtils territoryFieldUtils, ConfigurationConstants configurationConstants) {
         this.territoryFieldUtils = territoryFieldUtils;
+        this.configurationConstants = configurationConstants;
     }
 
     @Override
@@ -19,7 +22,7 @@ public class Stroll implements Behaviour {
     }
 
     private void performNextStep(Animal animal, Context context) {
-        int MAX_TRIALS_OF_DIRECTION_CHANGE = MainConstants.MAX_TRIALS_OF_DIRECTION_CHANGE_FOR_SINGLE_MOVE;
+        int MAX_TRIALS_OF_DIRECTION_CHANGE = configurationConstants.getMaxTrialsOfDirectionChangeForSingleMove();
         int numberOfTrials = 0;
         int nextX, nextY;
         do {
@@ -38,7 +41,7 @@ public class Stroll implements Behaviour {
 
     private void setNewRandomVelocity(Animal animal, Context context) {
         float maxAnimalSpeed = animal.getMax_speed();
-        float speed = (float) context.getRandom().nextDouble() * (maxAnimalSpeed - MainConstants.MIN_ANIMAL_SPEED) + MainConstants.MIN_ANIMAL_SPEED;
+        float speed = (float) context.getRandom().nextDouble() * (maxAnimalSpeed - configurationConstants.getMinAnimalSpeed()) + configurationConstants.getMinAnimalSpeed();
         float nextVelocityX = (float) (context.getRandom().nextDouble() * speed * 2) - speed;
         int randomSign = context.getRandom().nextDouble() < 0.5 ? 1 : -1;
         float nextVelocityY = (float) Math.sqrt(Math.pow(speed, 2) - Math.pow(nextVelocityX, 2)) * randomSign;

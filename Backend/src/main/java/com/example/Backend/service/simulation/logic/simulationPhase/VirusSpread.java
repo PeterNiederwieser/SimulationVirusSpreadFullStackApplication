@@ -1,9 +1,9 @@
 package com.example.Backend.service.simulation.logic.simulationPhase;
 
+import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.data.Animal;
 import com.example.Backend.data.Context;
 import com.example.Backend.data.HealthState;
-import com.example.Backend.data.MainConstants;
 import com.example.Backend.service.simulation.logic.simulationPhase.utils.PhaseUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,11 @@ import java.util.List;
 @Order(5)
 public class VirusSpread implements Phase {
     private final PhaseUtils phaseUtils;
+    private final ConfigurationConstants configurationConstants;
 
-    public VirusSpread(PhaseUtils phaseUtils) {
+    public VirusSpread(PhaseUtils phaseUtils, ConfigurationConstants configurationConstants) {
         this.phaseUtils = phaseUtils;
+        this.configurationConstants = configurationConstants;
     }
 
     @Override
@@ -35,16 +37,16 @@ public class VirusSpread implements Phase {
     }
 
     private void changeStatesInCaseOfInfection(Animal animal, Context context) {
-        float PROBABILITY_OF_INFECTION = MainConstants.PROBABILITY_OF_INFECTION;
+        float PROBABILITY_OF_INFECTION = configurationConstants.getProbabilityOfInfection();
         if (context.getRandom().nextDouble() <= PROBABILITY_OF_INFECTION) {
             animal.setHealthState(HealthState.INFECTED);
             animal.setMomentOfInfection(context.getStepNumber());
-            animal.setMax_speed(MainConstants.MAX_ANIMAL_SPEED);
+            animal.setMax_speed(configurationConstants.getMaxAnimalSpeed());
         }
     }
 
     private boolean isOtherAnimalWithinInfectionRadius(Animal otherAnimal, Animal infectedAnimal) {
-        int INFECTION_RADIUS = MainConstants.INFECTION_RADIUS;
+        int INFECTION_RADIUS = configurationConstants.getInfectionRadius();
         return (getDistanceBetweenAnimals(otherAnimal, infectedAnimal) <= (double) INFECTION_RADIUS);
     }
 

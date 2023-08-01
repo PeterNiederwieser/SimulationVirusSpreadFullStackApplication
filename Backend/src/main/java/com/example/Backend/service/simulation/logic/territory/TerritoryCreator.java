@@ -1,9 +1,8 @@
-package com.example.Backend.simulation.logic.territory;
+package com.example.Backend.service.simulation.logic.territory;
 
-import com.example.Backend.simulation.data.Context;
-import com.example.Backend.simulation.data.MainConstants;
-import com.example.Backend.simulation.data.SurfaceType;
-import com.example.Backend.simulation.logic.territory.utils.ColorConstants;
+import com.example.Backend.configuration.ConfigurationConstants;
+import com.example.Backend.data.Context;
+import com.example.Backend.data.SurfaceType;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -14,11 +13,19 @@ import java.io.IOException;
 
 @Service
 public class TerritoryCreator {
+    private final String filePathOfTerritoryImage;
+    private final ConfigurationConstants configurationConstants;
+
+    public TerritoryCreator(ConfigurationConstants configurationConstants, ConfigurationConstants configurationConstants1) {
+        this.filePathOfTerritoryImage = configurationConstants.getFilePathOfTerritoryImage();
+        this.configurationConstants = configurationConstants1;
+    }
+
     public void generateTerritoryFromImage(Context context) throws IOException {
-        BufferedImage image = ImageIO.read(new File(MainConstants.filePathOfTerritoryImage));
-        SurfaceType[][] map = new SurfaceType[MainConstants.TERRITORY_HEIGHT][MainConstants.TERRITORY_WIDTH];
-        for (int x = 0; x < MainConstants.TERRITORY_HEIGHT; x++) {
-            for (int y = 0; y < MainConstants.TERRITORY_WIDTH; y++) {
+        BufferedImage image = ImageIO.read(new File(filePathOfTerritoryImage));
+        SurfaceType[][] map = new SurfaceType[configurationConstants.getTerritoryHeight()][configurationConstants.getTerritoryWidth()];
+        for (int x = 0; x < configurationConstants.getTerritoryHeight(); x++) {
+            for (int y = 0; y < configurationConstants.getTerritoryWidth(); y++) {
                 Color pixelColor = new Color(image.getRGB(x, y));
                 SurfaceType surfaceType = getSurfaceTypeFromColor(pixelColor);
                 map[x][y] = surfaceType;
@@ -28,7 +35,7 @@ public class TerritoryCreator {
     }
 
     private SurfaceType getSurfaceTypeFromColor(Color pixelColor) {
-        if (isColorInRange(pixelColor, ColorConstants.COLOR_WATER_INPUT_IMAGE, ColorConstants.COLOR_VALUE_RANGE)) {
+        if (isColorInRange(pixelColor, Color.decode(configurationConstants.getColorWaterInputImage()), configurationConstants.getColorValueRange())) {
             return SurfaceType.WATER;
         } else {
             return SurfaceType.ACCESSIBLE_TERRAIN;

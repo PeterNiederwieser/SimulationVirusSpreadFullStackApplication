@@ -30,7 +30,7 @@ public class SimulationBasicParametersEndpoint {
     }
 
     @PostMapping
-    SimulationBasicParameters create(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException, ElementNotFoundException {
+    SimulationBasicParameters create(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException {
         return simulationBasicParametersService.create(simulationBasicParameters, authentication.getName());
     }
 

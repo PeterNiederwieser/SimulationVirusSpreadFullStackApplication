@@ -1,5 +1,6 @@
 package com.example.Backend.service.simulation.logic.initialisation;
 
+import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.data.*;
 import com.example.Backend.service.simulation.logic.territory.TerritoryCreator;
 import com.example.Backend.service.simulation.logic.territory.TerritoryPrinter;
@@ -14,11 +15,13 @@ public class Initializer {
     private final TerritoryCreator territoryCreator;
     private final TerritoryPrinter territoryPrinter;
     private final TerritoryFieldUtils territoryFieldUtils;
+    private final ConfigurationConstants configurationConstants;
 
-    public Initializer(TerritoryCreator territoryCreator, TerritoryPrinter territoryPrinter, TerritoryFieldUtils territoryFieldUtils) {
+    public Initializer(TerritoryCreator territoryCreator, TerritoryPrinter territoryPrinter, TerritoryFieldUtils territoryFieldUtils, ConfigurationConstants configurationConstants) {
         this.territoryCreator = territoryCreator;
         this.territoryPrinter = territoryPrinter;
         this.territoryFieldUtils = territoryFieldUtils;
+        this.configurationConstants = configurationConstants;
     }
 
     public void initializeSimulation(Context context) throws IOException {
@@ -41,15 +44,15 @@ public class Initializer {
         List<Animal> population = context.getPopulation();
         for (int i = 0; i < NUMBER_OF_ANIMALS; i++) {
             Position position = getRandomInitialPosition(context);
-            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(context.getRandom().nextDouble() * MainConstants.TIME_OF_RECOVERY), MainConstants.MIN_TIME_FOR_SEVERE_ILLNESS_AFTER_INFECTION);
-            boolean isGettingSeverelyIll = context.getRandom().nextDouble() <= MainConstants.PROBABILITY_OF_FATAL_INFECTION_COURSE;
-            population.add(new Animal(position.x(), position.y(), MainConstants.MAX_ANIMAL_SPEED, HealthState.HEALTHY, BehaviourType.STROLL, timeOfPossibleSevereIllnessAfterInfection, isGettingSeverelyIll));
+            int timeOfPossibleSevereIllnessAfterInfection = Math.max((int) Math.round(context.getRandom().nextDouble() * configurationConstants.getTimeOfRecovery()), configurationConstants.getMinTimeForSevereIllnessAfterInfection());
+            boolean isGettingSeverelyIll = context.getRandom().nextDouble() <= configurationConstants.getProbabilityOfFatalInfectionCourse();
+            population.add(new Animal(position.x(), position.y(), configurationConstants.getMaxAnimalSpeed(), HealthState.HEALTHY, BehaviourType.STROLL, timeOfPossibleSevereIllnessAfterInfection, isGettingSeverelyIll));
         }
     }
 
     private Position getRandomInitialPosition(Context context) {
-        int MAP_HEIGHT = MainConstants.TERRITORY_HEIGHT;
-        int MAP_WIDTH = MainConstants.TERRITORY_WIDTH;
+        int MAP_HEIGHT = configurationConstants.getTerritoryHeight();
+        int MAP_WIDTH = configurationConstants.getTerritoryWidth();
         int x, y;
         do {
             x = (int) Math.round(context.getRandom().nextDouble() * MAP_HEIGHT);

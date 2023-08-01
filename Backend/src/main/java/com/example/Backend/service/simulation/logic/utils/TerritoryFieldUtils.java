@@ -1,5 +1,6 @@
 package com.example.Backend.service.simulation.logic.utils;
 
+import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.data.*;
 import org.springframework.stereotype.Service;
 
@@ -7,10 +8,16 @@ import java.util.List;
 
 @Service
 public class TerritoryFieldUtils {
+    private final ConfigurationConstants configurationConstants;
+
+    public TerritoryFieldUtils(ConfigurationConstants configurationConstants) {
+        this.configurationConstants = configurationConstants;
+    }
+
     public boolean isAreaInaccessible(Position nextPosition, Context context) {
         SurfaceType[][] map = context.getTerritory();
-        for (int x = nextPosition.x(); x <= nextPosition.x() + MainConstants.ANIMAL_SIZE; x++) {
-            for (int y = nextPosition.y(); y <= nextPosition.y() + MainConstants.ANIMAL_SIZE; y++) {
+        for (int x = nextPosition.x(); x <= nextPosition.x() + configurationConstants.getAnimalSize(); x++) {
+            for (int y = nextPosition.y(); y <= nextPosition.y() + configurationConstants.getAnimalSize(); y++) {
                 if (isFieldOutOfMap(new Position(x, y), context)) {
                     return true;
                 }
@@ -26,7 +33,7 @@ public class TerritoryFieldUtils {
         List<Animal> otherAnimals = getOtherAnimals(currentAnimal, context);
         for (Animal otherAnimal : otherAnimals) {
             int distance = (int) Math.ceil(Math.sqrt(Math.pow(nextPosition.x() - otherAnimal.getX(), 2) + Math.pow(nextPosition.y() - otherAnimal.getY(), 2)));
-            if (distance < MainConstants.ANIMAL_SIZE) {
+            if (distance < configurationConstants.getAnimalSize()) {
                 return true;
             }
         }

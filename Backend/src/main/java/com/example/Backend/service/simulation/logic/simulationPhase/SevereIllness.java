@@ -1,5 +1,6 @@
 package com.example.Backend.service.simulation.logic.simulationPhase;
 
+import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.data.*;
 import com.example.Backend.service.simulation.logic.simulationPhase.utils.PhaseUtils;
 import org.springframework.core.annotation.Order;
@@ -11,9 +12,11 @@ import java.util.List;
 @Order(3)
 public class SevereIllness implements Phase {
     private final PhaseUtils phaseUtils;
+    private final ConfigurationConstants configurationConstants;
 
-    public SevereIllness(PhaseUtils phaseUtils) {
+    public SevereIllness(PhaseUtils phaseUtils, ConfigurationConstants configurationConstants) {
         this.phaseUtils = phaseUtils;
+        this.configurationConstants = configurationConstants;
     }
 
     @Override
@@ -26,10 +29,10 @@ public class SevereIllness implements Phase {
         });
     }
 
-    private static void changeStatesForSevereIllness(Context context, Animal animal) {
+    private void changeStatesForSevereIllness(Context context, Animal animal) {
         animal.setHealthState(HealthState.SEVERELY_ILL);
         animal.setStartOfSevereIllness(context.getStepNumber());
-        animal.setMax_speed(MainConstants.MAX_SEVERELY_ILL_ANIMAL_SPEED);
+        animal.setMax_speed(configurationConstants.getMaxSeverelyIllAnimalSpeed());
         animal.setBehaviourType(BehaviourType.REST);
     }
 
