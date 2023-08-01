@@ -2,8 +2,8 @@ package com.example.Backend.service;
 
 import com.example.Backend.api.data.RequestBodySimData;
 import com.example.Backend.persistence.entity.SimulationData;
-import com.example.Backend.simulation.SimulationManager;
-import com.example.Backend.simulation.data.Context;
+import com.example.Backend.service.simulation.SimulationManager;
+import com.example.Backend.data.Context;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -25,18 +25,28 @@ public class SimulationDataWebSocketService {
     public String getByIdAndStepNumbers(RequestBodySimData request) throws JsonProcessingException {
         long simulationId = request.simulationId();
         Context context = simulationManager.getSimulationContext(simulationId);
-        simulationManager.runRequiredSteps(request);
         List<SimulationData> requestedSimulationData = getRequestedSimulationData(request, context);
-        databaseStorageService.saveSimDataBatchToDb(requestedSimulationData);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(requestedSimulationData);
     }
 
     private List<SimulationData> getRequestedSimulationData(RequestBodySimData request, Context context) {
-        return context.isCompleteSimulationDataSavedToDb() ?
-                simulationDataService.getSimulationData(request.simulationId(), request.stepNumberFloor(), request.stepNumberCeil()) :
-                context.getSimulationDataStorage().stream()
-                        .filter(simulationData -> simulationData.getStepNumber() >= request.stepNumberFloor() && simulationData.getStepNumber() < request.stepNumberCeil())
-                        .toList();
+        boolean isRequestedDataPersisted = simulationDataService.isSimDataPersistedWithStepNumber(request.stepNumberCeil(), request.simulationId());
+        if (isRequestedDataPersisted) {
+            System.out.println("Requested sim data is retrieved from db, steps: " + request.stepNumberFloor() + ", " + request.stepNumberCeil());
+            return simulationDataService.getSimulationData(request.simulationId(), request.stepNumberFloor(), request.stepNumberCeil());
+        } else {
+            simulationManager.runRequiredSteps(request);
+            System.out.println("Requested sim data is computed, steps: " + request.stepNumberFloor() + ", " + request.stepNumberCeil());
+            List<SimulationData> requestedData = getRequiredSimDataFromStorage(request, context);
+            databaseStorageService.saveSimDataBatchToDb(requestedData);
+            return requestedData;
+        }
+    }
+
+    public List<SimulationData> getRequiredSimDataFromStorage(RequestBodySimData request, Context context) {
+        return context.getSimulationDataStorage().stream()
+                .filter(simulationData -> simulationData.getStepNumber() >= request.stepNumberFloor() && simulationData.getStepNumber() <= request.stepNumberCeil())
+                .toList();
     }
 }
