@@ -6,4 +6,3 @@ export const HEIGHT_CANVAS = 800;
 export const LIMIT_DATA_AMOUNT_FOR_NEW_REQUEST = 100000;
 export const TIME_RANGE_FOR_STATISTICS_IN_STEPS = 24;
 export const FILE_PATH_IMAGE_TERRITORY = "/map.png";
-export const FILE_PATH_IMAGE_SIGNIN_REGISTER = "/screen.jpg";
