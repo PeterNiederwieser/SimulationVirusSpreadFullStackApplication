@@ -25,5 +25,5 @@ public class SimulationBasicParameters {
     private int seed;
     private boolean isSimulationCompleted;
     @ManyToOne
-    User user;
+    private User user;
 }
