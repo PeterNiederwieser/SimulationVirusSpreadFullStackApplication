@@ -1,4 +1,4 @@
-package com.example.Backend.simulation.data;
+package com.example.Backend.data;
 
 import com.example.Backend.persistence.entity.SimulationData;
 import lombok.Data;
@@ -19,13 +19,13 @@ public class Context {
     private SurfaceType[][] territory;
     private List<Animal> population = new ArrayList<>();
     private List<SimulationData> simulationDataStorage = new ArrayList<>();
-    private final Random random = new Random();
+    private final Random random;
 
-    public Context(long simulationId, int numberOfAnimals, int numberOfInitialInfections, int seed) {
+    public Context(long simulationId, int numberOfAnimals, int numberOfInitialInfections, Random random) {
         this.simulationId = simulationId;
         this.numberOfAnimals = numberOfAnimals;
         this.numberOfInitialInfections = numberOfInitialInfections;
         this.numberOfInfections = numberOfInitialInfections;
-        this.random.setSeed(seed);
+        this.random = random;
     }
 }
