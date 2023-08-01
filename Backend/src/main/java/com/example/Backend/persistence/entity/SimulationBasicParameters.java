@@ -22,7 +22,7 @@ public class SimulationBasicParameters {
     private String simulationName;
     private int numberOfAnimals;
     private int numberOfInitialInfections;
-    private int seed;
+    private long seed;
     private boolean isSimulationCompleted;
     @ManyToOne
     private User user;
