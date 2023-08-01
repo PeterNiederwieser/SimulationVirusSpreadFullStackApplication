@@ -4,7 +4,6 @@ import com.example.Backend.persistence.entity.SimulationData;
 import com.example.Backend.persistence.repository.SimulationDataRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -17,5 +16,9 @@ public class SimulationDataService {
 
     public List<SimulationData> getSimulationData(long simulationId, int stepNumberLowerBorder, int stepNumberUpperBorder) {
         return simulationDataRepository.findBySimulationIdAndStepNumberBetween(simulationId, stepNumberLowerBorder, stepNumberUpperBorder);
+    }
+
+    public boolean isSimDataPersistedWithStepNumber(int stepNumber, long simulationId) {
+        return simulationDataRepository.existsByStepNumberAndSimulationId(stepNumber, simulationId);
     }
 }
