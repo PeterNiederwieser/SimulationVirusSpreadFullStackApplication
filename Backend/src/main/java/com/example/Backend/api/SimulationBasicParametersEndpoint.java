@@ -35,8 +35,8 @@ public class SimulationBasicParametersEndpoint {
     }
 
     @PutMapping
-    SimulationBasicParameters update(@RequestBody SimulationBasicParameters simulationBasicParameters) {
-        return simulationBasicParametersService.update(simulationBasicParameters);
+    SimulationBasicParameters update(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException {
+        return simulationBasicParametersService.create(simulationBasicParameters, authentication.getName());
     }
 
     @DeleteMapping("{id}")
