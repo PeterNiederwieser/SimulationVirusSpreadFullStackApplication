@@ -1,18 +1,18 @@
 package com.example.Backend.service;
 
-import com.example.Backend.configurationConstants.ConfigurationConstants;
+import com.example.Backend.configuration.ConfigurationConstants;
 import com.example.Backend.persistence.entity.SimulationBasicParameters;
 import com.example.Backend.persistence.repository.SimulationBasicParametersRepository;
 import com.example.Backend.security.data.User;
 import com.example.Backend.security.data.UserRepository;
-import com.example.Backend.simulation.data.Context;
-import com.example.Backend.simulation.logic.initialisation.Initializer;
+import com.example.Backend.data.Context;
+import com.example.Backend.service.simulation.logic.initialisation.Initializer;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class SimulationBasicParametersService {
@@ -20,14 +20,14 @@ public class SimulationBasicParametersService {
     private final UserRepository userRepository;
     private final SimulationContextStorage simulationContextStorage;
     private final Initializer initializer;
-    private final int seedLimit;
+    private final ConfigurationConstants configurationConstants;
 
     public SimulationBasicParametersService(SimulationBasicParametersRepository simulationBasicParametersRepository, UserRepository userRepository, SimulationContextStorage simulationContextStorage, Initializer initializer, ConfigurationConstants configurationConstants) {
         this.simulationBasicParametersRepository = simulationBasicParametersRepository;
         this.userRepository = userRepository;
         this.simulationContextStorage = simulationContextStorage;
         this.initializer = initializer;
-        this.seedLimit = configurationConstants.getSeedLimit();
+        this.configurationConstants = configurationConstants;
     }
 
     public List<SimulationBasicParameters> findAllByUser(String userEmail) {
@@ -48,14 +48,24 @@ public class SimulationBasicParametersService {
     }
 
     private void addRandomSeed(SimulationBasicParameters simulationBasicParameters) {
-        int seed = (int) Math.round(Math.random() * seedLimit);
+        int seed = (int) Math.round(Math.random() * configurationConstants.getSeedLimit());
         simulationBasicParameters.setSeed(seed);
     }
 
     private void setupSimulation(SimulationBasicParameters persisted) throws IOException {
-        Context context = new Context(persisted.getId(), persisted.getNumberOfAnimals(), persisted.getNumberOfInitialInfections(), persisted.getSeed());
+        Random random = getRandomWithSeed(persisted);
+        Context context = new Context(persisted.getId(), persisted.getNumberOfAnimals(), persisted.getNumberOfInitialInfections(), random);
         initializer.initializeSimulation(context);
         simulationContextStorage.addContext(persisted.getId(), context);
+    }
+
+    private Random getRandomWithSeed(SimulationBasicParameters persisted) {
+        int seed = persisted.getSeed();
+        return new Random(seed);
+    }
+
+    private User findUserByEmail(String userEmail) {
+        return userRepository.findByEmail(userEmail).get();
     }
 
     public SimulationBasicParameters update(SimulationBasicParameters simulationBasicParameters) {
@@ -72,10 +82,5 @@ public class SimulationBasicParametersService {
 
     public List<SimulationBasicParameters> findByStatusOfSimulationCompletion(boolean value) {
         return simulationBasicParametersRepository.findByIsSimulationCompletedEquals(value);
-    }
-
-    private User findUserByEmail(String userEmail) {
-        return userRepository.findByEmail(userEmail)
-                .orElseThrow(NoSuchElementException::new);
     }
 }
