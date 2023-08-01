@@ -3,7 +3,7 @@ package com.example.Backend.api;
 import com.example.Backend.api.data.RequestBodySimData;
 import com.example.Backend.service.SimulationDataService;
 import com.example.Backend.service.SimulationDataWebSocketService;
-import com.example.Backend.simulation.SimulationManager;
+import com.example.Backend.service.simulation.SimulationManager;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
