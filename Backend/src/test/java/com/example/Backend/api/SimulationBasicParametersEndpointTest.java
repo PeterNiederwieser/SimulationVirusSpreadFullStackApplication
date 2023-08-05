@@ -14,9 +14,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.security.test.context.support.WithMockUser;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 
 import java.util.Optional;
 
+@WithMockUser()
 @WebMvcTest(SimulationBasicParametersEndpoint.class)
 class SimulationBasicParametersEndpointTest {
     @MockBean
@@ -27,7 +30,7 @@ class SimulationBasicParametersEndpointTest {
 
     @Test
     void getAll() throws Exception {
-        String userEmail = "test@mail.com";
+        String userEmail = "user";
         mockMvc.perform(MockMvcRequestBuilders.get(url))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         Mockito.verify(simulationBasicParametersService).findAllByUser(userEmail);
@@ -67,17 +70,17 @@ class SimulationBasicParametersEndpointTest {
                 .build();
         String body = """
                     {"simulationName": "testSimulationName",
-                    "numberOfAnimals": 10, 
-                    "numberOfInitialInfections": 1
+                    "numberOfAnimals": 10,
+                    "numberOfInitialInfections": 1}
                 """;
+        String userEmail = "user";
 
-        /*mockMvc.perform(MockMvcRequestBuilders.request(HttpMethod.valueOf(httpMethodName), url)
+        mockMvc.perform(MockMvcRequestBuilders.request(HttpMethod.valueOf(httpMethodName), url).with(jwt())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-
-        Mockito.verify(simulationBasicParametersService).create(simulationBasicParameters);*/
+        Mockito.verify(simulationBasicParametersService).create(simulationBasicParameters, userEmail);
     }
 
     @Test
@@ -85,9 +88,31 @@ class SimulationBasicParametersEndpointTest {
         long id = 1;
         String extendedUrl = url + "/" + id;
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(extendedUrl))
+        mockMvc.perform(MockMvcRequestBuilders.delete(extendedUrl).with(jwt()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         Mockito.verify(simulationBasicParametersService).deleteById(id);
+    }
+
+    @Test
+    void getByName() throws Exception {
+        String name = "testName";
+        String extendedUrl = url + "/getByName/" + name;
+
+        mockMvc.perform(MockMvcRequestBuilders.get(extendedUrl))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(simulationBasicParametersService).findByName(name);
+    }
+
+    @Test
+    void getByStatusOfSimulationCompletion() throws Exception {
+        boolean isCompleted = true;
+        String extendedUrl = url + "/isSimulationCompleted/" + isCompleted;
+
+        mockMvc.perform(MockMvcRequestBuilders.get(extendedUrl))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(simulationBasicParametersService).findByStatusOfSimulationCompletion(isCompleted);
     }
 }
