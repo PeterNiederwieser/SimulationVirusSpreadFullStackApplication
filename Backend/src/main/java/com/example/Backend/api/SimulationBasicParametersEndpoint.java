@@ -30,27 +30,27 @@ public class SimulationBasicParametersEndpoint {
     }
 
     @PostMapping
-    SimulationBasicParameters create(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException {
+    public SimulationBasicParameters create(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException {
         return simulationBasicParametersService.create(simulationBasicParameters, authentication.getName());
     }
 
     @PutMapping
-    SimulationBasicParameters update(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException {
+    public SimulationBasicParameters update(@RequestBody SimulationBasicParameters simulationBasicParameters, Authentication authentication) throws IOException {
         return simulationBasicParametersService.create(simulationBasicParameters, authentication.getName());
     }
 
     @DeleteMapping("{id}")
-    void deleteOne(@PathVariable long id) {
+    public void deleteOne(@PathVariable long id) {
         simulationBasicParametersService.deleteById(id);
     }
 
     @GetMapping("getByName/{name}")
-    List<SimulationBasicParameters> getByName(@PathVariable String name) {
+    public List<SimulationBasicParameters> getByName(@PathVariable String name) {
         return simulationBasicParametersService.findByName(name);
     }
 
     @GetMapping("isSimulationCompleted/{value}")
-    List<SimulationBasicParameters> getByStatusOfSimulationCompletion(@PathVariable boolean value) {
+    public List<SimulationBasicParameters> getByStatusOfSimulationCompletion(@PathVariable boolean value) {
         return simulationBasicParametersService.findByStatusOfSimulationCompletion(value);
     }
 }
