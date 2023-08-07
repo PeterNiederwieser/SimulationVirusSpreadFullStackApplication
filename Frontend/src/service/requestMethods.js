@@ -33,7 +33,7 @@ export async function getSimulationBasicDataById(id) {
     }
 }
 
-export async function getJwt(auth) {
+export async function getJwt(auth, setIsSignInFailed) {
     const customConfiguration = {
         headers: {
             'Authorization': 'Basic ' + auth,
@@ -43,8 +43,9 @@ export async function getJwt(auth) {
     try {
         const response = await axios.get(URL_LOGIN, customConfiguration);
         console.log("jwt: " + response.data);
-        return response.data;
+        return response;
     } catch (error) {
+        setIsSignInFailed(true);
         console.log("Error in getJwt: ", error);
     }
 }

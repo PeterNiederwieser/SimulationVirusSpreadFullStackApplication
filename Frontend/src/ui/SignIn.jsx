@@ -1,7 +1,6 @@
 /* Source of this React Component SignIn: free template taken with modifications
 from MUI (mui.com) under MIT-licence (see the licence at the bottom of this file */
 
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,6 +13,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import {handleLogin} from "../service/authentication.js";
 import {stylingTextfield} from "../data/stylingElements.js";
+import {useState} from "react";
 
 function LabelEndOfPage(props) {
     return (
@@ -28,6 +28,7 @@ function LabelEndOfPage(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const [isSignInFailed, setIsSignInFailed] = useState(false);
     const navigate = useNavigate();
 
     return (
@@ -71,7 +72,10 @@ export default function SignIn() {
                             <Typography style={{marginBottom: '10px', fontSize: '30px', color: 'white'}}>
                                 Sign in
                             </Typography>
-                            <Box component="form" noValidate onSubmit={event => handleLogin(event, navigate)}
+                            {isSignInFailed && <Typography style={{marginBottom: '10px', fontSize: '20px', color: 'red'}}>
+                                Sign in did not work. Please try again!
+                            </Typography>}
+                            <Box component="form" noValidate onSubmit={event => handleLogin(event, navigate, setIsSignInFailed)}
                                  sx={{mt: 1}} style={{width: "500px"}}>
                                 <TextField
                                     margin="normal"
