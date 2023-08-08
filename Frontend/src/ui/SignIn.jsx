@@ -62,7 +62,7 @@ export default function SignIn() {
                     >
                         <Typography component="h1" variant="h5"
                                     style={{
-                                        marginBottom: '10px',
+                                        marginBottom: '5px',
                                         fontSize: '50px',
                                         marginTop: '180px',
                                         color: '#1a2c20',
@@ -73,7 +73,7 @@ export default function SignIn() {
                         <Typography component="h1" variant="h5"
                                     style={{
                                         fontSize: '40px',
-                                        marginTop: '10px',
+                                        marginTop: '0px',
                                         marginBottom: '70px',
                                         color: '#a07e68',
                                         fontWeight: '800'
@@ -124,14 +124,14 @@ export default function SignIn() {
                                     color: '#1a2c20',
                                     borderColor: '#1a2c20',
                                     backgroundColor: '#a07e68',
-                                    "&:focus": {backgroundColor: '#a07e68'},
-                                    "&:hover": {backgroundColor: '#a07e68'},
+                                    "&:focus": {backgroundColor: '#a07e68', borderColor: '#1a2c20'},
+                                    "&:hover": {backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
                                 }}
                             >
                                 Sign In
                             </Button>
-                            <Grid container>
-                                <Grid item>
+                            <Grid container className="link-to-register">
+                                <Grid item className="link-to-register-grid">
                                     <Link href="/register" variant="body1" sx={{color: '#1a2c20'}}>
                                         {"You don't have an account? Register now!"}
                                     </Link>

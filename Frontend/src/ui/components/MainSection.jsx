@@ -16,12 +16,6 @@ function MainSection({
                      }) {
     return (
         <div className="main-section">
-            <FormSimulationParameters
-                updateFormObject={updateFormObject}
-                formObject={formObject}
-                setFormObject={setFormObject}
-                setSimulationsBasicData={setSimulationsBasicData}
-            />
             <SimulationSection
                 receivedSimulationDataRef={receivedSimulationDataRef}
                 isSimulationRunning={isSimulationRunning}

@@ -6,6 +6,7 @@ import {initFormObject, updateFormObject} from "../service/form.js";
 import OverviewSimulations from "./components/OverviewSimulations.jsx";
 import MainSection from "./components/MainSection.jsx";
 import Navbar from "./components/Navbar.jsx";
+import FormSimulationParameters from "./components/FormSimulationParameters.jsx";
 
 function Simulation() {
     const isDataAwaitedRef = useRef(false);
@@ -35,24 +36,36 @@ function Simulation() {
         <div className="container">
             <Navbar/>
             <div className="simulation">
-                <OverviewSimulations
-                    runSimulation={runSimulation}
-                    simulationsBasicData={simulationsBasicData}
-                    setSimulationsBasicData={setSimulationsBasicData}
-                />
-                <MainSection
-                    updateFormObject={updateFormObject}
-                    formObject={formObject}
-                    receivedSimulationDataRef={receivedSimulationDataRef}
-                    isSimulationRunning={isSimulationRunning}
-                    setIsSimulationRunning={setIsSimulationRunning}
-                    stompClient={stompClient}
-                    selectedSimulationId={selectedSimulationId}
-                    isDataAwaitedRef={isDataAwaitedRef}
-                    numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
-                    setFormObject={setFormObject}
-                    setSimulationsBasicData={setSimulationsBasicData}
-                />
+                {!isSimulationRunning && (
+                    <>
+                        <FormSimulationParameters
+                            updateFormObject={updateFormObject}
+                            formObject={formObject}
+                            setFormObject={setFormObject}
+                            setSimulationsBasicData={setSimulationsBasicData}
+                        />
+                        <OverviewSimulations
+                            runSimulation={runSimulation}
+                            simulationsBasicData={simulationsBasicData}
+                            setSimulationsBasicData={setSimulationsBasicData}
+                        />
+                    </>)
+                }
+                {isSimulationRunning &&
+                    <MainSection
+                        updateFormObject={updateFormObject}
+                        formObject={formObject}
+                        receivedSimulationDataRef={receivedSimulationDataRef}
+                        isSimulationRunning={isSimulationRunning}
+                        setIsSimulationRunning={setIsSimulationRunning}
+                        stompClient={stompClient}
+                        selectedSimulationId={selectedSimulationId}
+                        isDataAwaitedRef={isDataAwaitedRef}
+                        numberOfSimStepsPerRequest={numberOfSimStepsPerRequest}
+                        setFormObject={setFormObject}
+                        setSimulationsBasicData={setSimulationsBasicData}
+                    />
+                }
             </div>
         </div>
     )
