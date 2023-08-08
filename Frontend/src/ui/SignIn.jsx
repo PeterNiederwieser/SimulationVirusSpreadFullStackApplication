@@ -32,94 +32,117 @@ export default function SignIn() {
     const navigate = useNavigate();
 
     return (
-            <ThemeProvider theme={defaultTheme}>
-                <Grid container component="main" sx={{height: '100vh'}}>
-                    <CssBaseline/>
-                    <Grid
-                        item
-                        xs={false}
-                        sm={4}
-                        md={7}
+        <ThemeProvider theme={defaultTheme}>
+            <Grid container component="main" sx={{height: '100vh'}}>
+                <CssBaseline/>
+                <Grid
+                    item
+                    xs={false}
+                    sm={4}
+                    md={7}
+                    sx={{
+                        backgroundImage: 'url(\'/pexels-bo-ponomari.jpg\')',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundColor: (t) =>
+                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
+                      className="signin-right-side">
+                    <Box
                         sx={{
-                            backgroundImage: 'url(\'/screen.jpg\')',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundColor: (t) =>
-                                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
+                            my: 8,
+                            mx: 4,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
                         }}
-                    />
-                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square
-                          className="signin-right-side">
-                        <Box
-                            sx={{
-                                my: 8,
-                                mx: 4,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <Typography component="h1" variant="h5"
-                                        style={{
-                                            marginBottom: '10px',
-                                            fontSize: '35px',
-                                            marginTop: '180px',
-                                            color: 'white'
-                                        }}>
-                                Virus Spread Simulations
-                            </Typography>
-                            <Typography style={{marginBottom: '10px', fontSize: '30px', color: 'white'}}>
-                                Sign in
-                            </Typography>
-                            {isSignInFailed && <Typography style={{marginBottom: '10px', fontSize: '20px', color: 'red'}}>
-                                Sign in did not work. Please try again!
-                            </Typography>}
-                            <Box component="form" noValidate onSubmit={event => handleLogin(event, navigate, setIsSignInFailed)}
-                                 sx={{mt: 1}} style={{width: "500px"}}>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    autoFocus
-                                    sx={stylingTextfield}
-                                />
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    sx={stylingTextfield}
-                                />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{mt: 3, mb: 2, borderRadius: '15px', color: 'white'}}
-                                >
-                                    Sign In
-                                </Button>
-                                <Grid container>
-                                    <Grid item>
-                                        <Link href="/register" variant="body2" sx={{color: 'white'}}>
-                                            {"You don't have an account? Register now!"}
-                                        </Link>
-                                    </Grid>
+                    >
+                        <Typography component="h1" variant="h5"
+                                    style={{
+                                        marginBottom: '10px',
+                                        fontSize: '50px',
+                                        marginTop: '180px',
+                                        color: '#1a2c20',
+                                        fontWeight: '800'
+                                    }}>
+                            Virus Spread Simulations
+                        </Typography>
+                        <Typography component="h1" variant="h5"
+                                    style={{
+                                        fontSize: '40px',
+                                        marginTop: '10px',
+                                        marginBottom: '70px',
+                                        color: '#a07e68',
+                                        fontWeight: '800'
+                                    }}>
+                            among monkeys
+                        </Typography>
+                        <Typography
+                            style={{marginBottom: '10px', fontSize: '40px', color: '#1a2c20', fontWeight: '800'}}>
+                            Sign in
+                        </Typography>
+                        {isSignInFailed && <Typography
+                            style={{marginBottom: '10px', fontSize: '20px', color: '#d5b50c', fontWeight: '800'}}>
+                            Sign in did not work. Please try again!
+                        </Typography>}
+                        <Box component="form" noValidate
+                             onSubmit={event => handleLogin(event, navigate, setIsSignInFailed)}
+                             sx={{mt: 1}} style={{width: "500px"}}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                                sx={stylingTextfield}
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                sx={stylingTextfield}
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{
+                                    mt: 3,
+                                    mb: 2,
+                                    borderRadius: '15px',
+                                    color: '#1a2c20',
+                                    borderColor: '#1a2c20',
+                                    backgroundColor: '#a07e68',
+                                    "&:focus": {backgroundColor: '#a07e68'},
+                                    "&:hover": {backgroundColor: '#a07e68'},
+                                }}
+                            >
+                                Sign In
+                            </Button>
+                            <Grid container>
+                                <Grid item>
+                                    <Link href="/register" variant="body1" sx={{color: '#1a2c20'}}>
+                                        {"You don't have an account? Register now!"}
+                                    </Link>
                                 </Grid>
-                                <LabelEndOfPage sx={{mt: 5, color: 'white'}}/>
-                            </Box>
+                            </Grid>
+                            <LabelEndOfPage sx={{mt: 5, color: '#1a2c20'}}/>
                         </Box>
-                    </Grid>
+                    </Box>
                 </Grid>
-            </ThemeProvider>
+            </Grid>
+        </ThemeProvider>
     );
 }
 

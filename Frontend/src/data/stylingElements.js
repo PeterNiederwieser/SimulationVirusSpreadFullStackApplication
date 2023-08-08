@@ -1,13 +1,13 @@
 export const stylingTextfield = {
-    "& .MuiInputLabel-root": {color: '#FFFFFF'},
+    "& .MuiInputLabel-root": {color: '#1a2c20', backgroundColor: 'transparent'},
     "& .MuiOutlinedInput-root": {
-        "& > fieldset": {borderColor: '#3481cb', borderRadius: 5, backgroundColor: '#173e81'},
+        "& > fieldset": {borderColor: '#a07e68', fontSize: '50px', borderRadius: 5, backgroundColor: 'transparent'},
     },
-    "& .MuiInputLabel-root.Mui-focused": {color: '#FFFFFF', zIndex: 3},
+    "& .MuiInputLabel-root.Mui-focused": {color: '#1a2c20', zIndex: 3, backgroundColor: 'transparent'},
     "& .MuiOutlinedInput-root.Mui-focused": {
-        "& > fieldset": {borderColor: '#FFFFFF', backgroundColor: '#173e81'}
+        "& > fieldset": {borderColor: '#a07e68', backgroundColor: 'transparent'},
     },
     "& input": {
-        color: '#FFFFFF', zIndex: 1
+        color: '#1a2c20', zIndex: 1, backgroundColor: 'transparent'
     }
 };

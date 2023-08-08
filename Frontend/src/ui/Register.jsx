@@ -13,6 +13,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import {handleRegister} from "../service/authentication.js";
 import {stylingTextfield} from "../data/stylingElements.js";
+
 function LabelEndOfPage(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props} style={{marginTop: "150px"}}>
@@ -41,7 +42,7 @@ export default function Register() {
                         sm={4}
                         md={7}
                         sx={{
-                            backgroundImage: 'url(\'/screen.jpg\')',
+                            backgroundImage: 'url(\'/pexels-bo-ponomari.jpg\')',
                             backgroundRepeat: 'no-repeat',
                             backgroundColor: (t) =>
                                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -63,13 +64,25 @@ export default function Register() {
                             <Typography component="h1" variant="h5"
                                         style={{
                                             marginBottom: '10px',
-                                            fontSize: '35px',
+                                            fontSize: '50px',
                                             marginTop: '180px',
-                                            color: 'white'
+                                            color: '#1a2c20',
+                                            fontWeight: '800'
                                         }}>
                                 Virus Spread Simulations
                             </Typography>
-                            <Typography style={{marginBottom: '10px', fontSize: '30px', color: 'white'}}>
+                            <Typography component="h1" variant="h5"
+                                        style={{
+                                            fontSize: '40px',
+                                            marginTop: '10px',
+                                            marginBottom: '70px',
+                                            color: '#a07e68',
+                                            fontWeight: '800'
+                                        }}>
+                                among monkeys
+                            </Typography>
+                            <Typography
+                                style={{marginBottom: '10px', fontSize: '40px', color: '#1a2c20', fontWeight: '800'}}>
                                 Registration
                             </Typography>
                             <Box component="form" noValidate onSubmit={event => handleRegister(event, navigate)}
@@ -111,7 +124,16 @@ export default function Register() {
                                     type="submit"
                                     fullWidth
                                     variant="contained"
-                                    sx={{mt: 3, mb: 2, borderRadius: '15px', color: 'white'}}
+                                    sx={{
+                                        mt: 3,
+                                        mb: 2,
+                                        borderRadius: '15px',
+                                        color: '#1a2c20',
+                                        borderColor: '#1a2c20',
+                                        backgroundColor: '#a07e68',
+                                        "&:focus": {backgroundColor: '#a07e68'},
+                                        "&:hover": {backgroundColor: '#a07e68'},
+                                    }}
                                 >
                                     Register
                                 </Button>
