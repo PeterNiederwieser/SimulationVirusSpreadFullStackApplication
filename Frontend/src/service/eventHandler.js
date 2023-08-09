@@ -30,3 +30,8 @@ export function onSubmit(formObject, setSimulationsBasicData, setFormObject) {
             throw error;
         });
 }
+
+export function handleCheckboxClick(setIsCheckboxSelected) {
+    console.log("checkbox was clicked")
+    setIsCheckboxSelected(prev => !prev);
+}

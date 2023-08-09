@@ -34,7 +34,7 @@ function Simulation() {
 
     return (
         <div className="container">
-            <Navbar/>
+            <Navbar isSimulatioinRunning={isSimulationRunning}/>
             <div className="simulation">
                 {!isSimulationRunning && (
                     <>

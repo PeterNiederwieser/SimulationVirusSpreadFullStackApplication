@@ -1,6 +1,6 @@
 export const optionsPieChart = {
     title: "",
-    height: 300,
+    height: 500,
     width: 550,
     colors: ["#38f5f5", "#f5e616", "#fa602d", "#7F00FF", "#000000"],
     is3D: true,
@@ -11,7 +11,7 @@ export const optionsPieChart = {
 export const optionsLineChart = {
     title: "New Infections / Deaths per time",
     height: 450,
-    width: 250,
+    width: 550,
     colors: ["#fa602d", "#000000"],
     legend: {position: "bottom"},
     curveType: "function",
@@ -23,7 +23,7 @@ export const optionsLineChart = {
 export const optionsAreaChart = {
     title: "Total infections / deaths",
     height: 450,
-    width: 250,
+    width: 550,
     colors: ["#fa602d", "#000000"],
     legend: {position: "bottom"},
     curveType: "function",

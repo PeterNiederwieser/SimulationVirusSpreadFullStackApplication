@@ -31,14 +31,14 @@ constants:
   probability-of-infection: 0.8F
   probability-of-fatal-infection-course: 0.5F
   file-path-of-territory-image: "Backend/src/main/resources/MapImage_by_DALL·E .png"
-  color-value-range: 40
+  color-value-range: 20
   max-color-value: 255
   min-color-value: 0
   color-healthy-animal: "#38f5f5"
   color-infected-animal: "#fa602d"
   color-recovered-animal: "#f5e616"
   color-severely-ill-animal: "#000000"
-  color-water: "#054177"
-  color-accessible-terrain: "#97BC62"
+  color-water: "#05CCF4"
+  color-accessible-terrain: "#53ab50"
   color-inaccessible-terrain: "#2C5F2D"
   color-water-input-image: "#030574"

@@ -8,7 +8,9 @@
     --color4: #92dfeb;
     --fontColor1: white;
     --fontColor2: #1a2c20;
-    --fontColor3: #81b4e5;
+    --fontColor3: #55c0cd;
+    --fontColor4: #39a2b7;
+    --fontColor5: #0e6fb9;
 }
 
 * {
@@ -26,9 +28,16 @@ body {
     flex-direction: row;
     align-items: flex-start;
     padding-top: 10px;
-    background-image: url("/pexels-guillaume-meurice-modifiedVersion.jpg");
     background-size: 100%;
     color: white;
+}
+
+#background1 {
+    background-image: url("/pexels-guillaume-meurice-modifiedVersion.jpg");
+}
+
+#background2 {
+    background-image: url("/pexels-mike-1174138-modifiedVersion.jpg");
 }
 
 .overview-item-image{
@@ -97,7 +106,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: var(--color2) 1px solid ;
+    /*border: var(--color2) 1px solid;*/
     border-radius: 25px;
     box-shadow: 5px 10px 15px #888888;
 }
@@ -220,6 +229,7 @@ button {
 
 .simulation-section {
     width: 100%;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -232,11 +242,20 @@ button {
     flex-direction: row;
 }
 
+.canvas-heading, .charts-heading {
+    font-size: 35px;
+    font-weigth: 800;
+    color: #223622;
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+}
+
 .canvas-section {
     display: flex;
-    width: 60%;
+    width: 50%;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
     align-items: center;
     justify-content: center;
 }
@@ -250,19 +269,31 @@ button {
 .charts {
     display: flex;
     flex-direction: column;
-    gap: 50px;
-    width: 40%;
+    gap: 0px;
+    width: 50%;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .line-charts {
     display: flex;
+    width: 100%;
     flex-direction: row;
     gap: 50px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.line-chart {
+    width: 500px;
 }
 
 .pie-chart {
     display: flex;
+    width: 100%;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .signin-right-side, .register-right-side {
