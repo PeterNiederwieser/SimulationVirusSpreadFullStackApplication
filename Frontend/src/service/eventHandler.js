@@ -33,6 +33,5 @@ export function onSubmit(formObject, setSimulationsBasicData, setFormObject) {
 }
 
 export function handleCheckboxClick(setIsCheckboxSelected) {
-    console.log("checkbox was clicked")
     setIsCheckboxSelected(prev => !prev);
 }
