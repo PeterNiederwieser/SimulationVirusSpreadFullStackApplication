@@ -5,18 +5,17 @@ import com.example.Backend.service.simulation.logic.simulationPhase.Phase;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class Simulator {
 
     public void simulateRequiredSteps(Context context, List<Phase> phases, int stepNumberFloor, int stepNumberCeil) {
         for (int i = stepNumberFloor; i <= stepNumberCeil; i++) {
-            simulatePhases(context, phases);
+            computeNextSimulationStep(context, phases);
         }
     }
 
-    private void simulatePhases(Context context, List<Phase> phases) {
-        for (Phase phase : phases) {
-            phase.perform(context);
-        }
+    private void computeNextSimulationStep(Context context, List<Phase> phases) {
+        phases.forEach(phase -> phase.perform(context));
     }
 }
