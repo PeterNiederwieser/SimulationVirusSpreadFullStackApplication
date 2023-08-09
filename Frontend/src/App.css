@@ -257,7 +257,7 @@ button {
     flex-direction: column;
     gap: 0px;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .canvas-buttons {
