@@ -21,7 +21,7 @@ body {
     font-family: var(--main-font-family);
 }
 
-.navbar {
+#navbar {
     background-color: transparent;
     height: 190px;
     display: flex;
@@ -32,15 +32,15 @@ body {
     color: white;
 }
 
-#background1 {
+.background1 {
     background-image: url("/pexels-guillaume-meurice-modifiedVersion.jpg");
 }
 
-#background2 {
+.background2 {
     background-image: url("/pexels-mike-1174138-modifiedVersion.jpg");
 }
 
-.overview-item-image{
+.overview-item-image {
     width: 250px;
     border-radius: 20px;
 }

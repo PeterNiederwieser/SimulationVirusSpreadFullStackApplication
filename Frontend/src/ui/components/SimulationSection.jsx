@@ -4,6 +4,7 @@ function SimulationSection({
                                receivedSimulationDataRef,
                                isSimulationRunning,
                                setIsSimulationRunning,
+                               setBackgroundImageSrc,
                                stompClient,
                                selectedSimulationId,
                                isDataAwaitedRef,
@@ -18,6 +19,7 @@ function SimulationSection({
                         receivedSimulationDataRef={receivedSimulationDataRef}
                         isSimulationRunning={isSimulationRunning}
                         setIsSimulationRunning={setIsSimulationRunning}
+                        setBackgroundImageSrc={setBackgroundImageSrc}
                         stompClient={stompClient}
                         selectedSimulationId={selectedSimulationId}
                         isDataAwaitedRef={isDataAwaitedRef}

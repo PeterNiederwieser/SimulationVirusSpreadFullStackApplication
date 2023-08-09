@@ -25,6 +25,7 @@ function Canvas({
                     receivedSimulationDataRef,
                     isSimulationRunning,
                     setIsSimulationRunning,
+                    setBackgroundImageSrc,
                     stompClient,
                     selectedSimulationId,
                     isDataAwaitedRef,
@@ -103,7 +104,7 @@ function Canvas({
                                 {buttonText}
                             </Button>
                             <Button id="item-button"
-                                    onClick={() => handleEndSimulation(setIsSimulationRunning, stompClient, intervalId)}
+                                    onClick={() => handleEndSimulation(setIsSimulationRunning, setBackgroundImageSrc, stompClient, intervalId)}
                                     variant="contained"
                                     sx={{
                                         mt: 3,

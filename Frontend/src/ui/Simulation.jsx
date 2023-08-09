@@ -16,6 +16,7 @@ function Simulation() {
     const [selectedSimulationId, setSelectedSimulationId] = useState(null);
     const [simulationsBasicData, setSimulationsBasicData] = useState(null);
     const [stompClient, setStompClient] = useState(null);
+    const [backgroundImageSrc, setBackgroundImageSrc] = useState("url(\"/pexels-guillaume-meurice-modifiedVersion.jpg\")");
     const [formObject, setFormObject] = useState(initFormObject());
 
     useEffect(() => {
@@ -26,6 +27,7 @@ function Simulation() {
     function runSimulation(simulationId) {
         const stompClient = setupWebSocket(receivedSimulationDataRef, setIsSimulationRunning, isDataAwaitedRef);
         setSelectedSimulationId(simulationId);
+        setBackgroundImageSrc("url(\"/pexels-mike-1174138-modifiedVersion.jpg\")");
         setStompClient(stompClient);
         const numberOfAnimals = simulationsBasicData.filter(item => item.id === simulationId)[0].numberOfAnimals;
         const numberSimStepsPerRequest = Math.round(NUMBER_OF_SIM_DATA_PER_REQUEST / numberOfAnimals);
@@ -34,7 +36,7 @@ function Simulation() {
 
     return (
         <div className="container">
-            <Navbar isSimulatioinRunning={isSimulationRunning}/>
+            <Navbar backgroundImageSrc={backgroundImageSrc}/>
             <div className="simulation">
                 {!isSimulationRunning && (
                     <>
@@ -58,6 +60,7 @@ function Simulation() {
                         receivedSimulationDataRef={receivedSimulationDataRef}
                         isSimulationRunning={isSimulationRunning}
                         setIsSimulationRunning={setIsSimulationRunning}
+                        setBackgroundImageSrc={setBackgroundImageSrc}
                         stompClient={stompClient}
                         selectedSimulationId={selectedSimulationId}
                         isDataAwaitedRef={isDataAwaitedRef}

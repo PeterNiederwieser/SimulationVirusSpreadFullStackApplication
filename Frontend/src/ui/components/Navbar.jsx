@@ -1,12 +1,12 @@
 import {useNavigate} from "react-router-dom";
-function Navbar({isSimulationRunning}) {
+function Navbar({backgroundImageSrc}) {
     const navigate = useNavigate();
     function handleLogout() {
         localStorage.clear();
         navigate("/");
     }
     return (
-        <div className="navbar" id={isSimulationRunning ? "background1" : "background2"}>
+        <div id="navbar" style={{backgroundImage: backgroundImageSrc}}>
             <div className="navbar-topic">
                 Virus Spread Simulations
             </div>

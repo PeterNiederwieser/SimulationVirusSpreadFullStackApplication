@@ -11,9 +11,10 @@ export function handleStopContinue(isSimulationPaused, setIsSimulationPaused, in
     setIsSimulationPaused(prev => !prev);
 }
 
-export function handleEndSimulation(setIsSimulationRunning, stompClient, navigate, intervalId) {
+export function handleEndSimulation(setIsSimulationRunning, setBackgroundImageSrc, stompClient, navigate, intervalId) {
     clearInterval(intervalId);
     setIsSimulationRunning(false);
+    setBackgroundImageSrc("url(\"/pexels-guillaume-meurice-modifiedVersion.jpg\")");
     stompClient.deactivate()
        .then(() => console.log("Stomp client deactivated"));
     window.location.reload();
