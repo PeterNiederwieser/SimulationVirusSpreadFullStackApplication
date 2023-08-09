@@ -35,8 +35,6 @@ function FormSimulationParameters({updateFormObject, formObject, setFormObject, 
                         id="input-long"
                         setFormObject={setFormObject}
                     />
-                </div>
-                <div className="form-container-button">
                     <Button id="form-button"
                             onClick={() => onSubmit(formObject, setSimulationsBasicData, setFormObject)}
                             endIcon={<SendIcon/>}
@@ -45,13 +43,17 @@ function FormSimulationParameters({updateFormObject, formObject, setFormObject, 
                                 mt: 3,
                                 mb: 2,
                                 borderRadius: '15px',
-                                color: '#1a2c20',
+                                height: '54px',
+                                color: 'white',
                                 borderColor: '#1a2c20',
                                 backgroundColor: '#a07e68',
-                                "&:focus": {backgroundColor: '#a07e68', borderColor: '#1a2c20'},
-                                "&:hover": {backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
+                                "&:focus": {color: 'black', backgroundColor: '#a07e68', borderColor: '#1a2c20'},
+                                "&:hover": {color: 'black', backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
                             }}
                     >Submit</Button>
+                </div>
+                <div className="form-container-button">
+
                 </div>
             </div>
         </div>

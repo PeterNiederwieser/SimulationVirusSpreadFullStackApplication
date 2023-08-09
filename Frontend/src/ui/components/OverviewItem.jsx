@@ -10,7 +10,7 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData, imageSrc}) 
     return (
         <div className="overview-item">
             <div className="overview-item-heading">
-                <div className="overview-item-name">Simulation: {item.simulationName}</div>
+                <div className="overview-item-name">{item.simulationName}</div>
                 <div className="overview-item-buttons">
 
                 </div>
@@ -46,11 +46,11 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData, imageSrc}) 
                                     mt: 3,
                                     mb: 2,
                                     borderRadius: '15px',
-                                    color: '#1a2c20',
+                                    color: 'white',
                                     borderColor: '#1a2c20',
                                     backgroundColor: '#a07e68',
-                                    "&:focus": {backgroundColor: '#a07e68', borderColor: '#1a2c20'},
-                                    "&:hover": {backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
+                                    "&:focus": {color: 'black', backgroundColor: '#a07e68', borderColor: '#1a2c20'},
+                                    "&:hover": {color: 'black', backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
                                 }}>
                             Run
                         </Button>
@@ -60,11 +60,11 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData, imageSrc}) 
                                     mt: 3,
                                     mb: 2,
                                     borderRadius: '15px',
-                                    color: '#1a2c20',
+                                    color: 'white',
                                     borderColor: '#1a2c20',
                                     backgroundColor: '#a07e68',
-                                    "&:focus": {backgroundColor: '#a07e68', borderColor: '#1a2c20'},
-                                    "&:hover": {backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
+                                    "&:focus": {color: 'black', backgroundColor: '#a07e68', borderColor: '#1a2c20'},
+                                    "&:hover": {color: 'black', backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
                                 }}>
                             Update
                         </Button>
@@ -74,11 +74,11 @@ function OverviewItem({item, runSimulation, setSimulationsBasicData, imageSrc}) 
                                     mt: 3,
                                     mb: 2,
                                     borderRadius: '15px',
-                                    color: '#1a2c20',
+                                    color: 'white',
                                     borderColor: '#1a2c20',
                                     backgroundColor: '#a07e68',
-                                    "&:focus": {backgroundColor: '#a07e68', borderColor: '#1a2c20'},
-                                    "&:hover": {backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
+                                    "&:focus": {color: 'black', backgroundColor: '#a07e68', borderColor: '#1a2c20'},
+                                    "&:hover": {color: 'black', backgroundColor: '#e5c6b2', borderColor: '#1a2c20'}
                                 }}>
                             Delete
                         </Button>
