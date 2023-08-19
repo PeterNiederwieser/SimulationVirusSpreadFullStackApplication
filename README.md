@@ -1,5 +1,3 @@
-SimulationVirusSpreadWithSpringAndReact
-
 This project is still in development, but already working. It 
 is a fullstack application simulating a virus spread among an 
 animal population. 
