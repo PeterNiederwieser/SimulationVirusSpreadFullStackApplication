@@ -42,7 +42,7 @@ function Canvas({
     const [lineChartData, setLineChartData] = useState(initLineChartData());
     const [areaChartData, setAreaChartData] = useState(initAreaChartData());
     const [intervalId, setIntervalId] = useState(null);
-    const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+    const [isCheckboxSelected, setIsCheckboxSelected] = useState(true);
     let context = null;
 
     useEffect(() => {
@@ -120,7 +120,7 @@ function Canvas({
                                 End
                             </Button>
                             <FormControlLabel
-                                control={<Checkbox defaultChecked={false} style={{color: '#223622'}}
+                                control={<Checkbox defaultChecked={true} style={{color: '#223622'}}
                                                    onChange={() => handleCheckboxClick(setIsCheckboxSelected)}/>}
                                 style={{color: "#223622"}}
                                 label="Show Diagrams"/>
