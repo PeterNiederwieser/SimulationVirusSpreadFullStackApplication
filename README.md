@@ -6,7 +6,7 @@ The following image shows a snapshot of the running simulation in the browser:
 
 ![Simulation_2](https://github.com/PeterNiederwieser/SimulationVirusSpreadFullStackApplication/assets/112017284/3713f8f3-692d-4f79-a936-e72cef28f35c)
 
-On the left side there is the map showing the region, where the animals live, and each animal is displayed as a coloured circle. The movement of the animals can be tracked on the screen during the simulation. The color of an animal indicates its health or infection status (light blue ... healthy, yellow ... recovered and immune, red ... infected, violet ... severely ill).
+On the left side there is the map showing the region, where the animals live, and each animal is displayed as a coloured circle. The movement of the animals can be tracked on the screen during the simulation. The colour of an animal indicates its health or infection status (light blue ... healthy; yellow ... recovered and immune; red ... infected; violet ... severely ill).
 
 There are three charts on the right side displaying important data of the virus spread. If the simulation is running, these charts get updated regularly within short time intervals.
 
@@ -14,7 +14,7 @@ The communication between frontend and backend is based on REST API, except for 
 
 The simulation data is computed in the backend and needs to be transferred to the frontend, where the data is consumed. When the simulation is running, hundreds of thousands of simulation data records are required within a short period of time, which makes a WebSocket connection for data transmission more suitable than the use of REST API. The transmission happens 'on-demand,' meaning that if there are too few data records in the frontend, a request is sent from the frontend to the backend via the WebSocket connection. In the backend, the next simulation steps are then calculated, and afterwards the newly computed simulation data records are bundled and sent to the frontend via the WebSocket connection.
 
-Before the simulation can be started, the user needs to log in on the login page or must be redirected to register first, in case the user has not registered yet. During the login, a JWT token is generated in the backend and sent with the response to the frontend, from where the token is included in the header of all following HTTP requests for authentication reasons. 
+Before the simulation can be started, the user needs to log in on the login page or register first, in case the user has not registered yet. During the login, a JWT token is generated in the backend and sent with the response to the frontend, from where the token is included in the header of all subsequent HTTP requests for authentication reasons. 
 
 After successful login, the user is redirected to a page (see the following image below) with three input fields, where the user can set the name of the simulation, the number of animals and the number of initial infections. After pressing the submit button, this data is sent to the backend via an HTTP request and subsequently the necessary conditions for starting the simulation are created in the backend. 
 
