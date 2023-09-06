@@ -1,6 +1,5 @@
-This project is still in development, but already working. It 
-is a fullstack application simulating a virus spread among an 
-animal population. 
+This project is a fullstack application simulating a virus 
+spread among an animal population. 
 
 In the backend I used the Spring Framework, especially Spring 
 Boot, Spring Data JPA with Hibernate and H2 Database, Spring 
